@@ -30,7 +30,10 @@ def main() -> None:
     for s in ("train", "dev", "test"):
         with gzip.open(a.raw / f"{s}.tsv.gz", "rt", encoding="utf-8", newline="") as f:
             for line in f:
-                lab, i, t = line.rstrip("\n").split("\t")
+                parts = line.rstrip("\r\n").split("\t", 2)
+                if len(parts) != 3:  # malformed row: skip (reported by phase1_corpus_audit.py)
+                    continue
+                lab, i, t = parts
                 w = norm(t)
                 if len(w) < MIN_LEN:
                     continue
@@ -43,7 +46,7 @@ def main() -> None:
         cross = [v for v in g if len({x[0] for x in v}) > 1]
         top = sorted(g, key=len, reverse=True)[:10]
         out[name] = {
-            "groups": len(g), "records": sum(map(len, g)), "max_group": max(map(len, g)),
+            "groups": len(g), "records": sum(map(len, g)), "max_group": max(map(len, g), default=0),
             "cross_split_groups": len(cross),
             "dev_test_records_in_cross_split_groups": sum(1 for v in cross for x in v if x[0] != "train"),
             "label_set_conflict_groups": sum(1 for v in g if len({frozenset(x[2].split()) for x in v}) > 1),

@@ -1,4 +1,4 @@
-# Architecture (proposed, v0.1)
+# Architecture (v1.0, approved with the method gate 2026-11-05)
 
 The src-layout follows the master prompt §8 unchanged, except for the deltas noted. Nothing below is implemented yet beyond `scripts/phase1_*.py`.
 
@@ -40,7 +40,7 @@ inference.predict (single/batch; outputs id, status, raw_scores, score_type, thr
 
 | Asset | Terms |
 |---|---|
-| Our code | proposed MIT or Apache-2.0: **user to choose [D-12]** |
+| Our code | Apache-2.0 (D-12, approved; `LICENSE`) |
 | CORE annotations (labels) | CC BY-SA 4.0 (LICENSE.txt), with attribution and share-alike for derived label files |
 | CORE web text | **no license grant found**, so it is not redistributed; retrieval instructions plus hashes only |
 | Primary article | CC BY 4.0 (cited, not redistributed) |

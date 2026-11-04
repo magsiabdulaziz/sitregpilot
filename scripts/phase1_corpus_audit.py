@@ -82,7 +82,7 @@ def main() -> int:
     subcodes = sorted(legend_set - set(MAIN) - {"OTHER"})
 
     audit: dict = {
-        "source_dir": str(args.raw),
+        "source_dir": args.raw.as_posix(),  # POSIX form so output hashes do not depend on OS separators
         "file_sha256": {},
         "legend": {"n_codes": len(legend_codes), "codes": legend,
                    "n_main": len(MAIN), "n_sub": len(subcodes), "subcodes": subcodes,
@@ -172,9 +172,9 @@ def main() -> int:
                     st["rows_with_cr_in_text"] += 1
                 if "\\n" in text:
                     st["rows_with_literal_backslash_n"] += 1
-                if " " in text or " " in text:
+                if "\u2029" in text or "\u2028" in text:
                     st["rows_with_unicode_line_sep"] += 1
-                if "�" in text:
+                if "\ufffd" in text:
                     st["rows_with_replacement_char"] += 1
                 if re.search(r"https?://|www\.", text):
                     st["rows_with_url_string"] += 1

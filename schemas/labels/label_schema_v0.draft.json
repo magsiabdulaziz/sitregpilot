@@ -1,7 +1,7 @@
 {
   "schema_id": "core_labels",
   "version": "0.1.0-draft",
-  "status": "DRAFT - pending method-gate approval",
+  "status": "DRAFT - label policy approved (D-03, D-04, 2026-11-05); schema freeze pending Phase 2 (#5)",
   "source": {
     "file": "register_label_abbreviations.txt",
     "sha256": "33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d",

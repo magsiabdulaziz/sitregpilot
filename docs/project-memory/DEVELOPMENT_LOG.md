@@ -29,3 +29,9 @@ Times are not reliably recorded; dates are from the session environment.
 - Completed: rewrote the bootstrap commit to drop the co-author trailer at the owner's request (`ac52d41`→`dac13cb`, force-with-lease; ISS-007, DEC-004).
 - Verified: both Phase 1 audit scripts reproduce `reports/audit/*.json` byte-for-byte (sha256 7c2272…, d0f789…).
 - Planned: branch `docs/issue-1-phase1-records` → draft PR for issue #1.
+
+## 2026-11-05: PR #10 review round 1 and revision
+- Draft PR #10 opened (closes #1). An independent read-only `general-purpose` agent reviewed it: Changes required (3 Major, 7 Minor, 2 Suggestions, 0 Critical).
+- Revision: approved-status wording (methodology, architecture, schema status), PR_TRACKER/TASKS reconciled, undefined AUD-* refs replaced with JSON keys, corpus-wide median corrected to 635 (independently verified), template-homogeneity wording quantified, D-09 count clarified; scripts: POSIX `source_dir`, robust split/`max(default=0)`/CRLF strip, invisible Unicode literals escaped.
+- `reports/audit/corpus_audit.json` regenerated: only `source_dir` changed (`data\raw\…` → `data/raw/…`); new sha256 a61bb0c9…; template JSON unchanged (d0f789a0…); both byte-reproducible on re-run.
+- Not changed: `/CLAUDE.md` finding 4 (left for the owner).

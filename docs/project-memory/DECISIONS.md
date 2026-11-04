@@ -1,6 +1,6 @@
 # Engineering and process decisions (DEC-xxx)
 
-The research-protocol decisions (D-01…D-13, approved by the owner on 2026-11-05) live in [`docs/decisions.md`](../decisions.md) and are not duplicated here.
+The research-protocol decisions (D-01/D-02 adopted; D-03…D-12 approved by the owner on 2026-11-05; D-13 blocked) live in [`docs/decisions.md`](../decisions.md) and are not duplicated here.
 
 ## DEC-001: Markdown project memory under `docs/project-memory/`
 

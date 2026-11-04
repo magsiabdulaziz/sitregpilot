@@ -5,11 +5,11 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 
 | ID | Title | Pri | Status | Issue | Depends | PR |
 |---|---|---|---|---|---|---|
-| TASK-001 | Phase 0 environment & agent audit | P0 | IN_REVIEW | #1 | — | — |
-| TASK-002 | Phase 1 corpus audit, source ledger, protocol | P0 | IN_REVIEW | #1 | 001 | — |
+| TASK-001 | Phase 0 environment & agent audit | P0 | IN_REVIEW | #1 | — | #10 |
+| TASK-002 | Phase 1 corpus audit, source ledger, protocol | P0 | IN_REVIEW | #1 | 001 | #10 |
 | TASK-003 | Dev environment: git init, venv, deps, lock | P0 | IN_PROGRESS | #3 | 002 | — |
 | TASK-004 | GitHub PR-driven workflow design | P0 | TODO | #2 | — | — |
-| TASK-005 | Persistent project-memory system | P0 | IN_REVIEW | #1 | — | — |
+| TASK-005 | Persistent project-memory system | P0 | IN_REVIEW | #1 | — | #10 |
 | TASK-006 | Independent recount of audit numbers (H-001) | P1 | TODO | #4 | 002 (#1) | — |
 | TASK-007 | Obtain & ledger the complementary 2021 study | P2 | BLOCKED | #9 | owner PDF | — |
 | TASK-010 | Package skeleton, config, ingest/validate, `audit` CLI | P0 | TODO | #5 | 003, 004 | — |

@@ -1,6 +1,6 @@
-# Methodology: proposed protocol (v0.1, awaiting method-gate approval)
+# Methodology: approved protocol (v1.0, method gate approved 2026-11-05)
 
-Every item marked **[D-xx]** is a decision listed in `decisions.md` that needs explicit approval. Audit numbers come from `reports/audit/corpus_audit.json` and `template_overlap_indicator.json`.
+Every item marked **[D-xx]** is a decision in `decisions.md`; D-03…D-12 were approved by the owner on 2026-11-05. Changing any of them needs new approval. Audit numbers come from `reports/audit/corpus_audit.json` and `template_overlap_indicator.json`.
 
 ## 1. Research questions → analyses
 
@@ -22,16 +22,16 @@ Every item marked **[D-xx]** is a decision listed in `decisions.md` that needs e
 - Every subcode except DP always co-occurs with its Table-1 parent, so the release looks **propagated**. DP lacks IN in 293 rows; DP co-occurs with NA 515 times. The article's Table 2 shows DP selected under NARRATIVE.
 - OTHER never co-occurs with another code (582 rows).
 - Paragraph breaks are flattened to spaces. Titles run into the first sentence. Page boilerplate (menus, cookie notices, "About me") remains. Some texts contain control characters (U+0007, U+0014/15) and U+00A0.
-- Whitespace words: median 634, p95 ≈ 3,800, max 118,278; 28,791 docs exceed 512 words.
+- Whitespace words (corpus-wide, independently recounted in the PR #10 review): median 635, p95 3,797, max 118,278 (per-split medians in the audit JSON: train 634, dev 649, test 634); 28,791 docs exceed 512 words.
 - Exact duplicates: 12 two-member groups (raw = normalised); 6 cross split (5 train/test, 1 train/dev); 3 groups have conflicting label sets (0610929/0654134 IN vs NA NE across train/dev; two within train).
-- **Template indicator** (identical normalised first-50/last-50 words): 114 prefix groups (745 docs, max 129) and 670 suffix groups (3,276 docs, max 477). 409 suffix groups cross splits. Large groups are label-homogeneous site templates: a forum-software header goes with ID DF (121/129), a free-trial billing notice with IP DS, publisher footers with NA NE. This is direct evidence of **source/template shortcuts**. It is not provenance.
+- **Template indicator** (identical normalised first-50/last-50 words): 114 prefix groups (745 docs, max 129) and 670 suffix groups (3,276 docs, max 477). 409 suffix groups cross splits. The largest groups are dominated by one label set (forum-software header → ID DF in 121/129, a free-trial billing notice → IP DS in 57/80, the largest publisher footer → NA NE in 270/477), but most groups are not label-homogeneous (label-set conflicts in 80/114 prefix and 508/670 suffix groups). This is direct evidence of **source/template shortcuts**. It is not provenance.
 
 ## 3. Tasks and labels
 
 `source_labels` (raw string, preserved) → `analysis_labels` (task-specific set) → `predictions` (scores + decisions) are separate fields.
 
 - **T1, primary: coarse main-register multilabel** over SP LY IN IP OP NA HI ID, using **observed** main codes only. No closure is applied: DP rows without IN stay without IN. **[D-03]**
-- **OTHER policy [D-04]**, proposed: OTHER-only rows (582) are **excluded from T1 training and from the primary metric cohort ("functional cohort")**. Their T1 predictions are still produced and reported descriptively (rate of empty prediction sets, label distribution). Sensitivity S-OTHER: retrain with OTHER rows as all-negative and report the change on the functional cohort plus the empty-set rate on OTHER rows. Labelled as a sensitivity analysis because OTHER rows are not verified negatives.
+- **OTHER policy [D-04]**, approved: OTHER-only rows (582) are **excluded from T1 training and from the primary metric cohort ("functional cohort")**. Their T1 predictions are still produced and reported descriptively (rate of empty prediction sets, label distribution). Sensitivity S-OTHER: retrain with OTHER rows as all-negative and report the change on the functional cohort plus the empty-set rate on OTHER rows. Labelled as a sensitivity analysis because OTHER rows are not verified negatives.
 - **T2: released 56-code multilabel**, all rows, OTHER as a code. This matches the article's propagated label space (not its models or settings).
 - **T3, optional [D-05]**: (a) derived nonpropagated approximation; (b) single-main subset (docs with exactly one main; coverage loss reported: 5,687 of 47,853 non-empty functional docs (11.9%) are cross-main); (c) label-powerset multiclass over 455 sets, unseen-combination counts reported.
 - Hybridity is reported as **cross-main overlap** (≥2 mains). Multiple subs under one main are counted separately and are not called hybrids.

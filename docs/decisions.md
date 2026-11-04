@@ -12,7 +12,7 @@ Status: **ADOPTED** (within the authorised audit scope) · **PROPOSED** (needs a
 | D-06 | Shared input window = first 1,000 whitespace words for the primary representation comparison; full-text TF-IDF ablation | APPROVED (2026-11-05) | 512 words (closer to the BERT window) / 2,000 / full text (parser cost on 118k-word docs) |
 | D-07 | `controlled_split`: exact + verified near-dup (5-shingle MinHash, Jaccard ≥ 0.80) components; priority test > dev > train; conflicting training members quarantined; template groups used only for diagnostics | APPROVED (2026-11-05) | group-aware repartition (loses released comparability); also exclude template-sharing docs (domain-filter effect) |
 | D-08 | spaCy 3.8.x + pinned `en_core_web_sm` for linguistic measurement | APPROVED (2026-11-05) | `en_core_web_md`/`lg` (slower, more RAM); Stanza (slower, no Py3.14 check yet) |
-| D-09 | Grid as in methodology §7 (≤ 24 TF-IDF configs per model/task) | APPROVED (2026-11-05) | smaller/larger grid |
+| D-09 | Grid as in methodology §7 (≤ 24 TF-IDF configs per model/task; the combined model B4 adds only 3 α values on top of the B1-best TF-IDF config, per experiment_plan) | APPROVED (2026-11-05) | smaller/larger grid |
 | D-10 | Primary endpoint: T1 macro-F1, functional cohort, controlled_split test | APPROVED (2026-11-05) | released_split as primary (comparability, but contaminated) |
 | D-11 | Initialise Git at `D:\SitRegPilot`; `.venv` + pip + frozen lock; data/artifacts git-ignored | APPROVED (2026-11-05) | — |
 | D-12 | Code license: Apache-2.0 (default accepted with "approve all") | APPROVED (2026-11-05) | — |

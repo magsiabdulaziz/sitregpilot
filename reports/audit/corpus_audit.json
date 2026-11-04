@@ -1,5 +1,5 @@
 {
-  "source_dir": "data\\raw\\CORE-corpus",
+  "source_dir": "data/raw/CORE-corpus",
   "file_sha256": {
     "README.md": "d6b84a21bd641ca1f85b9605cd37b71d2db91d6a9d39fc7f29753c530eede395",
     "LICENSE.txt": "963470ca952fa69d6766d4c72009a4b551aa22790cd9eaf33e99f55f910dc2fa",
