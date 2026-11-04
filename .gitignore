@@ -1,0 +1,14 @@
+# data and large artifacts are never committed; tracked via hashes/manifests
+data/raw/
+data/interim/
+data/processed/
+artifacts/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+# local copy of the article (CC BY 4.0, cited not redistributed)
+*.pdf
