@@ -170,8 +170,18 @@ def _report(rows: list[dict[str, str]], by_id: Mapping[str, _Doc], schema: Label
 
     exclusions = Counter((r["released_split"], r["controlled_reason"]) for r in rows if r["controlled_partition"] == "excluded")
     cohorts = Counter((r["controlled_partition"], r["cohort"]) for r in rows)
+    def template_bucket(r: dict[str, str], col: str) -> str:
+        if r[col]:
+            return r[col]
+        excluded = r["status"] != Status.OK.value or (
+            col == "template_seen_controlled" and r["controlled_partition"] == "excluded"
+        )
+        return "n/a_excluded" if excluded else "n/a_too_short"
+
     template = Counter(
-        (r["released_split"], col, r[col]) for r in rows for col in ("template_seen_released", "template_seen_controlled")
+        (r["released_split"], col, template_bucket(r, col))
+        for r in rows
+        for col in ("template_seen_released", "template_seen_controlled")
         if r["released_split"] != "train"
     )
     test_released = sorted(r["doc_id"] for r in rows if r["released_split"] == "test")
@@ -188,7 +198,7 @@ def _report(rows: list[dict[str, str]], by_id: Mapping[str, _Doc], schema: Label
         "controlled_partition_sizes": {p: sum(1 for r in rows if r["controlled_partition"] == p) for p in parts},
         "exclusions_by_released_split_and_reason": {f"{s}/{why}": n for (s, why), n in sorted(exclusions.items())},
         "cohort_by_controlled_partition": {f"{p}/{c}": n for (p, c), n in sorted(cohorts.items())},
-        "template_seen_dev_test": {f"{s}/{col}/{v or 'n/a'}": n for (s, col, v), n in sorted(template.items())},
+        "template_seen_dev_test": {f"{s}/{col}/{v}": n for (s, col, v), n in sorted(template.items())},
         "label_counts_released": label_table("released_split", list(SPLITS)),
         "label_counts_controlled": label_table("controlled_partition", parts),
         "sealed_test": {

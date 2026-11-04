@@ -57,7 +57,7 @@ The original files, unchanged, for reference comparability. Known contamination 
 - Template groups (§5.3) are **not** used for exclusion in the primary controlled split. Excluding all template-sharing docs would remove legitimate same-site documents and act as an undocumented domain filter. They drive the diagnostic below.
 
 ### 5.3 Template diagnostic (no repartitioning)
-Template keys (normalised first-50 and last-50 words) are computed from **training documents only**. A test document is "template-seen" if it shares a key with any training document. Report metrics for template-seen vs template-unseen test cohorts and the paired gap. Optional ablation: mask spans matching training template keys. A true domain-held-out experiment is impossible without an ID→URL mapping; this is a proxy and is labelled as one.
+Template keys (normalised first-50 and last-50 words; only documents with ≥ 60 normalised words, as in the Phase 1 indicator) are computed from **training documents only**. A test document is "template-seen" if it shares a key with any training document. Report metrics for template-seen vs template-unseen test cohorts and the paired gap. Optional ablation: mask spans matching training template keys. A true domain-held-out experiment is impossible without an ID→URL mapping; this is a proxy and is labelled as one.
 
 ### 5.4 Test sealing
 Test manifests are frozen in Phase 2 before any fitting. Test inference runs only once, in Phase 5, for finalists frozen beforehand.

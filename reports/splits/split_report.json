@@ -65,17 +65,17 @@
     "train/other_only": 407
   },
   "template_seen_dev_test": {
-    "dev/template_seen_controlled/n/a": 2,
     "dev/template_seen_controlled/false": 4502,
+    "dev/template_seen_controlled/n/a_excluded": 2,
     "dev/template_seen_controlled/true": 341,
-    "dev/template_seen_released/n/a": 1,
     "dev/template_seen_released/false": 4500,
+    "dev/template_seen_released/n/a_excluded": 1,
     "dev/template_seen_released/true": 344,
-    "test/template_seen_controlled/n/a": 6,
     "test/template_seen_controlled/false": 8980,
+    "test/template_seen_controlled/n/a_excluded": 6,
     "test/template_seen_controlled/true": 706,
-    "test/template_seen_released/n/a": 6,
     "test/template_seen_released/false": 8972,
+    "test/template_seen_released/n/a_excluded": 6,
     "test/template_seen_released/true": 714
   },
   "label_counts_released": {

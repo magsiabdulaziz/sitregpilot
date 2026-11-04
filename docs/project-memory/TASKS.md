@@ -14,8 +14,8 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 | TASK-007 | Obtain & ledger the complementary 2021 study | P2 | BLOCKED | #9, #11 | owner PDF | — |
 | TASK-010 | Package skeleton, config, ingest/validate, `audit` CLI | P0 | DONE | #5 | 003, 004 | #14 |
 | TASK-011 | Exact + MinHash near-duplicate grouping | P0 | DONE | #6 | 010 | #15 |
-| TASK-012 | released/controlled split manifests, test sealing | P0 | IN_REVIEW | #7 | 011 | (pending) |
-| TASK-013 | Data-contract test suite (Phase 2 gate C) | P0 | TODO | #8 | 010–012 | — |
+| TASK-012 | released/controlled split manifests, test sealing | P0 | DONE | #7 | 011 | #17 |
+| TASK-013 | Data-contract test suite (Phase 2 gate C) | P0 | IN_REVIEW | #8 | 010–012 | #18 |
 | TASK-020 | Phase 3: linguistic feature registry & extraction | P1 | TODO | — | 013 | — |
 | TASK-021 | Phase 3: CPU baselines B0–B4 on dev | P1 | TODO | — | 013, 020 | — |
 
