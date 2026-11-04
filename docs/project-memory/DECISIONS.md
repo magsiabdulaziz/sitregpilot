@@ -97,5 +97,8 @@ The owner picks the merge method per PR. When an agent merges on the owner's exp
 - **`pip-audit`:** runs as a separate job on every PR/push plus weekly, and is **not required**. A newly published CVE is shown but does not block unrelated PRs; a red `pip-audit` becomes a `type:fix` issue.
 - **Protection on `main`:** PR required with **0** required approvals (agents act through the owner's account, and GitHub forbids self-approval); required checks strict (branch up to date); no force-push; no deletion; applies to admins as well, so the shared account cannot bypass it by accident.
 
+### Result (issue #3 acceptance criterion)
+**Enforced** on 2026-11-05 via `PUT /repos/magsiabdulaziz/sitregpilot/branches/main/protection` (possible because the repo is currently public, ISS-009). API response verified: checks `lint-type`, `test (ubuntu-latest)`, `test (windows-latest)`, strict; enforce_admins true; 0 approvals; force-push and deletion disabled. If the repo goes back to private on a free plan, re-check whether GitHub still enforces it; the fallback is DEVELOPMENT_WORKFLOW §10.
+
 ### Consequences
 Even the owner cannot push directly to `main` while `enforce_admins` is on. The owner can switch it off in Settings → Branches if needed.

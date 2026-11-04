@@ -59,3 +59,4 @@ Times are not reliably recorded; dates are from the session environment.
 - CI run 41909923088 at `1bcc8f1`: lint-type, test (ubuntu), test (windows) all passed; pip-audit step: no known vulnerabilities.
 - Independent read-only review: Changes required (Major: protection result not recorded). Revision: test fixes, setuptools>=77, CI hardening (SHA-pinned checkout/setup-python v7, persist-credentials false, lock-based lint, `pip check`, separate pip-audit job + weekly schedule), memory updates, DEC-006 (proposed).
 - Observed: repo visibility is now public (ISS-009), not changed by agents.
+- Branch protection on `main` applied and verified via API (DEC-006 result); CI run 41911110569 at `df05442` green incl. pip-audit.
