@@ -1,0 +1,40 @@
+name: Bug
+description: Something produces wrong results, crashes, or contradicts the documented protocol
+title: "fix: <short description>"
+labels: ["type:fix"]
+body:
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Symptoms
+      description: Observed behaviour, error messages (no corpus text, no secrets).
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Commands, config, commit SHA.
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact on research results
+      options:
+        - "None (tooling only)"
+        - "Could affect reported numbers"
+        - "Possible test-set leakage or data-integrity issue"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Suspected cause / notes
+      description: Mark hypotheses as such; link ISS-xxx if known.

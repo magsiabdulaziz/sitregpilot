@@ -40,3 +40,12 @@ Times are not reliably recorded; dates are from the session environment.
 - Round 2 (same independent reviewer, delta only): all 12 round-1 findings resolved (CLAUDE.md line 3 left for the owner, non-blocking). Ready for approval, with 2 new Minor findings: N1 CRLF/LF mixing, N2 JSON written with CRLF on Windows.
 - Fixed in this PR: 17 tracked files normalised to LF; `.gitattributes` (`* text=auto eol=lf`, binaries marked); both scripts write JSON with `newline="\n"`.
 - Verified: two fresh runs plus the committed files are byte-identical. **Current reference hashes:** `corpus_audit.json` d4bf57b7…bec8, `template_overlap_indicator.json` 660f9365…95fb (they supersede earlier Windows-CRLF hashes; content unchanged). 0 CR bytes in tracked files.
+
+## 2026-11-05: PR #10 merged; issue #2 started
+- Round-3 check of `ec6645c`: Ready for approval. PR marked ready; Approval Report posted.
+- The owner said "merge #10". The owner merged it on GitHub (merge commit `6fba587`); the agent's squash attempt found it already merged. Verified: merged tree == approved head tree; issue #1 closed; local `main` fast-forwarded.
+- Started issue #2 on `docs/issue-2-workflow`: `docs/DEVELOPMENT_WORKFLOW.md`, `CONTRIBUTING.md`, `.github/pull_request_template.md`, `.github/ISSUE_TEMPLATE/{task,bug,config}.yml`, `README.md`; DEC-005.
+
+## 2026-11-05: PR #12 review and revision
+- Independent read-only review of `e3b7d9e`: Ready for approval; 0 Critical, 0 Major, 4 Minor, 3 Suggestions.
+- Fixed: force-push/history-rewrite rule now covers all branches; merge command includes `--squash`; SESSION_HANDOFF DEC range; DEC-005 set to Proposed (accepted on merge of #12) with an amendment note on DEC-003; master-prompt reference clarified; PR template gains an owner-approval checkbox; #10 merge attribution and timezone labelled; owner-created issue #11 linked to TASK-007.
