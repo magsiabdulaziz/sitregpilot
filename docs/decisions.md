@@ -17,3 +17,4 @@ Status: **ADOPTED** (within the authorised audit scope) · **PROPOSED** (needs a
 | D-11 | Initialise Git at `D:\SitRegPilot`; `.venv` + pip + frozen lock; data/artifacts git-ignored | APPROVED (2026-11-05) | — |
 | D-12 | Code license: Apache-2.0 (default accepted with "approve all") | APPROVED (2026-11-05) | — |
 | D-13 | Complementary study (2021) | BLOCKED | needs the user to supply a PDF; until then its methods are cited only as reported in the primary article |
+| D-14 | D-07 clarification: a train-only duplicate group whose members carry different label sets is quarantined **entirely** (no representative kept), since the correct label cannot be determined. Affects 10 documents in 5 two-member groups. Implemented in PR #17 (`configs/data/splits.yaml`: `conflict_policy: quarantine_train`). | APPROVED (owner: "quarantine all", 2026-11-05) | keep the lowest-ID member (would keep a possibly wrong label) |
