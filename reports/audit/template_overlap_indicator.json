@@ -1,0 +1,458 @@
+{
+  "definition": "identical normalized first/last 50 words; docs with >= 60 whitespace words",
+  "first50": {
+    "groups": 114,
+    "records": 745,
+    "max_group": 129,
+    "cross_split_groups": 76,
+    "dev_test_records_in_cross_split_groups": 211,
+    "label_set_conflict_groups": 80,
+    "largest_groups_label_profile": [
+      {
+        "size": 129,
+        "splits": {
+          "train": 102,
+          "dev": 7,
+          "test": 20
+        },
+        "top_labels": [
+          [
+            "ID DF",
+            121
+          ],
+          [
+            "ID DF QA",
+            3
+          ],
+          [
+            "ID QA",
+            1
+          ]
+        ]
+      },
+      {
+        "size": 80,
+        "splits": {
+          "train": 57,
+          "dev": 8,
+          "test": 15
+        },
+        "top_labels": [
+          [
+            "IP DS",
+            57
+          ],
+          [
+            "IN IP DT DS",
+            15
+          ],
+          [
+            "IN DT",
+            6
+          ]
+        ]
+      },
+      {
+        "size": 51,
+        "splits": {
+          "train": 34,
+          "dev": 6,
+          "test": 11
+        },
+        "top_labels": [
+          [
+            "IP DS",
+            34
+          ],
+          [
+            "IN IP DT DS",
+            11
+          ],
+          [
+            "IN DT",
+            5
+          ]
+        ]
+      },
+      {
+        "size": 43,
+        "splits": {
+          "train": 34,
+          "dev": 3,
+          "test": 6
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            12
+          ],
+          [
+            "OP OB",
+            12
+          ],
+          [
+            "NA",
+            3
+          ]
+        ]
+      },
+      {
+        "size": 35,
+        "splits": {
+          "train": 19,
+          "dev": 7,
+          "test": 9
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            16
+          ],
+          [
+            "NA SR",
+            4
+          ],
+          [
+            "OP OB",
+            3
+          ]
+        ]
+      },
+      {
+        "size": 25,
+        "splits": {
+          "train": 21,
+          "dev": 1,
+          "test": 3
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            16
+          ],
+          [
+            "NA IN NE",
+            2
+          ],
+          [
+            "OTHER",
+            1
+          ]
+        ]
+      },
+      {
+        "size": 20,
+        "splits": {
+          "train": 16,
+          "dev": 2,
+          "test": 2
+        },
+        "top_labels": [
+          [
+            "IP DS",
+            16
+          ],
+          [
+            "OP IP DS",
+            1
+          ],
+          [
+            "ID",
+            1
+          ]
+        ]
+      },
+      {
+        "size": 19,
+        "splits": {
+          "train": 13,
+          "dev": 2,
+          "test": 4
+        },
+        "top_labels": [
+          [
+            "IP DS",
+            15
+          ],
+          [
+            "IN IP DT DS",
+            4
+          ]
+        ]
+      },
+      {
+        "size": 15,
+        "splits": {
+          "train": 12,
+          "dev": 2,
+          "test": 1
+        },
+        "top_labels": [
+          [
+            "IP DS",
+            12
+          ],
+          [
+            "IN DT",
+            2
+          ],
+          [
+            "IN IP DT DS",
+            1
+          ]
+        ]
+      },
+      {
+        "size": 15,
+        "splits": {
+          "train": 7,
+          "dev": 4,
+          "test": 4
+        },
+        "top_labels": [
+          [
+            "ID DF",
+            13
+          ],
+          [
+            "ID DF QA",
+            1
+          ],
+          [
+            "ID QA",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "last50": {
+    "groups": 670,
+    "records": 3276,
+    "max_group": 477,
+    "cross_split_groups": 409,
+    "dev_test_records_in_cross_split_groups": 919,
+    "label_set_conflict_groups": 508,
+    "largest_groups_label_profile": [
+      {
+        "size": 477,
+        "splits": {
+          "train": 343,
+          "dev": 44,
+          "test": 90
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            270
+          ],
+          [
+            "OP OB",
+            40
+          ],
+          [
+            "OP RV",
+            24
+          ]
+        ]
+      },
+      {
+        "size": 228,
+        "splits": {
+          "train": 155,
+          "dev": 27,
+          "test": 46
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            140
+          ],
+          [
+            "NA SR",
+            18
+          ],
+          [
+            "IN DT",
+            10
+          ]
+        ]
+      },
+      {
+        "size": 139,
+        "splits": {
+          "train": 103,
+          "dev": 12,
+          "test": 24
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            71
+          ],
+          [
+            "NA SR",
+            16
+          ],
+          [
+            "OP OB",
+            8
+          ]
+        ]
+      },
+      {
+        "size": 77,
+        "splits": {
+          "train": 58,
+          "dev": 4,
+          "test": 15
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            42
+          ],
+          [
+            "SP IT",
+            4
+          ],
+          [
+            "OP RV",
+            4
+          ]
+        ]
+      },
+      {
+        "size": 40,
+        "splits": {
+          "train": 30,
+          "dev": 4,
+          "test": 6
+        },
+        "top_labels": [
+          [
+            "ID DF QA",
+            7
+          ],
+          [
+            "ID DF",
+            7
+          ],
+          [
+            "HI HT",
+            5
+          ]
+        ]
+      },
+      {
+        "size": 39,
+        "splits": {
+          "train": 32,
+          "dev": 2,
+          "test": 5
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            16
+          ],
+          [
+            "OP OB",
+            11
+          ],
+          [
+            "NA OP NE OB",
+            6
+          ]
+        ]
+      },
+      {
+        "size": 39,
+        "splits": {
+          "train": 20,
+          "dev": 8,
+          "test": 11
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            24
+          ],
+          [
+            "OP OB",
+            3
+          ],
+          [
+            "NA SR",
+            3
+          ]
+        ]
+      },
+      {
+        "size": 29,
+        "splits": {
+          "train": 22,
+          "test": 7
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            13
+          ],
+          [
+            "IN IB",
+            3
+          ],
+          [
+            "OP OB",
+            2
+          ]
+        ]
+      },
+      {
+        "size": 22,
+        "splits": {
+          "train": 13,
+          "dev": 1,
+          "test": 8
+        },
+        "top_labels": [
+          [
+            "NA NE",
+            18
+          ],
+          [
+            "OP OB",
+            2
+          ],
+          [
+            "NA IN NE",
+            1
+          ]
+        ]
+      },
+      {
+        "size": 18,
+        "splits": {
+          "train": 13,
+          "dev": 1,
+          "test": 4
+        },
+        "top_labels": [
+          [
+            "OP OB",
+            7
+          ],
+          [
+            "NA NE",
+            7
+          ],
+          [
+            "OTHER",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

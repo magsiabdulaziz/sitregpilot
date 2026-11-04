@@ -1,0 +1,11 @@
+numpy
+scipy
+scikit-learn
+pandas
+pyarrow
+pydantic>=2
+pyyaml
+joblib
+datasketch
+psutil
+spacy>=3.8,<3.9

@@ -1,0 +1,1611 @@
+{
+  "source_dir": "data/raw/CORE-corpus",
+  "file_sha256": {
+    "README.md": "d6b84a21bd641ca1f85b9605cd37b71d2db91d6a9d39fc7f29753c530eede395",
+    "LICENSE.txt": "963470ca952fa69d6766d4c72009a4b551aa22790cd9eaf33e99f55f910dc2fa",
+    "register_label_abbreviations.txt": "33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d",
+    "train.tsv.gz": "6715944d0be46ca1bb0ab1d0acb3fd206440e18eb87c5a0b9f666fc0b43b15b3",
+    "dev.tsv.gz": "2a57492f815a4fa6ff9452cc9c6979041ca8a7529abb0d8257bdf467d918bc95",
+    "test.tsv.gz": "8fb92b68ce0ec6ae33dfdee852467e81d05b3a287829088bb20c5edf75e2bec5"
+  },
+  "legend": {
+    "n_codes": 56,
+    "codes": [
+      [
+        "AD",
+        "advertisement"
+      ],
+      [
+        "AV",
+        "advice"
+      ],
+      [
+        "CM",
+        "course materials"
+      ],
+      [
+        "DF",
+        "discussion forum"
+      ],
+      [
+        "DP",
+        "description of a person"
+      ],
+      [
+        "DS",
+        "description with intent to sell"
+      ],
+      [
+        "DT",
+        "description of a thing"
+      ],
+      [
+        "ED",
+        "editorial"
+      ],
+      [
+        "EN",
+        "encyclopedia article"
+      ],
+      [
+        "FH",
+        "FAQ about how-to"
+      ],
+      [
+        "FI",
+        "FAQ about information"
+      ],
+      [
+        "FS",
+        "formal speech"
+      ],
+      [
+        "HA",
+        "historical article"
+      ],
+      [
+        "HI",
+        "how-to instructional"
+      ],
+      [
+        "HT",
+        "how-to"
+      ],
+      [
+        "IB",
+        "information blog"
+      ],
+      [
+        "ID",
+        "interactive discussion"
+      ],
+      [
+        "IN",
+        "informational description / explanation"
+      ],
+      [
+        "IP",
+        "informational persuasion"
+      ],
+      [
+        "IT",
+        "interview"
+      ],
+      [
+        "LE",
+        "letter to the editor"
+      ],
+      [
+        "LT",
+        "legal terms and conditions"
+      ],
+      [
+        "LY",
+        "lyrical"
+      ],
+      [
+        "MA",
+        "magazine article"
+      ],
+      [
+        "NA",
+        "narrative"
+      ],
+      [
+        "NE",
+        "news report / blog"
+      ],
+      [
+        "OB",
+        "opinion blog "
+      ],
+      [
+        "OE",
+        "other informational persuasion"
+      ],
+      [
+        "OF",
+        "other interactive discussion"
+      ],
+      [
+        "OH",
+        "other how-to / instructional"
+      ],
+      [
+        "OI",
+        "other informational description / explanation"
+      ],
+      [
+        "OL",
+        "other lyrical"
+      ],
+      [
+        "ON",
+        "other narrative"
+      ],
+      [
+        "OO",
+        "other opinion"
+      ],
+      [
+        "OP",
+        "opinion"
+      ],
+      [
+        "OS",
+        "other spoken"
+      ],
+      [
+        "OTHER",
+        "no labels"
+      ],
+      [
+        "PA",
+        "persuasive article or essay"
+      ],
+      [
+        "PB",
+        "personal blog"
+      ],
+      [
+        "PO",
+        "poem"
+      ],
+      [
+        "PR",
+        "prayer"
+      ],
+      [
+        "QA",
+        "question/answer forum"
+      ],
+      [
+        "RA",
+        "research article"
+      ],
+      [
+        "RE",
+        "recipe"
+      ],
+      [
+        "RR",
+        "reader/viewer responses"
+      ],
+      [
+        "RS",
+        "religious blogs / sermons"
+      ],
+      [
+        "RV",
+        "review"
+      ],
+      [
+        "SL",
+        "song lyric"
+      ],
+      [
+        "SP",
+        "spoken"
+      ],
+      [
+        "SR",
+        "sports report"
+      ],
+      [
+        "SS",
+        "short story"
+      ],
+      [
+        "TA",
+        "transcript of video / audio"
+      ],
+      [
+        "TB",
+        "travel blog"
+      ],
+      [
+        "TR",
+        "technical report"
+      ],
+      [
+        "TS",
+        "technical support"
+      ],
+      [
+        "TV",
+        "TV/movie script"
+      ]
+    ],
+    "n_main": 8,
+    "n_sub": 47,
+    "subcodes": [
+      "AD",
+      "AV",
+      "CM",
+      "DF",
+      "DP",
+      "DS",
+      "DT",
+      "ED",
+      "EN",
+      "FH",
+      "FI",
+      "FS",
+      "HA",
+      "HT",
+      "IB",
+      "IT",
+      "LE",
+      "LT",
+      "MA",
+      "NE",
+      "OB",
+      "OE",
+      "OF",
+      "OH",
+      "OI",
+      "OL",
+      "ON",
+      "OO",
+      "OS",
+      "PA",
+      "PB",
+      "PO",
+      "PR",
+      "QA",
+      "RA",
+      "RE",
+      "RR",
+      "RS",
+      "RV",
+      "SL",
+      "SR",
+      "SS",
+      "TA",
+      "TB",
+      "TR",
+      "TS",
+      "TV"
+    ],
+    "names_with_trailing_space": [
+      "OB"
+    ],
+    "reference_grouping_covers_all_subs": true
+  },
+  "splits": {
+    "train": {
+      "stats": {
+        "empty_text": 10,
+        "fields_3": 33915,
+        "ids_leading_zero": 18319,
+        "lines": 33915,
+        "main_without_sub": 3050,
+        "multi_main": 3974,
+        "multi_sub": 2535,
+        "other_only": 407,
+        "rows": 33915,
+        "rows_with_double_quote": 22313,
+        "rows_with_html_like_tag": 36,
+        "rows_with_literal_backslash_n": 12,
+        "rows_with_url_string": 3115,
+        "single_main_consistent_with_ref_grouping": 29332,
+        "single_main_multi_sub": 732,
+        "utf8_bom": 0
+      },
+      "whitespace_word_count": {
+        "total": 42223096,
+        "min": 0,
+        "p05": 131,
+        "p25": 336,
+        "median": 634,
+        "p75": 1161,
+        "p95": 3753,
+        "p99": 11274,
+        "max": 118278,
+        "mean": 1244.97
+      },
+      "docs_over_512_ws_words": 20101,
+      "docs_under_50_ws_words": 10,
+      "id_length_distribution": {
+        "7": 33915
+      },
+      "n_main_labels_distribution": {
+        "0": 407,
+        "1": 29534,
+        "2": 3974
+      },
+      "n_sub_labels_distribution": {
+        "0": 3457,
+        "1": 27923,
+        "2": 2535
+      },
+      "code_counts": {
+        "AD": 14,
+        "AV": 810,
+        "CM": 104,
+        "DF": 1494,
+        "DP": 709,
+        "DS": 996,
+        "DT": 3123,
+        "ED": 65,
+        "EN": 391,
+        "FH": 74,
+        "FI": 234,
+        "FS": 36,
+        "HA": 356,
+        "HI": 1433,
+        "HT": 1073,
+        "IB": 1357,
+        "ID": 2417,
+        "IN": 8882,
+        "IP": 1402,
+        "IT": 378,
+        "LE": 36,
+        "LT": 142,
+        "LY": 478,
+        "MA": 63,
+        "NA": 14914,
+        "NE": 8250,
+        "OB": 3671,
+        "OE": 8,
+        "OF": 16,
+        "OH": 3,
+        "OI": 130,
+        "OL": 6,
+        "ON": 9,
+        "OO": 16,
+        "OP": 7441,
+        "OS": 15,
+        "OTHER": 407,
+        "PA": 117,
+        "PB": 2308,
+        "PO": 61,
+        "PR": 14,
+        "QA": 853,
+        "RA": 653,
+        "RE": 133,
+        "RR": 57,
+        "RS": 542,
+        "RV": 1449,
+        "SL": 385,
+        "SP": 515,
+        "SR": 2213,
+        "SS": 220,
+        "TA": 53,
+        "TB": 273,
+        "TR": 36,
+        "TS": 32,
+        "TV": 15
+      },
+      "n_distinct_combinations": 415,
+      "main_combination_counts": {
+        "NA": 12370,
+        "IN": 6526,
+        "OP": 5506,
+        "ID": 2296,
+        "IN NA": 1250,
+        "OP NA": 1135,
+        "HI": 1045,
+        "IP": 932,
+        "IN OP": 502,
+        "LY": 449,
+        "SP": 410,
+        "OTHER": 407,
+        "IN IP": 296,
+        "IN HI": 247,
+        "OP HI": 110,
+        "IP OP": 105,
+        "SP NA": 60,
+        "OP ID": 59,
+        "IP NA": 58,
+        "IN ID": 29,
+        "SP IN": 26,
+        "NA ID": 19,
+        "SP OP": 14,
+        "LY NA": 11,
+        "NA HI": 11,
+        "LY OP": 10,
+        "HI ID": 9,
+        "IP HI": 8,
+        "LY IN": 6,
+        "SP ID": 3,
+        "IP ID": 2,
+        "LY HI": 2,
+        "SP IP": 1,
+        "SP HI": 1
+      },
+      "anomalies": [],
+      "n_anomalies": 0
+    },
+    "dev": {
+      "stats": {
+        "empty_text": 1,
+        "fields_3": 4845,
+        "ids_leading_zero": 2656,
+        "lines": 4845,
+        "main_without_sub": 434,
+        "multi_main": 571,
+        "multi_sub": 365,
+        "other_only": 58,
+        "rows": 4845,
+        "rows_with_double_quote": 3233,
+        "rows_with_html_like_tag": 3,
+        "rows_with_literal_backslash_n": 1,
+        "rows_with_replacement_char": 3,
+        "rows_with_url_string": 435,
+        "single_main_consistent_with_ref_grouping": 4187,
+        "single_main_multi_sub": 104,
+        "utf8_bom": 0
+      },
+      "whitespace_word_count": {
+        "total": 6102795,
+        "min": 0,
+        "p05": 137,
+        "p25": 343,
+        "median": 649,
+        "p75": 1196,
+        "p95": 3908,
+        "p99": 11735,
+        "max": 73354,
+        "mean": 1259.61
+      },
+      "docs_over_512_ws_words": 2941,
+      "docs_under_50_ws_words": 1,
+      "id_length_distribution": {
+        "7": 4845
+      },
+      "n_main_labels_distribution": {
+        "0": 58,
+        "1": 4216,
+        "2": 571
+      },
+      "n_sub_labels_distribution": {
+        "0": 492,
+        "1": 3988,
+        "2": 365
+      },
+      "code_counts": {
+        "AD": 5,
+        "AV": 115,
+        "CM": 15,
+        "DF": 214,
+        "DP": 101,
+        "DS": 146,
+        "DT": 446,
+        "ED": 10,
+        "EN": 57,
+        "FH": 10,
+        "FI": 34,
+        "FS": 7,
+        "HA": 54,
+        "HI": 203,
+        "HT": 149,
+        "IB": 195,
+        "ID": 349,
+        "IN": 1272,
+        "IP": 207,
+        "IT": 55,
+        "LE": 5,
+        "LT": 20,
+        "LY": 68,
+        "MA": 9,
+        "NA": 2128,
+        "NE": 1177,
+        "OB": 520,
+        "OE": 2,
+        "OF": 3,
+        "OH": 1,
+        "OI": 19,
+        "OL": 1,
+        "ON": 1,
+        "OO": 1,
+        "OP": 1054,
+        "OS": 3,
+        "OTHER": 58,
+        "PA": 18,
+        "PB": 328,
+        "PO": 8,
+        "PR": 1,
+        "QA": 123,
+        "RA": 94,
+        "RE": 19,
+        "RR": 7,
+        "RS": 77,
+        "RV": 205,
+        "SL": 56,
+        "SP": 77,
+        "SR": 316,
+        "SS": 32,
+        "TA": 8,
+        "TB": 38,
+        "TR": 5,
+        "TS": 6,
+        "TV": 2
+      },
+      "n_distinct_combinations": 243,
+      "main_combination_counts": {
+        "NA": 1766,
+        "IN": 934,
+        "OP": 784,
+        "ID": 327,
+        "IN NA": 178,
+        "OP NA": 160,
+        "HI": 148,
+        "IP": 134,
+        "IN OP": 68,
+        "LY": 63,
+        "SP": 60,
+        "OTHER": 58,
+        "IN IP": 44,
+        "IN HI": 35,
+        "OP HI": 16,
+        "IP OP": 15,
+        "IP NA": 11,
+        "SP NA": 8,
+        "OP ID": 7,
+        "IN ID": 7,
+        "NA ID": 4,
+        "SP OP": 4,
+        "SP IN": 4,
+        "HI ID": 2,
+        "LY IN": 2,
+        "IP HI": 1,
+        "LY IP": 1,
+        "LY HI": 1,
+        "IP ID": 1,
+        "SP ID": 1,
+        "LY NA": 1
+      },
+      "anomalies": [],
+      "n_anomalies": 0
+    },
+    "test": {
+      "stats": {
+        "empty_text": 6,
+        "fields_3": 9692,
+        "ids_leading_zero": 5202,
+        "lines": 9692,
+        "main_without_sub": 869,
+        "multi_main": 1142,
+        "multi_sub": 723,
+        "other_only": 117,
+        "rows": 9692,
+        "rows_with_double_quote": 6396,
+        "rows_with_html_like_tag": 4,
+        "rows_with_literal_backslash_n": 2,
+        "rows_with_url_string": 923,
+        "single_main_consistent_with_ref_grouping": 8375,
+        "single_main_multi_sub": 207,
+        "utf8_bom": 0
+      },
+      "whitespace_word_count": {
+        "total": 11827949,
+        "min": 0,
+        "p05": 134,
+        "p25": 335,
+        "median": 634,
+        "p75": 1162,
+        "p95": 3949,
+        "p99": 10500,
+        "max": 109833,
+        "mean": 1220.38
+      },
+      "docs_over_512_ws_words": 5749,
+      "docs_under_50_ws_words": 6,
+      "id_length_distribution": {
+        "7": 9692
+      },
+      "n_main_labels_distribution": {
+        "0": 117,
+        "1": 8433,
+        "2": 1142
+      },
+      "n_sub_labels_distribution": {
+        "0": 986,
+        "1": 7983,
+        "2": 723
+      },
+      "code_counts": {
+        "AD": 3,
+        "AV": 236,
+        "CM": 30,
+        "DF": 425,
+        "DP": 203,
+        "DS": 282,
+        "DT": 892,
+        "ED": 19,
+        "EN": 108,
+        "FH": 23,
+        "FI": 69,
+        "FS": 10,
+        "HA": 100,
+        "HI": 411,
+        "HT": 311,
+        "IB": 383,
+        "ID": 688,
+        "IN": 2537,
+        "IP": 404,
+        "IT": 104,
+        "LE": 10,
+        "LT": 40,
+        "LY": 135,
+        "MA": 18,
+        "NA": 4264,
+        "NE": 2359,
+        "OB": 1052,
+        "OE": 4,
+        "OF": 7,
+        "OH": 1,
+        "OI": 35,
+        "OL": 2,
+        "ON": 2,
+        "OO": 5,
+        "OP": 2131,
+        "OS": 4,
+        "OTHER": 117,
+        "PA": 36,
+        "PB": 656,
+        "PO": 17,
+        "PR": 5,
+        "QA": 244,
+        "RA": 189,
+        "RE": 37,
+        "RR": 15,
+        "RS": 157,
+        "RV": 411,
+        "SL": 110,
+        "SP": 147,
+        "SR": 635,
+        "SS": 63,
+        "TA": 15,
+        "TB": 79,
+        "TR": 9,
+        "TS": 9,
+        "TV": 5
+      },
+      "n_distinct_combinations": 299,
+      "main_combination_counts": {
+        "NA": 3532,
+        "IN": 1861,
+        "OP": 1574,
+        "ID": 655,
+        "IN NA": 358,
+        "OP NA": 328,
+        "HI": 300,
+        "IP": 266,
+        "IN OP": 145,
+        "LY": 129,
+        "OTHER": 117,
+        "SP": 116,
+        "IN IP": 87,
+        "IN HI": 69,
+        "IP OP": 33,
+        "OP HI": 31,
+        "SP NA": 18,
+        "OP ID": 16,
+        "IP NA": 16,
+        "IN ID": 8,
+        "SP IN": 8,
+        "NA HI": 5,
+        "NA ID": 4,
+        "HI ID": 3,
+        "LY NA": 3,
+        "SP OP": 2,
+        "IP HI": 2,
+        "SP ID": 2,
+        "LY OP": 2,
+        "SP HI": 1,
+        "LY IN": 1
+      },
+      "anomalies": [],
+      "n_anomalies": 0
+    }
+  },
+  "global": {
+    "rows": 48452,
+    "unique_ids": 48452,
+    "duplicate_ids": [],
+    "observed_codes": [
+      "AD",
+      "AV",
+      "CM",
+      "DF",
+      "DP",
+      "DS",
+      "DT",
+      "ED",
+      "EN",
+      "FH",
+      "FI",
+      "FS",
+      "HA",
+      "HI",
+      "HT",
+      "IB",
+      "ID",
+      "IN",
+      "IP",
+      "IT",
+      "LE",
+      "LT",
+      "LY",
+      "MA",
+      "NA",
+      "NE",
+      "OB",
+      "OE",
+      "OF",
+      "OH",
+      "OI",
+      "OL",
+      "ON",
+      "OO",
+      "OP",
+      "OS",
+      "OTHER",
+      "PA",
+      "PB",
+      "PO",
+      "PR",
+      "QA",
+      "RA",
+      "RE",
+      "RR",
+      "RS",
+      "RV",
+      "SL",
+      "SP",
+      "SR",
+      "SS",
+      "TA",
+      "TB",
+      "TR",
+      "TS",
+      "TV"
+    ],
+    "n_observed_codes": 56,
+    "legend_codes_never_observed": [],
+    "n_distinct_combinations": 455,
+    "combinations_singletons": 130,
+    "code_counts": {
+      "AD": 22,
+      "AV": 1161,
+      "CM": 149,
+      "DF": 2133,
+      "DP": 1013,
+      "DS": 1424,
+      "DT": 4461,
+      "ED": 94,
+      "EN": 556,
+      "FH": 107,
+      "FI": 337,
+      "FS": 53,
+      "HA": 510,
+      "HI": 2047,
+      "HT": 1533,
+      "IB": 1935,
+      "ID": 3454,
+      "IN": 12691,
+      "IP": 2013,
+      "IT": 537,
+      "LE": 51,
+      "LT": 202,
+      "LY": 681,
+      "MA": 90,
+      "NA": 21306,
+      "NE": 11786,
+      "OB": 5243,
+      "OE": 14,
+      "OF": 26,
+      "OH": 5,
+      "OI": 184,
+      "OL": 9,
+      "ON": 12,
+      "OO": 22,
+      "OP": 10626,
+      "OS": 22,
+      "OTHER": 582,
+      "PA": 171,
+      "PB": 3292,
+      "PO": 86,
+      "PR": 20,
+      "QA": 1220,
+      "RA": 936,
+      "RE": 189,
+      "RR": 79,
+      "RS": 776,
+      "RV": 2065,
+      "SL": 551,
+      "SP": 739,
+      "SR": 3164,
+      "SS": 315,
+      "TA": 76,
+      "TB": 390,
+      "TR": 50,
+      "TS": 47,
+      "TV": 22
+    },
+    "whitespace_words_total": 60153840,
+    "whitespace_words_max": 118278,
+    "exact_duplicates_raw": {
+      "n_groups": 12,
+      "n_records_in_groups": 24,
+      "group_size_distribution": {
+        "2": 12
+      },
+      "n_cross_split_groups": 6,
+      "cross_split_types": {
+        "test/train": 5,
+        "dev/train": 1
+      },
+      "n_label_conflict_groups": 3,
+      "groups": [
+        [
+          {
+            "split": "train",
+            "id": "0622842",
+            "labels": "IN DT",
+            "line": 459
+          },
+          {
+            "split": "test",
+            "id": "0794871",
+            "labels": "IN DT",
+            "line": 3159
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0610929",
+            "labels": "IN",
+            "line": 1088
+          },
+          {
+            "split": "dev",
+            "id": "0654134",
+            "labels": "NA NE",
+            "line": 875
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0124858",
+            "labels": "LY SL",
+            "line": 1779
+          },
+          {
+            "split": "test",
+            "id": "0726911",
+            "labels": "LY SL",
+            "line": 5149
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0153981",
+            "labels": "ID DF",
+            "line": 3477
+          },
+          {
+            "split": "train",
+            "id": "0148011",
+            "labels": "ID DF",
+            "line": 26624
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0515173",
+            "labels": "ID",
+            "line": 3619
+          },
+          {
+            "split": "train",
+            "id": "0787481",
+            "labels": "ID DF",
+            "line": 26802
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0286607",
+            "labels": "NA NE",
+            "line": 7529
+          },
+          {
+            "split": "test",
+            "id": "0515069",
+            "labels": "NA NE",
+            "line": 8635
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0758877",
+            "labels": "NA NE",
+            "line": 11335
+          },
+          {
+            "split": "train",
+            "id": "0160410",
+            "labels": "NA NE",
+            "line": 19581
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0189790",
+            "labels": "NA NE",
+            "line": 12417
+          },
+          {
+            "split": "train",
+            "id": "0765336",
+            "labels": "IN DT",
+            "line": 15941
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "3720737",
+            "labels": "NA NE",
+            "line": 12705
+          },
+          {
+            "split": "test",
+            "id": "3720380",
+            "labels": "NA NE",
+            "line": 11
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0663520",
+            "labels": "NA NE",
+            "line": 13458
+          },
+          {
+            "split": "train",
+            "id": "0027753",
+            "labels": "NA NE",
+            "line": 33160
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "1767384",
+            "labels": "NA DP",
+            "line": 27703
+          },
+          {
+            "split": "train",
+            "id": "1767372",
+            "labels": "NA DP",
+            "line": 28332
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0244715",
+            "labels": "NA NE",
+            "line": 28240
+          },
+          {
+            "split": "test",
+            "id": "0011100",
+            "labels": "NA NE",
+            "line": 8088
+          }
+        ]
+      ]
+    },
+    "exact_duplicates_normalized": {
+      "n_groups": 12,
+      "n_records_in_groups": 24,
+      "group_size_distribution": {
+        "2": 12
+      },
+      "n_cross_split_groups": 6,
+      "cross_split_types": {
+        "test/train": 5,
+        "dev/train": 1
+      },
+      "n_label_conflict_groups": 3,
+      "groups": [
+        [
+          {
+            "split": "train",
+            "id": "0622842",
+            "labels": "IN DT",
+            "line": 459
+          },
+          {
+            "split": "test",
+            "id": "0794871",
+            "labels": "IN DT",
+            "line": 3159
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0610929",
+            "labels": "IN",
+            "line": 1088
+          },
+          {
+            "split": "dev",
+            "id": "0654134",
+            "labels": "NA NE",
+            "line": 875
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0124858",
+            "labels": "LY SL",
+            "line": 1779
+          },
+          {
+            "split": "test",
+            "id": "0726911",
+            "labels": "LY SL",
+            "line": 5149
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0153981",
+            "labels": "ID DF",
+            "line": 3477
+          },
+          {
+            "split": "train",
+            "id": "0148011",
+            "labels": "ID DF",
+            "line": 26624
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0515173",
+            "labels": "ID",
+            "line": 3619
+          },
+          {
+            "split": "train",
+            "id": "0787481",
+            "labels": "ID DF",
+            "line": 26802
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0286607",
+            "labels": "NA NE",
+            "line": 7529
+          },
+          {
+            "split": "test",
+            "id": "0515069",
+            "labels": "NA NE",
+            "line": 8635
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0758877",
+            "labels": "NA NE",
+            "line": 11335
+          },
+          {
+            "split": "train",
+            "id": "0160410",
+            "labels": "NA NE",
+            "line": 19581
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0189790",
+            "labels": "NA NE",
+            "line": 12417
+          },
+          {
+            "split": "train",
+            "id": "0765336",
+            "labels": "IN DT",
+            "line": 15941
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "3720737",
+            "labels": "NA NE",
+            "line": 12705
+          },
+          {
+            "split": "test",
+            "id": "3720380",
+            "labels": "NA NE",
+            "line": 11
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0663520",
+            "labels": "NA NE",
+            "line": 13458
+          },
+          {
+            "split": "train",
+            "id": "0027753",
+            "labels": "NA NE",
+            "line": 33160
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "1767384",
+            "labels": "NA DP",
+            "line": 27703
+          },
+          {
+            "split": "train",
+            "id": "1767372",
+            "labels": "NA DP",
+            "line": 28332
+          }
+        ],
+        [
+          {
+            "split": "train",
+            "id": "0244715",
+            "labels": "NA NE",
+            "line": 28240
+          },
+          {
+            "split": "test",
+            "id": "0011100",
+            "labels": "NA NE",
+            "line": 8088
+          }
+        ]
+      ]
+    },
+    "combinations_unseen_in_train": {
+      "dev": 19,
+      "test": 21
+    }
+  },
+  "hierarchy": {
+    "reference_grouping": {
+      "IN": "CM DP DT EN FI IB LT OI RA TR",
+      "NA": "HA MA NE ON PB SR SS TB",
+      "HI": "FH HT OH RE TS",
+      "LY": "OL PO PR SL",
+      "IP": "DS ED OE PA",
+      "OP": "AD AV LE OB OO RS RV",
+      "ID": "DF OF QA RR",
+      "SP": "FS IT OS TA TV"
+    },
+    "sub_without_reference_parent": {
+      "DP": 293
+    },
+    "sub_without_any_main": {},
+    "sub_cooccurring_mains": {
+      "AD": {
+        "OP": 22,
+        "IN": 7,
+        "IP": 5
+      },
+      "AV": {
+        "OP": 1161,
+        "HI": 108,
+        "IN": 99,
+        "NA": 27,
+        "IP": 5,
+        "ID": 3,
+        "SP": 2
+      },
+      "CM": {
+        "IN": 149,
+        "HI": 9,
+        "NA": 3,
+        "OP": 1
+      },
+      "DF": {
+        "ID": 2133,
+        "NA": 13,
+        "OP": 11,
+        "IN": 7,
+        "HI": 3,
+        "IP": 1
+      },
+      "DP": {
+        "IN": 720,
+        "NA": 515,
+        "OP": 29,
+        "SP": 10,
+        "ID": 1
+      },
+      "DS": {
+        "IP": 1424,
+        "IN": 336,
+        "OP": 36,
+        "NA": 19,
+        "HI": 11,
+        "ID": 1,
+        "SP": 1,
+        "LY": 1
+      },
+      "DT": {
+        "IN": 4461,
+        "NA": 427,
+        "IP": 292,
+        "OP": 189,
+        "HI": 33,
+        "ID": 4,
+        "SP": 4,
+        "LY": 2
+      },
+      "ED": {
+        "IP": 94,
+        "OP": 20,
+        "NA": 13,
+        "IN": 4
+      },
+      "EN": {
+        "IN": 556,
+        "NA": 11,
+        "OP": 2
+      },
+      "FH": {
+        "HI": 107,
+        "IN": 67,
+        "OP": 2,
+        "ID": 1
+      },
+      "FI": {
+        "IN": 337,
+        "HI": 63,
+        "ID": 3,
+        "OP": 3,
+        "NA": 1,
+        "IP": 1
+      },
+      "FS": {
+        "SP": 53,
+        "NA": 7,
+        "IN": 3,
+        "OP": 2
+      },
+      "HA": {
+        "NA": 510,
+        "IN": 106,
+        "OP": 3,
+        "SP": 2,
+        "IP": 1
+      },
+      "HT": {
+        "HI": 1533,
+        "IN": 182,
+        "OP": 137,
+        "IP": 10,
+        "NA": 8,
+        "SP": 2,
+        "ID": 2,
+        "LY": 1
+      },
+      "IB": {
+        "IN": 1935,
+        "NA": 155,
+        "OP": 143,
+        "HI": 47,
+        "IP": 17,
+        "ID": 2,
+        "SP": 2
+      },
+      "IT": {
+        "SP": 537,
+        "NA": 61,
+        "IN": 28,
+        "OP": 14,
+        "ID": 5,
+        "IP": 1
+      },
+      "LE": {
+        "OP": 51,
+        "NA": 9,
+        "ID": 1
+      },
+      "LT": {
+        "IN": 202,
+        "OP": 2,
+        "HI": 1,
+        "NA": 1
+      },
+      "MA": {
+        "NA": 90,
+        "IN": 9,
+        "OP": 5,
+        "IP": 1
+      },
+      "NE": {
+        "NA": 11786,
+        "IN": 940,
+        "OP": 584,
+        "IP": 46,
+        "SP": 26,
+        "ID": 8,
+        "HI": 1
+      },
+      "OB": {
+        "OP": 5243,
+        "NA": 1083,
+        "IN": 189,
+        "IP": 80,
+        "ID": 15,
+        "SP": 7,
+        "HI": 7,
+        "LY": 1
+      },
+      "OE": {
+        "IP": 14,
+        "IN": 3,
+        "OP": 1
+      },
+      "OF": {
+        "ID": 26,
+        "SP": 2,
+        "OP": 2,
+        "IN": 1
+      },
+      "OH": {
+        "HI": 5,
+        "IN": 3
+      },
+      "OI": {
+        "IN": 184,
+        "NA": 6,
+        "HI": 4,
+        "OP": 4,
+        "IP": 2,
+        "SP": 1
+      },
+      "OL": {
+        "LY": 9,
+        "NA": 3,
+        "HI": 1
+      },
+      "ON": {
+        "NA": 12,
+        "IN": 1,
+        "OP": 1
+      },
+      "OO": {
+        "OP": 22,
+        "NA": 4,
+        "ID": 1
+      },
+      "OS": {
+        "SP": 22,
+        "NA": 2,
+        "OP": 1
+      },
+      "PA": {
+        "IP": 171,
+        "OP": 40,
+        "NA": 19,
+        "IN": 17
+      },
+      "PB": {
+        "NA": 3292,
+        "OP": 472,
+        "IN": 113,
+        "ID": 10,
+        "IP": 9,
+        "HI": 8,
+        "LY": 5,
+        "SP": 4
+      },
+      "PO": {
+        "LY": 86,
+        "NA": 10,
+        "OP": 2,
+        "IN": 1
+      },
+      "PR": {
+        "LY": 20,
+        "OP": 5,
+        "IN": 2
+      },
+      "QA": {
+        "ID": 1220,
+        "IN": 19,
+        "OP": 18,
+        "HI": 8,
+        "NA": 2,
+        "SP": 1
+      },
+      "RA": {
+        "IN": 936,
+        "NA": 67,
+        "OP": 14,
+        "IP": 5
+      },
+      "RE": {
+        "HI": 189,
+        "NA": 7,
+        "IN": 3,
+        "OP": 1
+      },
+      "RR": {
+        "ID": 79,
+        "OP": 15,
+        "IN": 1
+      },
+      "RS": {
+        "OP": 776,
+        "IN": 36,
+        "NA": 32,
+        "LY": 7,
+        "HI": 5,
+        "ID": 4,
+        "SP": 2,
+        "IP": 1
+      },
+      "RV": {
+        "OP": 2065,
+        "IN": 151,
+        "NA": 99,
+        "ID": 39,
+        "IP": 23,
+        "SP": 4,
+        "HI": 3,
+        "LY": 2
+      },
+      "SL": {
+        "LY": 551,
+        "IN": 3,
+        "OP": 2,
+        "IP": 1
+      },
+      "SR": {
+        "NA": 3164,
+        "OP": 104,
+        "IN": 38,
+        "SP": 18,
+        "IP": 5,
+        "HI": 2,
+        "ID": 1
+      },
+      "SS": {
+        "NA": 315,
+        "OP": 9,
+        "LY": 7,
+        "SP": 4,
+        "IP": 3,
+        "IN": 2
+      },
+      "TA": {
+        "SP": 76,
+        "NA": 5,
+        "OP": 2,
+        "IN": 2,
+        "HI": 1
+      },
+      "TB": {
+        "NA": 390,
+        "IN": 35,
+        "OP": 19,
+        "HI": 1
+      },
+      "TR": {
+        "IN": 50,
+        "NA": 1,
+        "ID": 1
+      },
+      "TS": {
+        "HI": 47,
+        "IN": 17,
+        "ID": 2
+      },
+      "TV": {
+        "SP": 22
+      }
+    },
+    "examples_dp_without_in": [
+      {
+        "split": "train",
+        "id": "0478048",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "0495125",
+        "labels": "NA DP NE"
+      },
+      {
+        "split": "train",
+        "id": "1407650",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "3371042",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "0085489",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "1444111",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "0455771",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "0307216",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "0121214",
+        "labels": "NA DP"
+      },
+      {
+        "split": "train",
+        "id": "0080810",
+        "labels": "NA DP NE"
+      }
+    ]
+  }
+}
