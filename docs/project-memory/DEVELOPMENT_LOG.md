@@ -49,3 +49,8 @@ Times are not reliably recorded; dates are from the session environment.
 ## 2026-11-05: PR #12 review and revision
 - Independent read-only review of `e3b7d9e`: Ready for approval; 0 Critical, 0 Major, 4 Minor, 3 Suggestions.
 - Fixed: force-push/history-rewrite rule now covers all branches; merge command includes `--squash`; SESSION_HANDOFF DEC range; DEC-005 set to Proposed (accepted on merge of #12) with an amendment note on DEC-003; master-prompt reference clarified; PR template gains an owner-approval checkbox; #10 merge attribution and timezone labelled; owner-created issue #11 linked to TASK-007.
+
+## 2026-11-05: PR #12 merged; issue #3 started
+- The owner's account merged PR #12 (`f953420`) at the reviewed head `9910af8`, before the agent's Approval Report was posted. Issue #2 closed; DEC-005 accepted.
+- Started #3 on `chore/issue-3-ci`: pyproject (setuptools, src layout, ruff/mypy/pytest config), `requirements/cpu.lock.txt` (pip freeze incl. dev tools and en_core_web_sm), package stub, 5 corpus-free unit tests, CI workflow (lint-type; test on ubuntu + windows; pip-audit on ubuntu).
+- Verified locally: ruff clean (style rules E501/E741 waived only for the frozen `scripts/phase1_*`), mypy strict clean, pytest 5 passed; the lock installs into a fresh Windows venv and tests pass there; pip-audit: no known vulnerabilities (en_core_web_sm is not auditable, since it is not on PyPI).

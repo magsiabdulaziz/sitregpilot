@@ -19,7 +19,8 @@ This is single-owner PhD research software. All changes follow [`docs/DEVELOPMEN
 Windows, Python 3.14.5:
 ```
 python -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements/cpu.in -r requirements/dev.in
-.venv\Scripts\python.exe -m spacy download en_core_web_sm
+.venv\Scripts\python.exe -m pip install -r requirements/cpu.lock.txt
+.venv\Scripts\python.exe -m pip install --no-deps -e .
+.venv\Scripts\python.exe -m ruff check . && .venv\Scripts\python.exe -m mypy && .venv\Scripts\python.exe -m pytest
 ```
-A pinned lock file and CI arrive with issue #3.
+The lock (`requirements/cpu.lock.txt`) pins cpu + dev dependencies and the spaCy model. CI (`.github/workflows/ci.yml`) runs the same checks on Ubuntu and Windows.

@@ -74,7 +74,7 @@ AI assistance is disclosed in project docs (agent_inventory, development log), n
 ## DEC-005: Merge method is the owner's choice
 
 **Date:** 2026-11-05
-**Status:** Proposed; accepted when the owner merges PR #12. Amends DEC-003 (merge method only; control rules unchanged).
+**Status:** Accepted (owner merged PR #12, 2026-11-05). Amends DEC-003 (merge method only; control rules unchanged).
 **Related PR:** #10
 
 ### Context
