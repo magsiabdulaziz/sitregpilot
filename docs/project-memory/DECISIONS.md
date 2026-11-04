@@ -51,6 +51,8 @@ Phase 2 is delayed by one approval round, but every implementation change is tra
 ### Decision
 Protected-`main` trunk workflow; one issue → one branch (`<type>/issue-<n>-<slug>`) → one draft PR; independent AI review by a separate fresh-context agent; light GitHub Actions CI (ruff, mypy on core, pytest unit with synthetic fixtures; no corpus in CI); the owner alone merges. The full proposal was given in chat on 2026-11-05; once approved it will be written to `docs/DEVELOPMENT_WORKFLOW.md`.
 
+_Amended by [DEC-005](#dec-005-merge-method-is-the-owners-choice) (merge method)._
+
 ### Resolved points (2026-11-05)
 Repo `magsiabdulaziz/sitregpilot`, **private** (owner choice). Commit identity is the owner's GitHub noreply address, set repo-locally. Bootstrap commit straight to `main` approved as the single exception. The account plan is UNKNOWN (not visible to the token), so whether branch protection is enforceable on a private repo is tested in issue #3, with a documented fallback if not.
 
@@ -72,11 +74,11 @@ AI assistance is disclosed in project docs (agent_inventory, development log), n
 ## DEC-005: Merge method is the owner's choice
 
 **Date:** 2026-11-05
-**Status:** Accepted (records owner practice; does not change DEC-003's control rules)
+**Status:** Proposed; accepted when the owner merges PR #12. Amends DEC-003 (merge method only; control rules unchanged).
 **Related PR:** #10
 
 ### Context
-DEC-003 planned squash merges, but the owner merged #10 with a merge commit via the GitHub UI.
+The workflow proposal presented in chat (2026-11-05), summarised as DEC-003, planned squash merges. PR #10 was merged with a merge commit by the owner's account (per `gh` output: the agent's squash attempt reported "already merged").
 
 ### Decision
 The owner picks the merge method per PR. When an agent merges on the owner's explicit instruction, it squash-merges with `--match-head-commit` unless told otherwise.

@@ -1,6 +1,6 @@
 # Development workflow
 
-Approved by the owner on 2026-11-05 ([DEC-003](project-memory/DECISIONS.md)). This is the operating procedure for every change to `magsiabdulaziz/sitregpilot`. Research-protocol gates (A–F) are in the master prompt and [`methodology.md`](methodology.md); this file covers how code and docs get into `main`.
+Approved by the owner on 2026-11-05 ([DEC-003](project-memory/DECISIONS.md)). This is the operating procedure for every change to `magsiabdulaziz/sitregpilot`. Research-protocol gates (A–F) are defined by the owner's project brief (not stored in the repo) and summarised in [`methodology.md`](methodology.md) and [`experiment_plan.md`](experiment_plan.md); this file covers how code and docs get into `main`.
 
 ## 1. Principles
 1. GitHub is the source of truth: every change traces through issue → branch → commits → PR → review → merge.
@@ -63,10 +63,10 @@ Before asking for a merge decision, the coordinator posts a **PR Approval Report
 
 | AI agents may | AI agents must not |
 |---|---|
-| create branches, commit, push PR branches, open and update PRs, run tests, review, recommend | merge without explicit owner approval, enable auto-merge, bypass checks, dismiss findings without justification, force-push protected branches, delete branches without authorisation, treat AI review or green CI as approval |
+| create branches, commit, push PR branches, open and update PRs, run tests, review, recommend | merge without explicit owner approval, enable auto-merge, bypass checks, dismiss findings without justification, force-push any branch or rewrite pushed history without explicit owner authorisation, delete branches without authorisation, treat AI review or green CI as approval |
 
 - Approval covers one PR at one head SHA. If anything is pushed afterwards, ask again. Silence or earlier approvals are not approval.
-- When an agent merges on the owner's instruction, it uses `gh pr merge <n> --match-head-commit <approved SHA>`.
+- When an agent merges on the owner's instruction, it uses `gh pr merge <n> --squash --match-head-commit <approved SHA>` (or `--merge` if the owner asks). An explicit method flag is required, because `gh` will not pick one non-interactively.
 - **Merge method:** the owner's choice. #10 was merged by the owner with a merge commit. Agents use squash unless the owner specifies otherwise.
 
 ## 10. Quality gates (configured in #3)

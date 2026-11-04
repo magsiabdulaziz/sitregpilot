@@ -20,7 +20,7 @@ See [PR_TRACKER](PR_TRACKER.md) for the PR number and status. `gh` path: `C:\Pro
 `docs/DEVELOPMENT_WORKFLOW.md`, `CONTRIBUTING.md`, `README.md`, `.github/` templates, memory files.
 
 ## Decisions to Preserve
-D-01/D-02 adopted, D-03…D-12 approved, D-13 blocked ([decisions](../decisions.md)); DEC-001…DEC-004 ([DECISIONS](DECISIONS.md)). Test set is sealed until Phase 5. No co-author trailers.
+D-01/D-02 adopted, D-03…D-12 approved, D-13 blocked ([decisions](../decisions.md)); DEC-001…DEC-005 ([DECISIONS](DECISIONS.md)). Test set is sealed until Phase 5. No co-author trailers.
 
 ## Unresolved Problems
 ISS-001 (complementary study PDF, #9). Branch-protection enforceability on the private repo is UNKNOWN (#3).

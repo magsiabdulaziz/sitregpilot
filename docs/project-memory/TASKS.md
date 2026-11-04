@@ -11,7 +11,7 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 | TASK-004 | GitHub PR-driven workflow design | P0 | IN_PROGRESS | #2 | — | (pending) |
 | TASK-005 | Persistent project-memory system | P0 | DONE | #1 | — | #10 |
 | TASK-006 | Independent recount of audit numbers (H-001) | P1 | TODO | #4 | 002 (#1) | — |
-| TASK-007 | Obtain & ledger the complementary 2021 study | P2 | BLOCKED | #9 | owner PDF | — |
+| TASK-007 | Obtain & ledger the complementary 2021 study | P2 | BLOCKED | #9, #11 | owner PDF | — |
 | TASK-010 | Package skeleton, config, ingest/validate, `audit` CLI | P0 | TODO | #5 | 003, 004 | — |
 | TASK-011 | Exact + MinHash near-duplicate grouping | P0 | TODO | #6 | 010 | — |
 | TASK-012 | released/controlled split manifests, test sealing | P0 | TODO | #7 | 011 | — |
@@ -22,7 +22,7 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 ## Details
 
 ### TASK-001: Phase 0 environment & agent audit
-Scope: hardware, toolchain, Claude config, REA identity, sources. Acceptance: capabilities recorded, with absent/untested distinguished. Evidence: [environment.md](../environment.md), [agent_inventory.md](../agent_inventory.md). **DONE:** merged by the owner in PR #10 (head `ec6645c`, merge `6fba587`, 2026-11-05); issue #1 closed.
+Scope: hardware, toolchain, Claude config, REA identity, sources. Acceptance: capabilities recorded, with absent/untested distinguished. Evidence: [environment.md](../environment.md), [agent_inventory.md](../agent_inventory.md). **DONE:** merged in PR #10 (head `ec6645c`, merge `6fba587`, 2026-11-05 local +0500); issue #1 closed.
 
 ### TASK-002: Phase 1 corpus audit and protocol
 Acceptance: counts reconcile; ledger written; protocol approved. Evidence: `reports/audit/corpus_audit.json` (row counts and hashes match the prior audit; 455 sets vs 460 strings explained), [source_ledger](../source_ledger.md), [methodology](../methodology.md). The owner approved the method gate on 2026-11-05. Independent recount pending (TASK-006). **DONE:** merged in PR #10 (`6fba587`); audit JSON byte-reproducible (d4bf57b7…, 660f9365…).
@@ -41,7 +41,7 @@ Files: `/CLAUDE.md`, `docs/project-memory/*`. Acceptance: files exist, links are
 Read-only `Explore` agent recomputes audit §2 numbers from the raw files. Acceptance: every mismatch reported or confirmed absent.
 
 ### TASK-007: Complementary study
-Needs a PDF of Laippala, Egbert, Biber & Kyröläinen (2021), LRE 55(3):757–788. See ISS-001.
+Needs a PDF of Laippala, Egbert, Biber & Kyröläinen (2021), LRE 55(3):757–788. See ISS-001. GitHub: #9; the owner opened #11 (2026-11-05) for its acceptance criterion (the ledger section), treated as part of this task.
 
 ### TASK-010 – TASK-013: Phase 2 data contracts
 Scope and acceptance criteria: [experiment_plan.md](../experiment_plan.md) P2-1…P2-4 and the master prompt Phase 2. Each becomes one GitHub issue and one PR.

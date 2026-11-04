@@ -16,7 +16,7 @@ An AI review or green CI is **never** owner approval. Only the owner authorises 
 - CI / tests: no CI; manual checks recorded in the PR body and revision comments. Audit JSON reference hashes d4bf57b7…, 660f9365….
 - Review round 3 (`ec6645c`): Ready for approval. Approval Report posted (issuecomment-6641319488).
 - Owner approval: "merge #10" for head `ec6645c` (2026-11-05).
-- Merge: the owner merged it on GitHub as a merge commit `6fba587` (2026-11-04T20:28:49Z UTC), shortly before the agent's `--match-head-commit` squash attempt, which reported "already merged" and did nothing. The merged tree equals `ec6645c`'s tree (`359c954`). Issue #1 closed. Branch `docs/issue-1-phase1-records` kept (deletion not authorised).
+- Merge: merge commit `6fba587` at 2026-11-04T20:28:49Z UTC (= 2026-11-05 01:28 +0500 local) by account `magsiabdulaziz`. Agents act through the same account, so the API cannot tell who clicked; per the agent session log, the agent's `--squash --match-head-commit` attempt ran afterwards and `gh` reported "already merged", so the agent did not perform the merge. The merged tree equals `ec6645c`'s tree (`359c954`). Issue #1 closed. Branch `docs/issue-1-phase1-records` kept (deletion not authorised).
 
 Template for each PR entry:
 

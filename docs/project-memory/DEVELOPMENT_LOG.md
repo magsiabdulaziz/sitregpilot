@@ -45,3 +45,7 @@ Times are not reliably recorded; dates are from the session environment.
 - Round-3 check of `ec6645c`: Ready for approval. PR marked ready; Approval Report posted.
 - The owner said "merge #10". The owner merged it on GitHub (merge commit `6fba587`); the agent's squash attempt found it already merged. Verified: merged tree == approved head tree; issue #1 closed; local `main` fast-forwarded.
 - Started issue #2 on `docs/issue-2-workflow`: `docs/DEVELOPMENT_WORKFLOW.md`, `CONTRIBUTING.md`, `.github/pull_request_template.md`, `.github/ISSUE_TEMPLATE/{task,bug,config}.yml`, `README.md`; DEC-005.
+
+## 2026-11-05: PR #12 review and revision
+- Independent read-only review of `e3b7d9e`: Ready for approval; 0 Critical, 0 Major, 4 Minor, 3 Suggestions.
+- Fixed: force-push/history-rewrite rule now covers all branches; merge command includes `--squash`; SESSION_HANDOFF DEC range; DEC-005 set to Proposed (accepted on merge of #12) with an amendment note on DEC-003; master-prompt reference clarified; PR template gains an owner-approval checkbox; #10 merge attribution and timezone labelled; owner-created issue #11 linked to TASK-007.

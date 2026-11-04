@@ -22,6 +22,7 @@ Closes #<!-- n --> (TASK-<!-- xxx -->)
 - [ ] No secrets, corpus text, or large artifacts committed; `data/raw/` untouched
 - [ ] Existing functionality intact
 - [ ] Independent review completed (findings and resolution linked)
+- [ ] Owner approval (head SHA: `<sha>`), given by the owner only
 
 ## G. Reviewer guidance
 <!-- Where to look hardest. -->
