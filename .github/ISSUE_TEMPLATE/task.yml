@@ -1,0 +1,53 @@
+name: Task
+description: A planned unit of work (one issue → one branch → one PR)
+title: "<type>: <short description>"
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: What outcome this task delivers.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement and scope
+      description: Why it is needed; what is in and out of scope; expected behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: technical
+    attributes:
+      label: Technical considerations
+      description: Modules affected, relevant decisions (D-xx / DEC-xxx), risks.
+  - type: input
+    id: dependencies
+    attributes:
+      label: Dependencies
+      placeholder: "#5, #6 or none"
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: "- [ ] "
+    validations:
+      required: true
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing requirements
+    validations:
+      required: true
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Complexity
+      options: ["S", "M", "L"]
+    validations:
+      required: true
+  - type: input
+    id: task
+    attributes:
+      label: Project-memory task ID
+      placeholder: TASK-0xx

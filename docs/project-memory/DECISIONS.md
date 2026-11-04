@@ -68,3 +68,18 @@ No `Co-Authored-By` trailers or "Generated with Claude Code" footers on commits 
 
 ### Consequences
 AI assistance is disclosed in project docs (agent_inventory, development log), not in commit metadata. No further history rewrites without new authorisation.
+
+## DEC-005: Merge method is the owner's choice
+
+**Date:** 2026-11-05
+**Status:** Accepted (records owner practice; does not change DEC-003's control rules)
+**Related PR:** #10
+
+### Context
+DEC-003 planned squash merges, but the owner merged #10 with a merge commit via the GitHub UI.
+
+### Decision
+The owner picks the merge method per PR. When an agent merges on the owner's explicit instruction, it squash-merges with `--match-head-commit` unless told otherwise.
+
+### Consequences
+`main` may contain merge commits. Traceability is unaffected (every merge references its PR).
