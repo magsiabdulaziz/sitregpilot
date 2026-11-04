@@ -1,0 +1,707 @@
+{
+  "source_sha256": {
+    "train.tsv.gz": "6715944d0be46ca1bb0ab1d0acb3fd206440e18eb87c5a0b9f666fc0b43b15b3",
+    "dev.tsv.gz": "2a57492f815a4fa6ff9452cc9c6979041ca8a7529abb0d8257bdf467d918bc95",
+    "test.tsv.gz": "8fb92b68ce0ec6ae33dfdee852467e81d05b3a287829088bb20c5edf75e2bec5",
+    "register_label_abbreviations.txt": "33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d"
+  },
+  "split_config_file": "configs/data/splits.yaml",
+  "split_config": {
+    "partition_priority": [
+      "test",
+      "dev",
+      "train"
+    ],
+    "train_representative": "lowest_doc_id",
+    "conflict_policy": "quarantine_train",
+    "template_words": 50,
+    "template_min_words": 60
+  },
+  "dedup_report": {
+    "path": "reports/dedup/dedup_report.json",
+    "sha256": "41a5276f53f504f4aecf1610cfa28d57a99793cf222e37bfe1e3bbe2ad5d0fad"
+  },
+  "dedup_groups_sha256": "cd185863fe2dddb4d7271ba7766218f45116607859ff13c014253e9e17953673",
+  "manifest": {
+    "path": "data/manifests/splits/split_manifest.csv",
+    "sha256": "99246b79b0c743fc36924682d524af8ced7c7a23a06ed4706b4d439b4ad9c28b",
+    "rows": 48452
+  },
+  "n_input_rows": 48452,
+  "assertions": {
+    "every_row_accounted": true,
+    "controlled_group_disjoint": true,
+    "controlled_group_disjoint_violations": [],
+    "no_record_moved_between_partitions": true
+  },
+  "released_split_sizes": {
+    "train": 33915,
+    "dev": 4845,
+    "test": 9692
+  },
+  "controlled_partition_sizes": {
+    "train": 33870,
+    "dev": 4843,
+    "test": 9686,
+    "excluded": 53
+  },
+  "exclusions_by_released_split_and_reason": {
+    "dev/cross_split_duplicate": 1,
+    "dev/status_EMPTY_INPUT": 1,
+    "test/status_EMPTY_INPUT": 6,
+    "train/cross_split_duplicate": 13,
+    "train/status_EMPTY_INPUT": 10,
+    "train/train_label_conflict": 10,
+    "train/within_train_duplicate": 12
+  },
+  "cohort_by_controlled_partition": {
+    "dev/functional": 4785,
+    "dev/other_only": 58,
+    "excluded/empty": 17,
+    "excluded/functional": 36,
+    "test/functional": 9569,
+    "test/other_only": 117,
+    "train/functional": 33463,
+    "train/other_only": 407
+  },
+  "template_seen_dev_test": {
+    "dev/template_seen_controlled/n/a": 2,
+    "dev/template_seen_controlled/false": 4502,
+    "dev/template_seen_controlled/true": 341,
+    "dev/template_seen_released/n/a": 1,
+    "dev/template_seen_released/false": 4500,
+    "dev/template_seen_released/true": 344,
+    "test/template_seen_controlled/n/a": 6,
+    "test/template_seen_controlled/false": 8980,
+    "test/template_seen_controlled/true": 706,
+    "test/template_seen_released/n/a": 6,
+    "test/template_seen_released/false": 8972,
+    "test/template_seen_released/true": 714
+  },
+  "label_counts_released": {
+    "AD": {
+      "train": 14,
+      "dev": 5,
+      "test": 3
+    },
+    "AV": {
+      "train": 810,
+      "dev": 115,
+      "test": 236
+    },
+    "CM": {
+      "train": 104,
+      "dev": 15,
+      "test": 30
+    },
+    "DF": {
+      "train": 1494,
+      "dev": 214,
+      "test": 425
+    },
+    "DP": {
+      "train": 709,
+      "dev": 101,
+      "test": 203
+    },
+    "DS": {
+      "train": 996,
+      "dev": 146,
+      "test": 282
+    },
+    "DT": {
+      "train": 3123,
+      "dev": 446,
+      "test": 892
+    },
+    "ED": {
+      "train": 65,
+      "dev": 10,
+      "test": 19
+    },
+    "EN": {
+      "train": 391,
+      "dev": 57,
+      "test": 108
+    },
+    "FH": {
+      "train": 74,
+      "dev": 10,
+      "test": 23
+    },
+    "FI": {
+      "train": 234,
+      "dev": 34,
+      "test": 69
+    },
+    "FS": {
+      "train": 36,
+      "dev": 7,
+      "test": 10
+    },
+    "HA": {
+      "train": 356,
+      "dev": 54,
+      "test": 100
+    },
+    "HI": {
+      "train": 1433,
+      "dev": 203,
+      "test": 411
+    },
+    "HT": {
+      "train": 1073,
+      "dev": 149,
+      "test": 311
+    },
+    "IB": {
+      "train": 1357,
+      "dev": 195,
+      "test": 383
+    },
+    "ID": {
+      "train": 2417,
+      "dev": 349,
+      "test": 688
+    },
+    "IN": {
+      "train": 8882,
+      "dev": 1272,
+      "test": 2537
+    },
+    "IP": {
+      "train": 1402,
+      "dev": 207,
+      "test": 404
+    },
+    "IT": {
+      "train": 378,
+      "dev": 55,
+      "test": 104
+    },
+    "LE": {
+      "train": 36,
+      "dev": 5,
+      "test": 10
+    },
+    "LT": {
+      "train": 142,
+      "dev": 20,
+      "test": 40
+    },
+    "LY": {
+      "train": 478,
+      "dev": 68,
+      "test": 135
+    },
+    "MA": {
+      "train": 63,
+      "dev": 9,
+      "test": 18
+    },
+    "NA": {
+      "train": 14914,
+      "dev": 2128,
+      "test": 4264
+    },
+    "NE": {
+      "train": 8250,
+      "dev": 1177,
+      "test": 2359
+    },
+    "OB": {
+      "train": 3671,
+      "dev": 520,
+      "test": 1052
+    },
+    "OE": {
+      "train": 8,
+      "dev": 2,
+      "test": 4
+    },
+    "OF": {
+      "train": 16,
+      "dev": 3,
+      "test": 7
+    },
+    "OH": {
+      "train": 3,
+      "dev": 1,
+      "test": 1
+    },
+    "OI": {
+      "train": 130,
+      "dev": 19,
+      "test": 35
+    },
+    "OL": {
+      "train": 6,
+      "dev": 1,
+      "test": 2
+    },
+    "ON": {
+      "train": 9,
+      "dev": 1,
+      "test": 2
+    },
+    "OO": {
+      "train": 16,
+      "dev": 1,
+      "test": 5
+    },
+    "OP": {
+      "train": 7441,
+      "dev": 1054,
+      "test": 2131
+    },
+    "OS": {
+      "train": 15,
+      "dev": 3,
+      "test": 4
+    },
+    "OTHER": {
+      "train": 407,
+      "dev": 58,
+      "test": 117
+    },
+    "PA": {
+      "train": 117,
+      "dev": 18,
+      "test": 36
+    },
+    "PB": {
+      "train": 2308,
+      "dev": 328,
+      "test": 656
+    },
+    "PO": {
+      "train": 61,
+      "dev": 8,
+      "test": 17
+    },
+    "PR": {
+      "train": 14,
+      "dev": 1,
+      "test": 5
+    },
+    "QA": {
+      "train": 853,
+      "dev": 123,
+      "test": 244
+    },
+    "RA": {
+      "train": 653,
+      "dev": 94,
+      "test": 189
+    },
+    "RE": {
+      "train": 133,
+      "dev": 19,
+      "test": 37
+    },
+    "RR": {
+      "train": 57,
+      "dev": 7,
+      "test": 15
+    },
+    "RS": {
+      "train": 542,
+      "dev": 77,
+      "test": 157
+    },
+    "RV": {
+      "train": 1449,
+      "dev": 205,
+      "test": 411
+    },
+    "SL": {
+      "train": 385,
+      "dev": 56,
+      "test": 110
+    },
+    "SP": {
+      "train": 515,
+      "dev": 77,
+      "test": 147
+    },
+    "SR": {
+      "train": 2213,
+      "dev": 316,
+      "test": 635
+    },
+    "SS": {
+      "train": 220,
+      "dev": 32,
+      "test": 63
+    },
+    "TA": {
+      "train": 53,
+      "dev": 8,
+      "test": 15
+    },
+    "TB": {
+      "train": 273,
+      "dev": 38,
+      "test": 79
+    },
+    "TR": {
+      "train": 36,
+      "dev": 5,
+      "test": 9
+    },
+    "TS": {
+      "train": 32,
+      "dev": 6,
+      "test": 9
+    },
+    "TV": {
+      "train": 15,
+      "dev": 2,
+      "test": 5
+    }
+  },
+  "label_counts_controlled": {
+    "AD": {
+      "train": 14,
+      "dev": 5,
+      "test": 3,
+      "excluded": 0
+    },
+    "AV": {
+      "train": 810,
+      "dev": 115,
+      "test": 236,
+      "excluded": 0
+    },
+    "CM": {
+      "train": 104,
+      "dev": 15,
+      "test": 30,
+      "excluded": 0
+    },
+    "DF": {
+      "train": 1490,
+      "dev": 214,
+      "test": 423,
+      "excluded": 6
+    },
+    "DP": {
+      "train": 707,
+      "dev": 101,
+      "test": 203,
+      "excluded": 2
+    },
+    "DS": {
+      "train": 993,
+      "dev": 146,
+      "test": 280,
+      "excluded": 5
+    },
+    "DT": {
+      "train": 3114,
+      "dev": 446,
+      "test": 892,
+      "excluded": 9
+    },
+    "ED": {
+      "train": 65,
+      "dev": 10,
+      "test": 19,
+      "excluded": 0
+    },
+    "EN": {
+      "train": 391,
+      "dev": 57,
+      "test": 108,
+      "excluded": 0
+    },
+    "FH": {
+      "train": 74,
+      "dev": 10,
+      "test": 23,
+      "excluded": 0
+    },
+    "FI": {
+      "train": 234,
+      "dev": 34,
+      "test": 69,
+      "excluded": 0
+    },
+    "FS": {
+      "train": 36,
+      "dev": 6,
+      "test": 10,
+      "excluded": 1
+    },
+    "HA": {
+      "train": 356,
+      "dev": 54,
+      "test": 100,
+      "excluded": 0
+    },
+    "HI": {
+      "train": 1433,
+      "dev": 203,
+      "test": 411,
+      "excluded": 0
+    },
+    "HT": {
+      "train": 1073,
+      "dev": 149,
+      "test": 311,
+      "excluded": 0
+    },
+    "IB": {
+      "train": 1356,
+      "dev": 195,
+      "test": 383,
+      "excluded": 1
+    },
+    "ID": {
+      "train": 2410,
+      "dev": 349,
+      "test": 686,
+      "excluded": 9
+    },
+    "IN": {
+      "train": 8867,
+      "dev": 1272,
+      "test": 2537,
+      "excluded": 15
+    },
+    "IP": {
+      "train": 1399,
+      "dev": 207,
+      "test": 402,
+      "excluded": 5
+    },
+    "IT": {
+      "train": 377,
+      "dev": 55,
+      "test": 104,
+      "excluded": 1
+    },
+    "LE": {
+      "train": 36,
+      "dev": 5,
+      "test": 10,
+      "excluded": 0
+    },
+    "LT": {
+      "train": 142,
+      "dev": 20,
+      "test": 40,
+      "excluded": 0
+    },
+    "LY": {
+      "train": 475,
+      "dev": 68,
+      "test": 135,
+      "excluded": 3
+    },
+    "MA": {
+      "train": 63,
+      "dev": 9,
+      "test": 18,
+      "excluded": 0
+    },
+    "NA": {
+      "train": 14900,
+      "dev": 2128,
+      "test": 4264,
+      "excluded": 14
+    },
+    "NE": {
+      "train": 8237,
+      "dev": 1177,
+      "test": 2359,
+      "excluded": 13
+    },
+    "OB": {
+      "train": 3669,
+      "dev": 520,
+      "test": 1051,
+      "excluded": 3
+    },
+    "OE": {
+      "train": 8,
+      "dev": 2,
+      "test": 4,
+      "excluded": 0
+    },
+    "OF": {
+      "train": 16,
+      "dev": 3,
+      "test": 7,
+      "excluded": 0
+    },
+    "OH": {
+      "train": 3,
+      "dev": 1,
+      "test": 1,
+      "excluded": 0
+    },
+    "OI": {
+      "train": 130,
+      "dev": 19,
+      "test": 35,
+      "excluded": 0
+    },
+    "OL": {
+      "train": 6,
+      "dev": 1,
+      "test": 2,
+      "excluded": 0
+    },
+    "ON": {
+      "train": 9,
+      "dev": 1,
+      "test": 2,
+      "excluded": 0
+    },
+    "OO": {
+      "train": 16,
+      "dev": 1,
+      "test": 5,
+      "excluded": 0
+    },
+    "OP": {
+      "train": 7436,
+      "dev": 1053,
+      "test": 2129,
+      "excluded": 8
+    },
+    "OS": {
+      "train": 14,
+      "dev": 2,
+      "test": 4,
+      "excluded": 2
+    },
+    "OTHER": {
+      "train": 407,
+      "dev": 58,
+      "test": 117,
+      "excluded": 0
+    },
+    "PA": {
+      "train": 117,
+      "dev": 18,
+      "test": 36,
+      "excluded": 0
+    },
+    "PB": {
+      "train": 2308,
+      "dev": 328,
+      "test": 656,
+      "excluded": 0
+    },
+    "PO": {
+      "train": 60,
+      "dev": 8,
+      "test": 17,
+      "excluded": 1
+    },
+    "PR": {
+      "train": 14,
+      "dev": 1,
+      "test": 5,
+      "excluded": 0
+    },
+    "QA": {
+      "train": 851,
+      "dev": 123,
+      "test": 244,
+      "excluded": 2
+    },
+    "RA": {
+      "train": 652,
+      "dev": 94,
+      "test": 189,
+      "excluded": 1
+    },
+    "RE": {
+      "train": 133,
+      "dev": 19,
+      "test": 37,
+      "excluded": 0
+    },
+    "RR": {
+      "train": 57,
+      "dev": 7,
+      "test": 15,
+      "excluded": 0
+    },
+    "RS": {
+      "train": 542,
+      "dev": 77,
+      "test": 157,
+      "excluded": 0
+    },
+    "RV": {
+      "train": 1448,
+      "dev": 205,
+      "test": 411,
+      "excluded": 1
+    },
+    "SL": {
+      "train": 383,
+      "dev": 56,
+      "test": 110,
+      "excluded": 2
+    },
+    "SP": {
+      "train": 513,
+      "dev": 76,
+      "test": 146,
+      "excluded": 4
+    },
+    "SR": {
+      "train": 2213,
+      "dev": 316,
+      "test": 635,
+      "excluded": 0
+    },
+    "SS": {
+      "train": 220,
+      "dev": 32,
+      "test": 63,
+      "excluded": 0
+    },
+    "TA": {
+      "train": 53,
+      "dev": 8,
+      "test": 15,
+      "excluded": 0
+    },
+    "TB": {
+      "train": 273,
+      "dev": 38,
+      "test": 79,
+      "excluded": 0
+    },
+    "TR": {
+      "train": 36,
+      "dev": 5,
+      "test": 9,
+      "excluded": 0
+    },
+    "TS": {
+      "train": 32,
+      "dev": 6,
+      "test": 9,
+      "excluded": 0
+    },
+    "TV": {
+      "train": 15,
+      "dev": 2,
+      "test": 5,
+      "excluded": 0
+    }
+  },
+  "sealed_test": {
+    "released_test_ids_sha256": "5b0f08d9ab5dac61f0eea24091a5c3a544a193d391ddaa89594f00fcd4c97c19",
+    "released_test_n": 9692,
+    "controlled_test_ids_sha256": "cc33a023a56981c4597a42777197586d775bc9f23dd4f2c86c15901051f7b126",
+    "controlled_test_n": 9686
+  }
+}
