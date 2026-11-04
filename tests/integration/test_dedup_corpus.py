@@ -52,7 +52,12 @@ def test_exact_groups_reproduce_the_reference_audit(result) -> None:  # type: ig
     assert ours["cross_split_types"] == {"dev/train": 1, "test/train": 5}
     assert ours["n_label_conflict_groups"] == ref_raw["n_label_conflict_groups"] == 3
     assert report["exact_normalized"]["n_groups"] == ref["global"]["exact_duplicates_normalized"]["n_groups"]
-    # every reference pair ends up in one final component
+    # exact_raw groups equal the reference groups member for member
+    ours_groups: dict[str, set[str]] = {}
+    for a, b, _ in res.edges["exact_raw"]:
+        ours_groups.setdefault(a, {a}).add(b)
+    assert {frozenset(g) for g in ours_groups.values()} == {frozenset(m["id"] for m in g) for g in ref_raw["groups"]}
+    # and each reference group lies within one final component
     for group in ref_raw["groups"]:
         ids = {m["id"] for m in group}
         assert len({res.group_of[i] for i in ids}) == 1, ids

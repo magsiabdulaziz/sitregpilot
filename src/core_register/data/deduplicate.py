@@ -88,6 +88,7 @@ class DedupResult:
     excluded: Counter[str] = field(default_factory=Counter)  # status -> count
     candidate_pairs: int = 0
     candidate_jaccard_hist: dict[str, int] = field(default_factory=dict)
+    max_lsh_bucket_size: int = 0
 
 
 RecordSource = Callable[[], Iterator[Record]]
@@ -122,7 +123,8 @@ def group_documents(source: RecordSource, cfg: DedupConfig) -> DedupResult:
                 buckets[(band, hv[band * r : (band + 1) * r].tobytes())].append(rec.doc_id)
 
     candidates: set[tuple[str, str]] = set()
-    for ids in buckets.values():
+    max_bucket = max((len(ids) for ids in buckets.values()), default=0)
+    for ids in buckets.values():  # pairs grow quadratically with bucket size; max_bucket is reported
         if len(ids) > 1:
             ids_sorted = sorted(ids)
             for i, a in enumerate(ids_sorted):
@@ -168,6 +170,7 @@ def group_documents(source: RecordSource, cfg: DedupConfig) -> DedupResult:
         excluded=excluded,
         candidate_pairs=len(candidates),
         candidate_jaccard_hist=dict(sorted(hist.items())),
+        max_lsh_bucket_size=max_bucket,
     )
 
 
@@ -219,7 +222,13 @@ def build_report(result: DedupResult, cfg: DedupConfig) -> dict[str, Any]:
         "n_exact_only_short_documents": sum(1 for m in meta.values() if m.n_norm_words < cfg.min_words_for_near_dup),
         "exact_raw": _group_summary(_kind_groups(result, "exact_raw"), meta),
         "exact_normalized": _group_summary(_kind_groups(result, "exact_norm"), meta),
+        "limitations": [
+            "Text similarity only, not source provenance; detection of all overlap is not guaranteed.",
+            "Pages sharing only boilerplate (Phase 1 template groups) are not grouped, by design (D-07).",
+            "Thresholds are frozen policy (configs/data/dedup.yaml), not tuned on model performance.",
+        ],
         "near_duplicate": {
+            "max_lsh_bucket_size": result.max_lsh_bucket_size,
             "n_candidate_pairs": result.candidate_pairs,
             "candidate_jaccard_histogram_floor_0.1": result.candidate_jaccard_hist,
             "n_verified_pairs": len(near),

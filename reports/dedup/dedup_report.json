@@ -54,7 +54,13 @@
     },
     "n_label_conflict_groups": 3
   },
+  "limitations": [
+    "Text similarity only, not source provenance; detection of all overlap is not guaranteed.",
+    "Pages sharing only boilerplate (Phase 1 template groups) are not grouped, by design (D-07).",
+    "Thresholds are frozen policy (configs/data/dedup.yaml), not tuned on model performance."
+  ],
   "near_duplicate": {
+    "max_lsh_bucket_size": 8,
     "n_candidate_pairs": 242,
     "candidate_jaccard_histogram_floor_0.1": {
       "0.0": 16,
@@ -347,5 +353,5 @@
       "same_label_set": true
     }
   ],
-  "runtime_seconds": 207.8
+  "runtime_seconds": 223.6
 }
