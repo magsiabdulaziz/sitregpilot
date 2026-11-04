@@ -21,5 +21,10 @@ Run from the repository root (after installing per [`CONTRIBUTING.md`](CONTRIBUT
 ```
 `audit` verifies the pinned SHA-256 of every source file before reading, streams the corpus, and prints counts only (no text). It exits with code 2 if a hash does not match. Rows get a status: `OK`, `EMPTY_INPUT`, `UNKNOWN_CODE` or `MALFORMED`.
 
+```
+.venv\Scripts\python.exe -m core_register.cli dedup --config configs/data/core.yaml --dedup-config configs/data/dedup.yaml
+```
+`dedup` groups exact and verified near-duplicate documents using the frozen D-07 policy in `configs/data/dedup.yaml`. It writes a committed report (`reports/dedup/dedup_report.json`: counts, IDs and Jaccard values, no text) and a git-ignored group manifest (`artifacts/dedup/groups.csv`), whose SHA-256 the report records. It takes about 3.5 minutes on a 4-core laptop.
+
 ## Licensing
 Code: Apache-2.0 ([`LICENSE`](LICENSE)). CORE annotations: CC BY-SA 4.0 (per the corpus repository). CORE web text carries no stated licence and is not redistributed here. Please cite Laippala et al. (2023) and the CORE compilation works listed in the corpus README.

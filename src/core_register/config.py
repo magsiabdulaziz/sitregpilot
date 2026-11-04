@@ -62,8 +62,39 @@ class DataConfig(StrictModel):
         return self.raw_dir / self.files[split]
 
 
-def load_data_config(path: Path) -> DataConfig:
+class DedupConfig(StrictModel):
+    """Duplicate-grouping policy (D-07). Frozen before any modelling; never tuned on model scores."""
+
+    normalization: Literal["nfkc_casefold_whitespace"] = "nfkc_casefold_whitespace"
+    shingle_words: int = Field(ge=1)
+    num_perm: int = Field(ge=16)
+    lsh_bands: int = Field(ge=1)
+    lsh_rows: int = Field(ge=1)
+    jaccard_threshold: float = Field(gt=0.0, le=1.0)
+    min_words_for_near_dup: int = Field(ge=1)
+    seed: int
+    verification_sample_size: int = Field(ge=0)
+    sample_seed: int
+
+    @model_validator(mode="after")
+    def _banding(self) -> DedupConfig:
+        if self.lsh_bands * self.lsh_rows != self.num_perm:
+            raise ValueError("lsh_bands * lsh_rows must equal num_perm")
+        if self.min_words_for_near_dup < self.shingle_words:
+            raise ValueError("min_words_for_near_dup must be >= shingle_words")
+        return self
+
+
+def _load_yaml_mapping(path: Path) -> dict[str, object]:
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
         raise ValueError(f"{path}: top level must be a mapping")
-    return DataConfig.model_validate(raw)
+    return raw
+
+
+def load_data_config(path: Path) -> DataConfig:
+    return DataConfig.model_validate(_load_yaml_mapping(path))
+
+
+def load_dedup_config(path: Path) -> DedupConfig:
+    return DedupConfig.model_validate(_load_yaml_mapping(path))

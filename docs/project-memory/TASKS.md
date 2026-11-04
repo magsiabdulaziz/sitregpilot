@@ -12,8 +12,8 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 | TASK-005 | Persistent project-memory system | P0 | DONE | #1 | — | #10 |
 | TASK-006 | Independent recount of audit numbers (H-001) | P1 | TODO | #4 | 002 (#1) | — |
 | TASK-007 | Obtain & ledger the complementary 2021 study | P2 | BLOCKED | #9, #11 | owner PDF | — |
-| TASK-010 | Package skeleton, config, ingest/validate, `audit` CLI | P0 | IN_REVIEW | #5 | 003, 004 | (pending) |
-| TASK-011 | Exact + MinHash near-duplicate grouping | P0 | TODO | #6 | 010 | — |
+| TASK-010 | Package skeleton, config, ingest/validate, `audit` CLI | P0 | DONE | #5 | 003, 004 | #14 |
+| TASK-011 | Exact + MinHash near-duplicate grouping | P0 | IN_PROGRESS | #6 | 010 | (pending) |
 | TASK-012 | released/controlled split manifests, test sealing | P0 | TODO | #7 | 011 | — |
 | TASK-013 | Data-contract test suite (Phase 2 gate C) | P0 | TODO | #8 | 010–012 | — |
 | TASK-020 | Phase 3: linguistic feature registry & extraction | P1 | TODO | — | 013 | — |

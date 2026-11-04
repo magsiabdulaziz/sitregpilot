@@ -1,0 +1,13 @@
+# Duplicate-grouping policy (docs/decisions.md D-07, approved 2026-11-05).
+# Frozen before any modelling. These values must not be tuned on model performance;
+# changing them needs owner approval and a new decision record.
+normalization: nfkc_casefold_whitespace   # exact "normalised" hash and the shingle tokens
+shingle_words: 5                          # word 5-shingles
+num_perm: 128                             # MinHash permutations
+lsh_bands: 32                             # 32 bands x 4 rows (candidate threshold ~ (1/32)^(1/4) ~ 0.42)
+lsh_rows: 4
+jaccard_threshold: 0.80                   # exact Jaccard on shingle sets, verified for every candidate pair
+min_words_for_near_dup: 25                # shorter documents: exact matching only
+seed: 1                                   # MinHash permutation seed
+verification_sample_size: 50              # verified pairs listed in the report (IDs + Jaccard only)
+sample_seed: 20261105

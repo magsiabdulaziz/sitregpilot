@@ -1,0 +1,357 @@
+{
+  "source_sha256": {
+    "train.tsv.gz": "6715944d0be46ca1bb0ab1d0acb3fd206440e18eb87c5a0b9f666fc0b43b15b3",
+    "dev.tsv.gz": "2a57492f815a4fa6ff9452cc9c6979041ca8a7529abb0d8257bdf467d918bc95",
+    "test.tsv.gz": "8fb92b68ce0ec6ae33dfdee852467e81d05b3a287829088bb20c5edf75e2bec5",
+    "register_label_abbreviations.txt": "33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d"
+  },
+  "dedup_config_file": "configs/data/dedup.yaml",
+  "manifest": {
+    "path": "artifacts/dedup/groups.csv",
+    "sha256": "cd185863fe2dddb4d7271ba7766218f45116607859ff13c014253e9e17953673",
+    "rows": 48435
+  },
+  "dedup_config": {
+    "normalization": "nfkc_casefold_whitespace",
+    "shingle_words": 5,
+    "num_perm": 128,
+    "lsh_bands": 32,
+    "lsh_rows": 4,
+    "jaccard_threshold": 0.8,
+    "min_words_for_near_dup": 25,
+    "seed": 1,
+    "verification_sample_size": 50,
+    "sample_seed": 20261105
+  },
+  "n_documents_considered": 48435,
+  "n_excluded_by_status": {
+    "EMPTY_INPUT": 17
+  },
+  "n_exact_only_short_documents": 0,
+  "exact_raw": {
+    "n_groups": 12,
+    "n_records_in_groups": 24,
+    "group_size_distribution": {
+      "2": 12
+    },
+    "n_cross_split_groups": 6,
+    "cross_split_types": {
+      "dev/train": 1,
+      "test/train": 5
+    },
+    "n_label_conflict_groups": 3
+  },
+  "exact_normalized": {
+    "n_groups": 12,
+    "n_records_in_groups": 24,
+    "group_size_distribution": {
+      "2": 12
+    },
+    "n_cross_split_groups": 6,
+    "cross_split_types": {
+      "dev/train": 1,
+      "test/train": 5
+    },
+    "n_label_conflict_groups": 3
+  },
+  "limitations": [
+    "Text similarity only, not source provenance; detection of all overlap is not guaranteed.",
+    "Pages sharing only boilerplate (Phase 1 template groups) are not grouped, by design (D-07).",
+    "Thresholds are frozen policy (configs/data/dedup.yaml), not tuned on model performance."
+  ],
+  "near_duplicate": {
+    "max_lsh_bucket_size": 8,
+    "n_candidate_pairs": 242,
+    "candidate_jaccard_histogram_floor_0.1": {
+      "0.0": 16,
+      "0.1": 27,
+      "0.2": 56,
+      "0.3": 49,
+      "0.4": 39,
+      "0.5": 11,
+      "0.6": 8,
+      "0.7": 5,
+      "0.8": 11,
+      "0.9": 20
+    },
+    "n_verified_pairs": 31,
+    "n_verified_pairs_below_1": 19,
+    "n_groups": 31,
+    "n_records_in_groups": 62,
+    "group_size_distribution": {
+      "2": 31
+    },
+    "n_cross_split_groups": 14,
+    "cross_split_types": {
+      "dev/test": 1,
+      "dev/train": 4,
+      "test/train": 9
+    },
+    "n_label_conflict_groups": 10
+  },
+  "components": {
+    "n_groups": 31,
+    "n_records_in_groups": 62,
+    "group_size_distribution": {
+      "2": 31
+    },
+    "n_cross_split_groups": 14,
+    "cross_split_types": {
+      "dev/test": 1,
+      "dev/train": 4,
+      "test/train": 9
+    },
+    "n_label_conflict_groups": 10
+  },
+  "verification_sample": [
+    {
+      "id_a": "0011100",
+      "split_a": "test",
+      "id_b": "0244715",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0027753",
+      "split_a": "train",
+      "id_b": "0663520",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0110902",
+      "split_a": "train",
+      "id_b": "3227419",
+      "split_b": "dev",
+      "jaccard": 0.9543,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0124858",
+      "split_a": "train",
+      "id_b": "0726911",
+      "split_b": "test",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0137692",
+      "split_a": "train",
+      "id_b": "0764224",
+      "split_b": "train",
+      "jaccard": 0.8645,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0148011",
+      "split_a": "train",
+      "id_b": "0153981",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0150577",
+      "split_a": "train",
+      "id_b": "0405162",
+      "split_b": "test",
+      "jaccard": 0.9235,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0160410",
+      "split_a": "train",
+      "id_b": "0758877",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0167467",
+      "split_a": "train",
+      "id_b": "0177488",
+      "split_b": "train",
+      "jaccard": 0.966,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0189790",
+      "split_a": "train",
+      "id_b": "0765336",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0222046",
+      "split_a": "train",
+      "id_b": "0320180",
+      "split_b": "test",
+      "jaccard": 0.9377,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0261113",
+      "split_a": "train",
+      "id_b": "0651565",
+      "split_b": "test",
+      "jaccard": 0.84,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0286607",
+      "split_a": "train",
+      "id_b": "0515069",
+      "split_b": "test",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0331138",
+      "split_a": "train",
+      "id_b": "3050975",
+      "split_b": "train",
+      "jaccard": 0.8797,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0471168",
+      "split_a": "dev",
+      "id_b": "0503302",
+      "split_b": "test",
+      "jaccard": 0.9772,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0515173",
+      "split_a": "train",
+      "id_b": "0787481",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0525852",
+      "split_a": "train",
+      "id_b": "0552514",
+      "split_b": "dev",
+      "jaccard": 0.8327,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0535357",
+      "split_a": "train",
+      "id_b": "0779837",
+      "split_b": "train",
+      "jaccard": 0.8346,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0593031",
+      "split_a": "train",
+      "id_b": "3171927",
+      "split_b": "train",
+      "jaccard": 0.9158,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0610929",
+      "split_a": "train",
+      "id_b": "0654134",
+      "split_b": "dev",
+      "jaccard": 1.0,
+      "same_label_set": false
+    },
+    {
+      "id_a": "0618491",
+      "split_a": "train",
+      "id_b": "0757081",
+      "split_b": "train",
+      "jaccard": 0.9992,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0622842",
+      "split_a": "train",
+      "id_b": "0794871",
+      "split_b": "test",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0639073",
+      "split_a": "train",
+      "id_b": "3198935",
+      "split_b": "train",
+      "jaccard": 0.8524,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0741164",
+      "split_a": "train",
+      "id_b": "0768283",
+      "split_b": "train",
+      "jaccard": 0.8797,
+      "same_label_set": true
+    },
+    {
+      "id_a": "0756833",
+      "split_a": "test",
+      "id_b": "3350766",
+      "split_b": "train",
+      "jaccard": 0.8617,
+      "same_label_set": false
+    },
+    {
+      "id_a": "1416730",
+      "split_a": "train",
+      "id_b": "1486504",
+      "split_b": "train",
+      "jaccard": 0.8182,
+      "same_label_set": false
+    },
+    {
+      "id_a": "1728010",
+      "split_a": "dev",
+      "id_b": "1728011",
+      "split_b": "train",
+      "jaccard": 0.8217,
+      "same_label_set": true
+    },
+    {
+      "id_a": "1767372",
+      "split_a": "train",
+      "id_b": "1767384",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": true
+    },
+    {
+      "id_a": "1786519",
+      "split_a": "train",
+      "id_b": "3797249",
+      "split_b": "train",
+      "jaccard": 0.8537,
+      "same_label_set": true
+    },
+    {
+      "id_a": "3200606",
+      "split_a": "train",
+      "id_b": "3201650",
+      "split_b": "train",
+      "jaccard": 0.9275,
+      "same_label_set": true
+    },
+    {
+      "id_a": "3720380",
+      "split_a": "test",
+      "id_b": "3720737",
+      "split_b": "train",
+      "jaccard": 1.0,
+      "same_label_set": true
+    }
+  ],
+  "runtime_seconds": 223.6
+}
