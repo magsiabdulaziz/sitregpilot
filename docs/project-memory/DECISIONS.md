@@ -106,7 +106,7 @@ Even the owner cannot push directly to `main` while `enforce_admins` is on. The 
 ## DEC-007: Row-status rules for ingestion
 
 **Date:** 2026-11-05
-**Status:** Proposed (accepted when the owner merges PR #14)
+**Status:** Accepted (owner approved "merge #14", 2026-11-05)
 **Related Task:** TASK-010 · **Related PR:** #14
 
 ### Decision

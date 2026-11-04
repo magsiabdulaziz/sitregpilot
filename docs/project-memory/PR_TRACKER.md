@@ -15,11 +15,12 @@ An AI review or green CI is **never** owner approval. Only the owner authorises 
 - Round 2 (`c21d223`): Ready for approval; Approval Report posted (issuecomment-6641989952).
 - Owner approval: "merge #13" (2026-11-05) for head `c21d223`.
 - Merge: `gh pr merge 13 --squash --match-head-commit c21d223…` → `9f54304` (2026-11-04T21:01:27Z UTC); tree verified identical to `c21d223`; issue #3 closed. A first attempt aborted before merging due to a PowerShell `--jq` quoting error in the head-SHA guard (no state change).
-| #14 | feat: package skeleton, typed config, streaming ingest/validate, audit CLI | #5 / TASK-010 | `feature/issue-5-ingest-validate` → `main` | run 41913381331 green at `76c1958` | round 1: Ready (0 Critical, 0 Major, 4 Minor) → Minor fixed; delta re-review pending | not given | not merged |
+| #14 | feat: package skeleton, typed config, streaming ingest/validate, audit CLI | #5 / TASK-010 | `feature/issue-5-ingest-validate` → `main` | run 41913381331 green at `76c1958` | round 1 Ready (4 Minor fixed); round 2 Ready for approval | owner "merge #14" for `c371c47` | **squash-merged on owner instruction** `7848760` |
 
 ### PR #14: feat: package skeleton, typed config, streaming ingest/validate, audit CLI
 - Round 1 (`76c1958`): Ready for approval. The reviewer re-ran 24 tests and the CLI; binary scan of the corpus found 0 rows with bare CR or other line-separator characters, so there is no divergence from the reference. Minor findings fixed: empty ID → MALFORMED; whitespace-only text → EMPTY_INPUT (corpus has none; DEC-007); architecture Record contract aligned; config rejects duplicate file names, stray hashes, non-bool `verify_hashes`. Suggestions adopted: stronger integration test (per-split code counts, label sets, ws max, statuses = lines), bare-CR fixture, issue strings truncated to 80 chars, status precedence documented.
-- Owner approval: not given · Merge: not merged
+- Round 2 (`c371c47`): Ready for approval; Approval Report posted (issuecomment-6642339661).
+- Merge: `--squash --match-head-commit c371c47…` → `7848760`; tree verified identical; issue #5 closed; DEC-007 accepted.
 
 ### PR #10: docs: Phase 0/1 records, approved protocol, and project memory
 - Issue / Task: #1 / TASK-001, TASK-002, TASK-005

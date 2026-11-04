@@ -51,6 +51,10 @@ python_version = "3.14"
 strict = true
 files = ["src/core_register"]
 
+[[tool.mypy.overrides]]
+module = ["datasketch", "datasketch.*"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = ["requires_corpus: needs data/raw/CORE-corpus (skipped in CI)"]
