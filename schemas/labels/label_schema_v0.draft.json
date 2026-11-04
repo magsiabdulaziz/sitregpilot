@@ -1,0 +1,498 @@
+{
+  "schema_id": "core_labels",
+  "version": "0.1.0-draft",
+  "status": "DRAFT - pending method-gate approval",
+  "source": {
+    "file": "register_label_abbreviations.txt",
+    "sha256": "33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d",
+    "repo_commit": "b57dbdb5ebee4b2688fa94889a2cbdb341d86ee7"
+  },
+  "ordering": "legend file order (alphabetical by code); frozen for this version",
+  "main_order_article": [
+    "SP",
+    "LY",
+    "IN",
+    "IP",
+    "OP",
+    "NA",
+    "HI",
+    "ID"
+  ],
+  "notes": [
+    "Levels are assigned explicitly here; release codes are all upper-case.",
+    "reference_parent_table1 is the article Table 1 grouping: a REFERENCE, not a verified constraint.",
+    "Verified exception: DP occurs without IN in 293 rows (incl. 515 DP+NA co-occurrences); article Table 2 Document 3 shows DP selected under NARRATIVE.",
+    "All other 46 subcodes co-occur with their Table-1 parent in every row (audit).",
+    "OTHER = 'no labels' (no two-coder agreement). Not a functional register; not OOD."
+  ],
+  "codes": [
+    {
+      "code": "AD",
+      "display_name": "advertisement",
+      "display_name_raw": "advertisement",
+      "level": "sub",
+      "reference_parent_table1": "OP"
+    },
+    {
+      "code": "AV",
+      "display_name": "advice",
+      "display_name_raw": "advice",
+      "level": "sub",
+      "reference_parent_table1": "OP"
+    },
+    {
+      "code": "CM",
+      "display_name": "course materials",
+      "display_name_raw": "course materials",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "DF",
+      "display_name": "discussion forum",
+      "display_name_raw": "discussion forum",
+      "level": "sub",
+      "reference_parent_table1": "ID"
+    },
+    {
+      "code": "DP",
+      "display_name": "description of a person",
+      "display_name_raw": "description of a person",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "DS",
+      "display_name": "description with intent to sell",
+      "display_name_raw": "description with intent to sell",
+      "level": "sub",
+      "reference_parent_table1": "IP"
+    },
+    {
+      "code": "DT",
+      "display_name": "description of a thing",
+      "display_name_raw": "description of a thing",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "ED",
+      "display_name": "editorial",
+      "display_name_raw": "editorial",
+      "level": "sub",
+      "reference_parent_table1": "IP"
+    },
+    {
+      "code": "EN",
+      "display_name": "encyclopedia article",
+      "display_name_raw": "encyclopedia article",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "FH",
+      "display_name": "FAQ about how-to",
+      "display_name_raw": "FAQ about how-to",
+      "level": "sub",
+      "reference_parent_table1": "HI"
+    },
+    {
+      "code": "FI",
+      "display_name": "FAQ about information",
+      "display_name_raw": "FAQ about information",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "FS",
+      "display_name": "formal speech",
+      "display_name_raw": "formal speech",
+      "level": "sub",
+      "reference_parent_table1": "SP"
+    },
+    {
+      "code": "HA",
+      "display_name": "historical article",
+      "display_name_raw": "historical article",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "HI",
+      "display_name": "how-to instructional",
+      "display_name_raw": "how-to instructional",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "HT",
+      "display_name": "how-to",
+      "display_name_raw": "how-to",
+      "level": "sub",
+      "reference_parent_table1": "HI"
+    },
+    {
+      "code": "IB",
+      "display_name": "information blog",
+      "display_name_raw": "information blog",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "ID",
+      "display_name": "interactive discussion",
+      "display_name_raw": "interactive discussion",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "IN",
+      "display_name": "informational description / explanation",
+      "display_name_raw": "informational description / explanation",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "IP",
+      "display_name": "informational persuasion",
+      "display_name_raw": "informational persuasion",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "IT",
+      "display_name": "interview",
+      "display_name_raw": "interview",
+      "level": "sub",
+      "reference_parent_table1": "SP"
+    },
+    {
+      "code": "LE",
+      "display_name": "letter to the editor",
+      "display_name_raw": "letter to the editor",
+      "level": "sub",
+      "reference_parent_table1": "OP"
+    },
+    {
+      "code": "LT",
+      "display_name": "legal terms and conditions",
+      "display_name_raw": "legal terms and conditions",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "LY",
+      "display_name": "lyrical",
+      "display_name_raw": "lyrical",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "MA",
+      "display_name": "magazine article",
+      "display_name_raw": "magazine article",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "NA",
+      "display_name": "narrative",
+      "display_name_raw": "narrative",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "NE",
+      "display_name": "news report / blog",
+      "display_name_raw": "news report / blog",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "OB",
+      "display_name": "opinion blog",
+      "display_name_raw": "opinion blog ",
+      "level": "sub",
+      "reference_parent_table1": "OP"
+    },
+    {
+      "code": "OE",
+      "display_name": "other informational persuasion",
+      "display_name_raw": "other informational persuasion",
+      "level": "sub",
+      "reference_parent_table1": "IP"
+    },
+    {
+      "code": "OF",
+      "display_name": "other interactive discussion",
+      "display_name_raw": "other interactive discussion",
+      "level": "sub",
+      "reference_parent_table1": "ID"
+    },
+    {
+      "code": "OH",
+      "display_name": "other how-to / instructional",
+      "display_name_raw": "other how-to / instructional",
+      "level": "sub",
+      "reference_parent_table1": "HI"
+    },
+    {
+      "code": "OI",
+      "display_name": "other informational description / explanation",
+      "display_name_raw": "other informational description / explanation",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "OL",
+      "display_name": "other lyrical",
+      "display_name_raw": "other lyrical",
+      "level": "sub",
+      "reference_parent_table1": "LY"
+    },
+    {
+      "code": "ON",
+      "display_name": "other narrative",
+      "display_name_raw": "other narrative",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "OO",
+      "display_name": "other opinion",
+      "display_name_raw": "other opinion",
+      "level": "sub",
+      "reference_parent_table1": "OP"
+    },
+    {
+      "code": "OP",
+      "display_name": "opinion",
+      "display_name_raw": "opinion",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "OS",
+      "display_name": "other spoken",
+      "display_name_raw": "other spoken",
+      "level": "sub",
+      "reference_parent_table1": "SP"
+    },
+    {
+      "code": "OTHER",
+      "display_name": "no labels",
+      "display_name_raw": "no labels",
+      "level": "annotation_outcome",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "PA",
+      "display_name": "persuasive article or essay",
+      "display_name_raw": "persuasive article or essay",
+      "level": "sub",
+      "reference_parent_table1": "IP"
+    },
+    {
+      "code": "PB",
+      "display_name": "personal blog",
+      "display_name_raw": "personal blog",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "PO",
+      "display_name": "poem",
+      "display_name_raw": "poem",
+      "level": "sub",
+      "reference_parent_table1": "LY"
+    },
+    {
+      "code": "PR",
+      "display_name": "prayer",
+      "display_name_raw": "prayer",
+      "level": "sub",
+      "reference_parent_table1": "LY"
+    },
+    {
+      "code": "QA",
+      "display_name": "question/answer forum",
+      "display_name_raw": "question/answer forum",
+      "level": "sub",
+      "reference_parent_table1": "ID"
+    },
+    {
+      "code": "RA",
+      "display_name": "research article",
+      "display_name_raw": "research article",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "RE",
+      "display_name": "recipe",
+      "display_name_raw": "recipe",
+      "level": "sub",
+      "reference_parent_table1": "HI"
+    },
+    {
+      "code": "RR",
+      "display_name": "reader/viewer responses",
+      "display_name_raw": "reader/viewer responses",
+      "level": "sub",
+      "reference_parent_table1": "ID"
+    },
+    {
+      "code": "RS",
+      "display_name": "religious blogs / sermons",
+      "display_name_raw": "religious blogs / sermons",
+      "level": "sub",
+      "reference_parent_table1": "OP"
+    },
+    {
+      "code": "RV",
+      "display_name": "review",
+      "display_name_raw": "review",
+      "level": "sub",
+      "reference_parent_table1": "OP"
+    },
+    {
+      "code": "SL",
+      "display_name": "song lyric",
+      "display_name_raw": "song lyric",
+      "level": "sub",
+      "reference_parent_table1": "LY"
+    },
+    {
+      "code": "SP",
+      "display_name": "spoken",
+      "display_name_raw": "spoken",
+      "level": "main",
+      "reference_parent_table1": null
+    },
+    {
+      "code": "SR",
+      "display_name": "sports report",
+      "display_name_raw": "sports report",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "SS",
+      "display_name": "short story",
+      "display_name_raw": "short story",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "TA",
+      "display_name": "transcript of video / audio",
+      "display_name_raw": "transcript of video / audio",
+      "level": "sub",
+      "reference_parent_table1": "SP"
+    },
+    {
+      "code": "TB",
+      "display_name": "travel blog",
+      "display_name_raw": "travel blog",
+      "level": "sub",
+      "reference_parent_table1": "NA"
+    },
+    {
+      "code": "TR",
+      "display_name": "technical report",
+      "display_name_raw": "technical report",
+      "level": "sub",
+      "reference_parent_table1": "IN"
+    },
+    {
+      "code": "TS",
+      "display_name": "technical support",
+      "display_name_raw": "technical support",
+      "level": "sub",
+      "reference_parent_table1": "HI"
+    },
+    {
+      "code": "TV",
+      "display_name": "TV/movie script",
+      "display_name_raw": "TV/movie script",
+      "level": "sub",
+      "reference_parent_table1": "SP"
+    }
+  ],
+  "tasks": {
+    "T1_main_multilabel": {
+      "labels": [
+        "SP",
+        "LY",
+        "IN",
+        "IP",
+        "OP",
+        "NA",
+        "HI",
+        "ID"
+      ],
+      "cohort": "functional (excl. OTHER-only) - proposed"
+    },
+    "T2_released_multilabel": {
+      "labels": [
+        "AD",
+        "AV",
+        "CM",
+        "DF",
+        "DP",
+        "DS",
+        "DT",
+        "ED",
+        "EN",
+        "FH",
+        "FI",
+        "FS",
+        "HA",
+        "HI",
+        "HT",
+        "IB",
+        "ID",
+        "IN",
+        "IP",
+        "IT",
+        "LE",
+        "LT",
+        "LY",
+        "MA",
+        "NA",
+        "NE",
+        "OB",
+        "OE",
+        "OF",
+        "OH",
+        "OI",
+        "OL",
+        "ON",
+        "OO",
+        "OP",
+        "OS",
+        "OTHER",
+        "PA",
+        "PB",
+        "PO",
+        "PR",
+        "QA",
+        "RA",
+        "RE",
+        "RR",
+        "RS",
+        "RV",
+        "SL",
+        "SP",
+        "SR",
+        "SS",
+        "TA",
+        "TB",
+        "TR",
+        "TS",
+        "TV"
+      ],
+      "cohort": "all rows"
+    }
+  }
+}
