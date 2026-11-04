@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=77"]  # PEP 639 license / license-files
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "core-register"
+version = "0.0.1"
+description = "Explainable, reproducible English web-register classifier (CORE corpus)"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.14"
+authors = [{ name = "magsiabdulaziz" }]
+# Ranges only; exact reproducible pins live in requirements/cpu.lock.txt
+dependencies = [
+    "numpy>=2.5",
+    "scipy>=1.18",
+    "scikit-learn>=1.9",
+    "pandas>=3.1",
+    "pyarrow>=26",
+    "pydantic>=2.14",
+    "pyyaml>=6",
+    "joblib>=1.6",
+    "datasketch>=2",
+    "psutil>=7",
+    "spacy>=3.8,<3.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=9", "ruff>=0.17", "mypy>=2.4", "types-PyYAML", "pip-audit"]
+# "neural" extras are declared in Phase 4, after checkpoint vetting (methodology §7).
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+extend-exclude = [".venv", "data", "artifacts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Frozen Phase 1 reference scripts: outputs are hash-verified (PR #10); style-only rules waived
+# rather than editing verified code.
+"scripts/phase1_*.py" = ["E501", "E741"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["src/core_register"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["requires_corpus: needs data/raw/CORE-corpus (skipped in CI)"]
+addopts = "-ra"

@@ -36,3 +36,9 @@
 - **Root cause:** confirmed: Python text-mode writes translate `\n` → `\r\n` on Windows; no `.gitattributes`.
 - **Resolution:** normalised to LF; `.gitattributes` with `eol=lf`; scripts write with `newline="\n"`. When editing files programmatically, use `write_bytes` or `newline="\n"`.
 - **Verification:** 0 CR bytes in tracked files; re-run hashes identical (DEVELOPMENT_LOG 2026-11-05).
+
+## ISS-009: Repository visibility changed from private to public
+- **Symptom:** `gh api repos/magsiabdulaziz/sitregpilot` returned `"visibility":"public"` on 2026-11-05 during PR #13 review. At creation it was private (owner's choice; `gh repo view` showed `PRIVATE`).
+- **Root cause:** UNKNOWN. No agent command changed visibility (none of the session's `gh` calls touch it). Presumably an owner action in the GitHub UI: UNVERIFIED.
+- **Exposure:** code, docs, audit JSON (CORE doc IDs and labels; CC BY-SA 4.0 annotations), no corpus text.
+- **Resolution:** pending owner confirmation. Agents do not change visibility.
