@@ -289,7 +289,7 @@ def main() -> int:
         "examples_dp_without_in": examples_dp_without_in,
     }
 
-    (args.out / "corpus_audit.json").write_text(json.dumps(audit, indent=2, ensure_ascii=False), encoding="utf-8")
+    (args.out / "corpus_audit.json").write_text(json.dumps(audit, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
     # compact summary to stdout
     g = audit["global"]
     print("rows", g["rows"], "unique_ids", g["unique_ids"], "observed_codes", g["n_observed_codes"],

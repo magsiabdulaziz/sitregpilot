@@ -56,7 +56,7 @@ def main() -> None:
                  "top_labels": collections.Counter(x[2] for x in v).most_common(3)} for v in top],
         }
     a.out.mkdir(parents=True, exist_ok=True)
-    (a.out / "template_overlap_indicator.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    (a.out / "template_overlap_indicator.json").write_text(json.dumps(out, indent=2), encoding="utf-8", newline="\n")
     print(json.dumps({k: {kk: vv for kk, vv in v.items() if kk != "largest_groups_label_profile"}
                       for k, v in out.items() if k != "definition"}, indent=1))
 

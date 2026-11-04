@@ -35,3 +35,8 @@ Times are not reliably recorded; dates are from the session environment.
 - Revision: approved-status wording (methodology, architecture, schema status), PR_TRACKER/TASKS reconciled, undefined AUD-* refs replaced with JSON keys, corpus-wide median corrected to 635 (independently verified), template-homogeneity wording quantified, D-09 count clarified; scripts: POSIX `source_dir`, robust split/`max(default=0)`/CRLF strip, invisible Unicode literals escaped.
 - `reports/audit/corpus_audit.json` regenerated: only `source_dir` changed (`data\raw\…` → `data/raw/…`); new sha256 a61bb0c9…; template JSON unchanged (d0f789a0…); both byte-reproducible on re-run.
 - Not changed: `/CLAUDE.md` finding 4 (left for the owner).
+
+## 2026-11-05: PR #10 review round 2 and line-ending fix
+- Round 2 (same independent reviewer, delta only): all 12 round-1 findings resolved (CLAUDE.md line 3 left for the owner, non-blocking). Ready for approval, with 2 new Minor findings: N1 CRLF/LF mixing, N2 JSON written with CRLF on Windows.
+- Fixed in this PR: 17 tracked files normalised to LF; `.gitattributes` (`* text=auto eol=lf`, binaries marked); both scripts write JSON with `newline="\n"`.
+- Verified: two fresh runs plus the committed files are byte-identical. **Current reference hashes:** `corpus_audit.json` d4bf57b7…bec8, `template_overlap_indicator.json` 660f9365…95fb (they supersede earlier Windows-CRLF hashes; content unchanged). 0 CR bytes in tracked files.

@@ -30,3 +30,9 @@
 - **Symptom:** commit `ac52d41` (pushed) contained `Co-Authored-By: Claude Opus 5.5`.
 - **Root cause:** confirmed: the default assistant attribution was applied before the owner's sole-author rule existed.
 - **Resolution:** the owner authorised a rewrite. `git commit --amend` + `git push --force-with-lease` → `dac13cb`; local and remote HEAD verified equal. Rule added to CLAUDE.md (DEC-004).
+
+## ISS-008: Mixed CRLF/LF line endings and OS-dependent output hashes
+- **Symptom:** the reviewer found that files edited via Python `write_text` on Windows had become CRLF; audit JSON hashes would differ on Linux/CI.
+- **Root cause:** confirmed: Python text-mode writes translate `\n` → `\r\n` on Windows; no `.gitattributes`.
+- **Resolution:** normalised to LF; `.gitattributes` with `eol=lf`; scripts write with `newline="\n"`. When editing files programmatically, use `write_bytes` or `newline="\n"`.
+- **Verification:** 0 CR bytes in tracked files; re-run hashes identical (DEVELOPMENT_LOG 2026-11-05).
