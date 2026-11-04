@@ -85,6 +85,28 @@ class DedupConfig(StrictModel):
         return self
 
 
+class SplitConfig(StrictModel):
+    """controlled_split policy (D-07). Records are only removed, never moved between partitions."""
+
+    partition_priority: tuple[Split, Split, Split]
+    train_representative: Literal["lowest_doc_id"]
+    conflict_policy: Literal["quarantine_train"]
+    template_words: int = Field(ge=1)
+    template_min_words: int = Field(ge=1)
+
+    @model_validator(mode="after")
+    def _check(self) -> SplitConfig:
+        if sorted(self.partition_priority) != sorted(SPLITS):
+            raise ValueError("partition_priority must list train, dev and test exactly once")
+        if self.template_min_words < self.template_words:
+            raise ValueError("template_min_words must be >= template_words")
+        return self
+
+
+def load_split_config(path: Path) -> SplitConfig:
+    return SplitConfig.model_validate(_load_yaml_mapping(path))
+
+
 def _load_yaml_mapping(path: Path) -> dict[str, object]:
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):

@@ -13,11 +13,12 @@ import time
 from collections.abc import Iterator, Sequence
 from pathlib import Path
 
-from core_register.config import SPLITS, load_data_config, load_dedup_config
+from core_register.config import SPLITS, load_data_config, load_dedup_config, load_split_config
 from core_register.data.audit import run_audit
 from core_register.data.deduplicate import build_report, group_documents, manifest_rows
 from core_register.data.ingest import Record, iter_records
 from core_register.data.labels import load_label_schema
+from core_register.data.splits import MANIFEST_FIELDS, build_split_manifest
 from core_register.data.validate import SourceIntegrityError, sha256_file, verify_source_files
 
 
@@ -75,6 +76,55 @@ def _cmd_dedup(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_split(args: argparse.Namespace) -> int:
+    cfg = load_data_config(args.config)
+    scfg = load_split_config(args.split_config)
+    try:
+        hashes = verify_source_files(cfg)
+    except SourceIntegrityError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    dedup_report = json.loads(args.dedup_report.read_text(encoding="utf-8"))
+    groups_path = Path(dedup_report["manifest"]["path"])
+    if not groups_path.is_file() or sha256_file(groups_path) != dedup_report["manifest"]["sha256"]:
+        print(f"error: {groups_path} missing or not the manifest recorded in {args.dedup_report}; "
+              "re-run `dedup` first", file=sys.stderr)
+        return 2
+    if dedup_report["source_sha256"] != hashes:
+        print("error: the dedup report was produced from different source files", file=sys.stderr)
+        return 2
+    with groups_path.open(encoding="utf-8", newline="") as f:
+        group_of = {row["doc_id"]: row["group_id"] for row in csv.DictReader(f)}
+    schema = load_label_schema(cfg.label_schema)
+
+    def records() -> Iterator[Record]:
+        for split in SPLITS:
+            yield from iter_records(cfg.split_path(split), split, schema)
+
+    rows, report = build_split_manifest(records(), group_of, schema, scfg)
+    if not all(v for k, v in report["assertions"].items() if not k.endswith("violations")):
+        print(f"error: split assertions failed: {report['assertions']}", file=sys.stderr)
+        return 3
+    args.manifest.parent.mkdir(parents=True, exist_ok=True)
+    with args.manifest.open("w", encoding="utf-8", newline="\n") as f:
+        writer = csv.DictWriter(f, fieldnames=MANIFEST_FIELDS, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    report = {
+        "source_sha256": hashes,
+        "split_config_file": args.split_config.as_posix(),
+        "split_config": scfg.model_dump(mode="json"),
+        "dedup_report": {"path": args.dedup_report.as_posix(), "sha256": sha256_file(args.dedup_report)},
+        "dedup_groups_sha256": dedup_report["manifest"]["sha256"],
+        "manifest": {"path": args.manifest.as_posix(), "sha256": sha256_file(args.manifest), "rows": len(rows)},
+        **report,
+    }
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    print(f"wrote {args.report} and {args.manifest}", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="core_register", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -88,6 +138,13 @@ def build_parser() -> argparse.ArgumentParser:
     dedup.add_argument("--report", type=Path, default=Path("reports/dedup/dedup_report.json"))
     dedup.add_argument("--manifest", type=Path, default=Path("artifacts/dedup/groups.csv"))
     dedup.set_defaults(func=_cmd_dedup)
+    split = sub.add_parser("split", help="build released/controlled split manifests and seal test (D-07)")
+    split.add_argument("--config", type=Path, required=True, help="data config YAML")
+    split.add_argument("--split-config", type=Path, required=True, help="split protocol YAML")
+    split.add_argument("--dedup-report", type=Path, default=Path("reports/dedup/dedup_report.json"))
+    split.add_argument("--report", type=Path, default=Path("reports/splits/split_report.json"))
+    split.add_argument("--manifest", type=Path, default=Path("data/manifests/splits/split_manifest.csv"))
+    split.set_defaults(func=_cmd_split)
     return parser
 
 

@@ -8,7 +8,7 @@ Explainable, reproducible English web-register classifier on CORE, comparing lex
 ## Phase
 - Phase 0/1 complete; **method gate approved** 2026-11-05 ([decisions](../decisions.md) D-03…D-12).
 - **M0 (bootstrap & governance) complete:** #1 (PR #10), #2 (PR #12), #3 (PR #13) merged.
-- **M1 / Phase 2 in progress:** #5 (TASK-010) on `feature/issue-5-ingest-validate`.
+- **M1 / Phase 2 in progress:** #4, #5, #6 merged (PRs #16, #14, #15); #7 (split manifests) in review; #8 (gate-C suite) next.
 
 ## Repository
 - GitHub: `magsiabdulaziz/sitregpilot`, **public** (owner-confirmed 2026-11-05, ISS-009). `main` = `9f54304`.
@@ -27,7 +27,7 @@ No GPU; Python 3.14.5; no corpus text in Git; raw data read-only; owner merges; 
 #9 / #11 / TASK-007: complementary study PDF (ISS-001).
 
 ## Pending owner approvals
-Merge of the #5 PR (after CI, review, and the Approval Report). Owner's call: `/CLAUDE.md` line 3 wording (D-01…D-13 statuses).
+Merge of the #7 PR (explicit per-PR approval: the harness blocks merges without one). Owner's call: `/CLAUDE.md` line 3 wording (D-01…D-13 statuses).
 
 ## Next priorities
 See [SESSION_HANDOFF](SESSION_HANDOFF.md).

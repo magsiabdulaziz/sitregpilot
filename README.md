@@ -26,5 +26,10 @@ Run from the repository root (after installing per [`CONTRIBUTING.md`](CONTRIBUT
 ```
 `dedup` groups exact and verified near-duplicate documents using the frozen D-07 policy in `configs/data/dedup.yaml`. It writes a committed report (`reports/dedup/dedup_report.json`: counts, IDs and Jaccard values, no text) and a git-ignored group manifest (`artifacts/dedup/groups.csv`), whose SHA-256 the report records. It takes about 3.5 minutes on a 4-core laptop.
 
+```
+.venv\Scripts\python.exe -m core_register.cli split --config configs/data/core.yaml --split-config configs/data/splits.yaml
+```
+`split` builds the sealed split manifest `data/manifests/splits/split_manifest.csv` (committed; IDs, statuses, partitions, reasons, groups and template flags, no text or labels) and `reports/splits/split_report.json`. It refuses to run unless the dedup manifest matches the hash in the dedup report. `released_split` is the original membership. `controlled_split` removes duplicate-group members per D-07 and never moves records between partitions.
+
 ## Licensing
 Code: Apache-2.0 ([`LICENSE`](LICENSE)). CORE annotations: CC BY-SA 4.0 (per the corpus repository). CORE web text carries no stated licence and is not redistributed here. Please cite Laippala et al. (2023) and the CORE compilation works listed in the corpus README.

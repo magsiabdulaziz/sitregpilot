@@ -1,0 +1,7 @@
+# Split protocol (docs/decisions.md D-07, methodology section 5; approved 2026-11-05).
+# controlled_split keeps released memberships and only removes records; it never re-partitions.
+partition_priority: [test, dev, train]   # a duplicate group spanning partitions stays where priority is highest
+train_representative: lowest_doc_id      # within train, one member per group is kept
+conflict_policy: quarantine_train        # train members of a group whose label sets differ are quarantined
+template_words: 50                       # template keys: identical normalised first/last 50 words
+template_min_words: 60                   # only documents with >= 60 normalised words get template keys
