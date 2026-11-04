@@ -50,23 +50,27 @@ def test_chain_succeeds_and_groups_the_near_duplicate(chain: dict[str, Path]) ->
     assert report["exclusions_by_released_split_and_reason"]["test/status_EMPTY_INPUT"] == 1
 
 
-def test_split_refuses_a_tampered_dedup_manifest(chain: dict[str, Path]) -> None:
+def test_split_refuses_a_tampered_dedup_manifest(chain: dict[str, Path], capsys: pytest.CaptureFixture[str]) -> None:
     with chain["groups"].open("a", encoding="utf-8", newline="\n") as f:
         f.write("9999999,train,G9999999,1,False,False,False\n")
     assert _split(chain) == 2
+    assert "not the manifest recorded" in capsys.readouterr().err
     assert not chain["manifest"].exists()
 
 
-def test_split_refuses_a_dedup_report_from_other_sources(chain: dict[str, Path]) -> None:
+def test_split_refuses_a_dedup_report_from_other_sources(
+    chain: dict[str, Path], capsys: pytest.CaptureFixture[str]
+) -> None:
     report = json.loads(chain["dedup_report"].read_text(encoding="utf-8"))
     report["source_sha256"]["train.tsv.gz"] = "0" * 64
     chain["dedup_report"].write_text(json.dumps(report), encoding="utf-8")
     assert _split(chain) == 2
+    assert "different source files" in capsys.readouterr().err
     assert not chain["manifest"].exists()
 
 
 def test_split_exits_3_and_writes_nothing_when_an_assertion_fails(
-    chain: dict[str, Path], monkeypatch: pytest.MonkeyPatch
+    chain: dict[str, Path], monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     real = cli.build_split_manifest
 
@@ -77,4 +81,5 @@ def test_split_exits_3_and_writes_nothing_when_an_assertion_fails(
 
     monkeypatch.setattr(cli, "build_split_manifest", broken)
     assert _split(chain) == 3
+    assert "split assertions failed" in capsys.readouterr().err
     assert not chain["manifest"].exists() and not chain["split_report"].exists()

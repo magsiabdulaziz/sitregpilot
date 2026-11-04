@@ -40,6 +40,8 @@ Main-register counts after control (train / dev / test / excluded): SP 513/76/14
 
 **Comparability note:** controlled test differs from released test only by its 6 empty texts. Controlled train loses 45 records (0.13%). Results on `released_split` remain reportable but are contaminated (6 exact and 8 further near-duplicate pairs cross splits).
 
+**Template-flag note:** no dev or test document is shorter than 60 normalised words, so the report's `n/a_too_short` bucket is empty, not missing. Every `n/a` is `n/a_excluded`.
+
 ## Limitations carried forward
 - Duplicate detection is text similarity, not provenance. Boilerplate-only overlap is not grouped (D-07); it is measured by the template-seen flag instead (controlled: dev 341, test 706 documents).
 - No source-domain metadata exists, so a domain-held-out evaluation is impossible without an ID→URL mapping.

@@ -14,7 +14,7 @@ Explainable, reproducible English web-register classifier on CORE, comparing lex
 - GitHub: `magsiabdulaziz/sitregpilot`, **public** (owner-confirmed 2026-11-05, ISS-009). `main` = `c6eab9b`.
 - `main` protected (DEC-006): PR required (0 approvals); required checks `lint-type`, `test (ubuntu-latest)`, `test (windows-latest)` (strict); enforce_admins; no force-push or deletion. `pip-audit` runs but is not required.
 - `gh` at `C:\Program Files\GitHub CLI\gh.exe`. Sole author: the owner (DEC-004).
-- Closed issues: #1–#3. Open: #4–#9, #11. PRs: see [PR_TRACKER](PR_TRACKER.md).
+- Closed issues: #1–#7. Open: #8 (PR #18), #9, #11 (blocked on the 2021 study PDF). PRs: see [PR_TRACKER](PR_TRACKER.md).
 
 ## Implemented (verified)
 - On `main`: audit scripts + byte-reproducible outputs; draft label schema; pyproject; exact lock; CI; package stub.
