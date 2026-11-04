@@ -19,7 +19,7 @@ An AI review or green CI is **never** owner approval. Only the owner authorises 
 | #15 | feat: exact and verified near-duplicate grouping (D-07) | #6 / TASK-011 | `feature/issue-6-dedup` → `main` | green at `8e22f76` | 2 rounds → Ready | owner "merge #15" for `8e22f76` | **squash-merged** `cddfe58` |
 | #16 | test: record independent recount (H-001) | #4 / TASK-006 | `test/issue-4-recount` → `main` | green at `3a899be` | round 1 Changes required (coverage) → part 2; round 2 Ready | owner "merge #16" for `3a899be` | **squash-merged** `38c9945` |
 | #17 | feat: released/controlled split and cohort manifests; seal test | #7 / TASK-012 | `feature/issue-7-splits` → `main` | green at `cf5469a` | review finished **after** merge: Ready (0 Critical, 0 Major, 2 Minor, 3 Suggestions; fixed in the #8 PR) | owner "merge #17" for `cf5469a`, **before review completed** | **squash-merged** `c6eab9b` |
-| #18 | test: data-contract suite completion and gate C report | #8 / TASK-013 | `test/issue-8-gate-c` → `main` | green at `de14f1b` | round 1 Ready (2 Minor bookkeeping + 2 Suggestions → fixed) | pending | not merged |
+| #18 | test: data-contract suite completion and gate C report | #8 / TASK-013 | `test/issue-8-gate-c` → `main` | green at `de14f1b` | round 1 Ready (2 Minor + 2 Suggestions fixed); round 2 Ready | owner "merge #18" for `f5845a0` | **squash-merged** `bb63f2a` |
 
 ### PR #15 / PR #16
 - #15: round 1 at `5bf433a` Ready (the reviewer independently matched all 31 Jaccard values, the 12 exact groups and the manifest hash); 2 Minor + 1 Suggestion fixed in `d7986cc`; delta Ready. `origin/main` was merged in after #16 (head `8e22f76`, docs-only delta; CI green); merged on the owner's explicit instruction.

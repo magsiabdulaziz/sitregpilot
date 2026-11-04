@@ -84,3 +84,9 @@ Times are not reliably recorded; dates are from the session environment.
 - The owner confirmed "quarantine all" for train label-conflict groups (recorded as D-14), then said "merge #17" while the independent review was still running. Merged `c6eab9b` at `cf5469a` (tree verified, CI green, #7 closed); a PR comment records that the review was incomplete.
 - Post-merge review: Ready. Independent recomputation matched all 48,452 manifest rows, all 56 per-label tables, the template flags and both sealed hashes. Minor findings (untested CLI refusal paths; stale memory) and suggestions (n/a bucket split; 60-word minimum in §5.3) are addressed on `test/issue-8-gate-c`. Formatting (`ruff format`) not adopted: CI does not enforce it.
 - #8: 4 provenance tests (tampered dedup manifest, mismatched sources, failed assertion → no output); report-only n/a split; sealed manifest unchanged (sha verified).
+
+## 2026-11-05: PR #18 merged; gate C approved; Phase 3 started (#19)
+- The owner said "merge #18 and approve gate C". Merged `bb63f2a` at `f5845a0` (tree verified; #8 closed). M1 complete.
+- Opened #19 (feature registry and extraction) and #20 (CPU baselines B0–B4).
+- #19 profiling on 300 controlled-train docs (`reports/profiling/spacy_profile.json`): full pipeline 11.2 docs/s; NER disabled 13.9 docs/s (1 process, ~0.6 GB) or 14.6 docs/s (3 processes, ~1.0 GB). Chosen: NER disabled, 1 process (≈1 h for 48,435 windows). Windows multiprocessing needs a `__main__` guard (stdin scripts fail: ISS-010).
+- Registry v1.0.0: 41 features in 8 families; counts and denominators stored; missing ≠ 0. 10 linguistic fixture tests. The cache-resume test found a torn-line bug (a row appended after an interrupted write was lost); fixed.

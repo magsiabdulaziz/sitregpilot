@@ -1,0 +1,92 @@
+{
+  "purpose": "issue #19 profiling before full extraction; training documents only",
+  "sample": {
+    "source": "controlled_partition == train",
+    "n": 300,
+    "seed": 20261105,
+    "window_ws_words": 1000
+  },
+  "environment": {
+    "spacy": "3.8.18",
+    "model": "en_core_web_sm 3.8.0",
+    "python": "3.14.5",
+    "cpu_logical": 8,
+    "ram_gb": 23.8
+  },
+  "runs": [
+    {
+      "active_pipes": [
+        "tok2vec",
+        "tagger",
+        "parser",
+        "attribute_ruler",
+        "lemmatizer",
+        "ner"
+      ],
+      "disabled": [],
+      "n_process": 1,
+      "batch_size": 32,
+      "docs": 300,
+      "ws_words": 191469,
+      "spacy_tokens": 220433,
+      "seconds": 26.7,
+      "docs_per_sec": 11.23,
+      "ws_words_per_sec": 7167,
+      "peak_rss_mb_main_plus_workers": 555
+    },
+    {
+      "active_pipes": [
+        "tok2vec",
+        "tagger",
+        "parser",
+        "attribute_ruler",
+        "lemmatizer"
+      ],
+      "disabled": [
+        "ner"
+      ],
+      "n_process": 1,
+      "batch_size": 32,
+      "docs": 300,
+      "ws_words": 191469,
+      "spacy_tokens": 220433,
+      "seconds": 21.5,
+      "docs_per_sec": 13.94,
+      "ws_words_per_sec": 8897,
+      "peak_rss_mb_main_plus_workers": 594
+    },
+    {
+      "active_pipes": [
+        "tok2vec",
+        "tagger",
+        "parser",
+        "attribute_ruler",
+        "lemmatizer"
+      ],
+      "disabled": [
+        "ner"
+      ],
+      "n_process": 3,
+      "batch_size": 16,
+      "docs": 300,
+      "ws_words": 191469,
+      "spacy_tokens": 220433,
+      "seconds": 20.6,
+      "docs_per_sec": 14.58,
+      "ws_words_per_sec": 9304,
+      "peak_rss_mb_main_plus_workers": 1011
+    }
+  ],
+  "estimate_full_extraction": {
+    "n_documents": 48435,
+    "best_config": {
+      "disabled": [
+        "ner"
+      ],
+      "n_process": 3,
+      "batch_size": 16
+    },
+    "estimated_hours": 0.92,
+    "note": "linear extrapolation from the sample; real runtime varies with document length"
+  }
+}

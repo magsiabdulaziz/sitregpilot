@@ -42,3 +42,12 @@
 - **Root cause:** UNKNOWN. No agent command changed visibility (none of the session's `gh` calls touch it). Presumably an owner action in the GitHub UI: UNVERIFIED.
 - **Exposure:** code, docs, audit JSON (CORE doc IDs and labels; CC BY-SA 4.0 annotations), no corpus text.
 - **Resolution:** the owner confirmed on 2026-11-05: **the repository stays public**. Agents do not change visibility.
+
+## ISS-010: spaCy multiprocessing from a stdin script fails on Windows
+- **Symptom:** `nlp.pipe(..., n_process=3)` from `python -` → `OSError: [Errno 22] Invalid argument: 'D:\SitRegPilot\<stdin>'` in spawned workers; the parent hung.
+- **Root cause:** confirmed: Windows `spawn` re-imports the main module from a file path.
+- **Resolution:** run multiprocessing code from a real file with an `if __name__ == "__main__":` guard (`scripts/profile_spacy.py`, `core_register.cli`).
+
+## ISS-011: Torn final cache line swallowed the next row
+- **Symptom:** after an interrupted write, the next appended row joined the torn line and became unparseable (found by `test_cache_is_resumable_and_tolerates_a_torn_line`).
+- **Resolution:** before appending, `extract_to_cache` writes a newline if the file does not end in one. Test passes.
