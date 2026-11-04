@@ -14,5 +14,12 @@ An explainable, reproducible classifier for **English web registers** built on t
 ## Data
 The corpus is not included. Clone https://github.com/TurkuNLP/CORE-corpus (commit `b57dbdb5ebee4b2688fa94889a2cbdb341d86ee7`) into `data/raw/CORE-corpus`. Expected SHA-256 hashes are in `reports/audit/corpus_audit.json` (`file_sha256`).
 
+## Command line
+Run from the repository root (after installing per [`CONTRIBUTING.md`](CONTRIBUTING.md)):
+```
+.venv\Scripts\python.exe -m core_register.cli audit --config configs/data/core.yaml [--out PATH]
+```
+`audit` verifies the pinned SHA-256 of every source file before reading, streams the corpus, and prints counts only (no text). It exits with code 2 if a hash does not match. Rows get a status: `OK`, `EMPTY_INPUT`, `UNKNOWN_CODE` or `MALFORMED`.
+
 ## Licensing
 Code: Apache-2.0 ([`LICENSE`](LICENSE)). CORE annotations: CC BY-SA 4.0 (per the corpus repository). CORE web text carries no stated licence and is not redistributed here. Please cite Laippala et al. (2023) and the CORE compilation works listed in the corpus README.

@@ -7,12 +7,12 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 |---|---|---|---|---|---|---|
 | TASK-001 | Phase 0 environment & agent audit | P0 | DONE | #1 | — | #10 |
 | TASK-002 | Phase 1 corpus audit, source ledger, protocol | P0 | DONE | #1 | 001 | #10 |
-| TASK-003 | Dev environment: git init, venv, deps, lock | P0 | IN_REVIEW | #3 | 002 | (pending) |
+| TASK-003 | Dev environment: git init, venv, deps, lock | P0 | DONE | #3 | 002 | #13 |
 | TASK-004 | GitHub PR-driven workflow design | P0 | DONE | #2 | — | #12 |
 | TASK-005 | Persistent project-memory system | P0 | DONE | #1 | — | #10 |
 | TASK-006 | Independent recount of audit numbers (H-001) | P1 | TODO | #4 | 002 (#1) | — |
 | TASK-007 | Obtain & ledger the complementary 2021 study | P2 | BLOCKED | #9, #11 | owner PDF | — |
-| TASK-010 | Package skeleton, config, ingest/validate, `audit` CLI | P0 | TODO | #5 | 003, 004 | — |
+| TASK-010 | Package skeleton, config, ingest/validate, `audit` CLI | P0 | IN_REVIEW | #5 | 003, 004 | (pending) |
 | TASK-011 | Exact + MinHash near-duplicate grouping | P0 | TODO | #6 | 010 | — |
 | TASK-012 | released/controlled split manifests, test sealing | P0 | TODO | #7 | 011 | — |
 | TASK-013 | Data-contract test suite (Phase 2 gate C) | P0 | TODO | #8 | 010–012 | — |
@@ -29,7 +29,7 @@ Acceptance: counts reconcile; ledger written; protocol approved. Evidence: `repo
 
 ### TASK-003: Dev environment
 Done: `git init` (branch `master`, renamed to `main`), `.gitignore`, `.venv`, `pip install -r requirements/cpu.in -r requirements/dev.in`, `en_core_web_sm` 3.8.0. Load test passed.
-Done: repo-local git identity `magsiabdulaziz <65072637+magsiabdulaziz@users.noreply.github.com>`; branch `main`; bootstrap commit `dac13cb` (.gitignore, LICENSE Apache-2.0) pushed. In review (issue #3, branch `chore/issue-3-ci`): `pyproject.toml`, `requirements/cpu.lock.txt` (89 lines, pip freeze), `src/core_register/__init__.py`, corpus-free unit tests, `.github/workflows/ci.yml`. Branch protection is attempted after CI passes.
+Done: repo-local git identity `magsiabdulaziz <65072637+magsiabdulaziz@users.noreply.github.com>`; branch `main`; bootstrap commit `dac13cb` (.gitignore, LICENSE Apache-2.0) pushed. **DONE:** pyproject, lock, package stub, tests, CI and branch protection merged in PR #13 (head `c21d223`, squash `9f54304`, owner-approved "merge #13", 2026-11-05).
 
 ### TASK-004: GitHub PR workflow design
 Plan **approved** by the owner on 2026-11-05 (DEC-003). Done outside the repo: private repo `magsiabdulaziz/sitregpilot` created; 24 labels and milestones M0–M5 created; issues #1–#9 opened. **DONE:** merged by the owner's account in PR #12 (head `9910af8`, merge commit `f953420`, 2026-11-04T20:37:41Z UTC); issue #2 closed.

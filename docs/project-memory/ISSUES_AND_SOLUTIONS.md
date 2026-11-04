@@ -41,4 +41,4 @@
 - **Symptom:** `gh api repos/magsiabdulaziz/sitregpilot` returned `"visibility":"public"` on 2026-11-05 during PR #13 review. At creation it was private (owner's choice; `gh repo view` showed `PRIVATE`).
 - **Root cause:** UNKNOWN. No agent command changed visibility (none of the session's `gh` calls touch it). Presumably an owner action in the GitHub UI: UNVERIFIED.
 - **Exposure:** code, docs, audit JSON (CORE doc IDs and labels; CC BY-SA 4.0 annotations), no corpus text.
-- **Resolution:** pending owner confirmation. Agents do not change visibility.
+- **Resolution:** the owner confirmed on 2026-11-05: **the repository stays public**. Agents do not change visibility.

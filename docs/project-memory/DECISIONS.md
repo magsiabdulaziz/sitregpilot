@@ -89,7 +89,7 @@ The owner picks the merge method per PR. When an agent merges on the owner's exp
 ## DEC-006: CI check roles and branch protection on `main`
 
 **Date:** 2026-11-05
-**Status:** Proposed (protection settings are applied under the approved workflow plan; the whole entry is accepted when the owner merges PR #13)
+**Status:** Accepted (owner merged PR #13, 2026-11-05)
 **Related Task:** TASK-003 · **Related PR:** #13
 
 ### Decision
@@ -102,3 +102,20 @@ The owner picks the merge method per PR. When an agent merges on the owner's exp
 
 ### Consequences
 Even the owner cannot push directly to `main` while `enforce_admins` is on. The owner can switch it off in Settings → Branches if needed.
+
+## DEC-007: Row-status rules for ingestion
+
+**Date:** 2026-11-05
+**Status:** Proposed (accepted when the owner merges PR #14)
+**Related Task:** TASK-010 · **Related PR:** #14
+
+### Decision
+Precedence MALFORMED > UNKNOWN_CODE > EMPTY_INPUT > OK.
+- **MALFORMED:** invalid UTF-8, fewer than 3 tab fields, or an empty ID field.
+- **UNKNOWN_CODE:** any code outside the schema, or no code at all.
+- **EMPTY_INPUT:** text that is empty **or whitespace-only** (`str.strip() == ""`). This interprets methodology §4 "empty texts".
+
+IDs are not format-checked beyond non-empty (all released IDs are 7-digit).
+
+### Consequences
+No change for the released corpus: 17 EMPTY_INPUT, 0 MALFORMED, 0 UNKNOWN_CODE, verified by the integration test. The audit's `empty_text` count remains `text == ""`, as in the reference.
