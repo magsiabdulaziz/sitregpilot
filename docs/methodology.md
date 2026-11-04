@@ -15,13 +15,13 @@ Every item marked **[D-xx]** is a decision in `decisions.md`; D-03…D-12 were a
 
 ## 2. Data facts that shape the protocol (audit, 2026-11-05)
 
-- 48,452 rows, all parse as exactly 3 tab fields; no tabs/CR inside text; no BOM; IDs are unique 7-character digit strings (26,177 with a leading zero), so they **must stay strings**.
+- 48,452 rows, all parse as exactly 3 tab fields; no tabs/CR inside text; no leading BOM in any file or line (U+FEFF occurs *inside* the text of 2 rows); IDs are unique 7-character digit strings (26,177 with a leading zero), so they **must stay strings**.
 - 17 empty texts (train 10, dev 1, test 6); no whitespace-only texts.
 - 56 codes observed, matching the legend exactly. **460 distinct raw label strings but 455 distinct label sets**: 5 sets occur in two orders (e.g. `NA DP NE` / `NA NE DP`). Label order carries no meaning; we treat labels as sets.
 - In every row, main codes precede subcodes. No row has a sub without some main.
 - Every subcode except DP always co-occurs with its Table-1 parent, so the release looks **propagated**. DP lacks IN in 293 rows; DP co-occurs with NA 515 times. The article's Table 2 shows DP selected under NARRATIVE.
 - OTHER never co-occurs with another code (582 rows).
-- Paragraph breaks are flattened to spaces. Titles run into the first sentence. Page boilerplate (menus, cookie notices, "About me") remains. Some texts contain control characters (U+0007, U+0014/15) and U+00A0.
+- Paragraph breaks are flattened to spaces. Titles run into the first sentence. Page boilerplate (menus, cookie notices, "About me") remains. Some texts contain control characters and special spaces. Rows containing each (independent recount H-001): U+0007 602, U+0014 13, U+0015 80, U+00A0 234, U+FFFD 3 (all dev), U+2028/2029 0.
 - Whitespace words (corpus-wide, independently recounted in the PR #10 review): median 635, p95 3,797, max 118,278 (per-split medians in the audit JSON: train 634, dev 649, test 634); 28,791 docs exceed 512 words.
 - Exact duplicates: 12 two-member groups (raw = normalised); 6 cross split (5 train/test, 1 train/dev); 3 groups have conflicting label sets (0610929/0654134 IN vs NA NE across train/dev; two within train).
 - **Template indicator** (identical normalised first-50/last-50 words): 114 prefix groups (745 docs, max 129) and 670 suffix groups (3,276 docs, max 477). 409 suffix groups cross splits. The largest groups are dominated by one label set (forum-software header → ID DF in 121/129, a free-trial billing notice → IP DS in 57/80, the largest publisher footer → NA NE in 270/477), but most groups are not label-homogeneous (label-set conflicts in 80/114 prefix and 508/670 suffix groups). This is direct evidence of **source/template shortcuts**. It is not provenance.
