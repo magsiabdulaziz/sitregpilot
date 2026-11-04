@@ -54,3 +54,8 @@ Times are not reliably recorded; dates are from the session environment.
 - The owner's account merged PR #12 (`f953420`) at the reviewed head `9910af8`, before the agent's Approval Report was posted. Issue #2 closed; DEC-005 accepted.
 - Started #3 on `chore/issue-3-ci`: pyproject (setuptools, src layout, ruff/mypy/pytest config), `requirements/cpu.lock.txt` (pip freeze incl. dev tools and en_core_web_sm), package stub, 5 corpus-free unit tests, CI workflow (lint-type; test on ubuntu + windows; pip-audit on ubuntu).
 - Verified locally: ruff clean (style rules E501/E741 waived only for the frozen `scripts/phase1_*`), mypy strict clean, pytest 5 passed; the lock installs into a fresh Windows venv and tests pass there; pip-audit: no known vulnerabilities (en_core_web_sm is not auditable, since it is not on PyPI).
+
+## 2026-11-05: PR #13 review round 1 and revision
+- CI run 41909923088 at `1bcc8f1`: lint-type, test (ubuntu), test (windows) all passed; pip-audit step: no known vulnerabilities.
+- Independent read-only review: Changes required (Major: protection result not recorded). Revision: test fixes, setuptools>=77, CI hardening (SHA-pinned checkout/setup-python v7, persist-credentials false, lock-based lint, `pip check`, separate pip-audit job + weekly schedule), memory updates, DEC-006 (proposed).
+- Observed: repo visibility is now public (ISS-009), not changed by agents.

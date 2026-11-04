@@ -50,11 +50,12 @@ def test_audit_json_has_no_text_fields_and_expected_totals() -> None:
     walk(audit)
 
 
-def test_reference_scripts_compile() -> None:
+def test_reference_scripts_compile(tmp_path: Path) -> None:
+    # Compile into tmp_path so no __pycache__ is written inside the repository.
     for script in ("phase1_corpus_audit.py", "phase1_template_overlap.py"):
-        py_compile.compile(str(ROOT / "scripts" / script), doraise=True)
+        py_compile.compile(str(ROOT / "scripts" / script), cfile=str(tmp_path / f"{script}c"), doraise=True)
 
 
-def test_tracked_text_files_use_lf(tmp_path: Path) -> None:
+def test_tracked_text_files_use_lf() -> None:
     for rel in ("README.md", "CLAUDE.md", "pyproject.toml", "reports/audit/corpus_audit.json"):
         assert b"\r" not in (ROOT / rel).read_bytes(), rel

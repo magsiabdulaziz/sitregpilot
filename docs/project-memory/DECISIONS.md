@@ -85,3 +85,17 @@ The owner picks the merge method per PR. When an agent merges on the owner's exp
 
 ### Consequences
 `main` may contain merge commits. Traceability is unaffected (every merge references its PR).
+
+## DEC-006: CI check roles and branch protection on `main`
+
+**Date:** 2026-11-05
+**Status:** Proposed (protection settings are applied under the approved workflow plan; the whole entry is accepted when the owner merges PR #13)
+**Related Task:** TASK-003 · **Related PR:** #13
+
+### Decision
+- **Required checks:** `lint-type`, `test (ubuntu-latest)`, `test (windows-latest)`.
+- **`pip-audit`:** runs as a separate job on every PR/push plus weekly, and is **not required**. A newly published CVE is shown but does not block unrelated PRs; a red `pip-audit` becomes a `type:fix` issue.
+- **Protection on `main`:** PR required with **0** required approvals (agents act through the owner's account, and GitHub forbids self-approval); required checks strict (branch up to date); no force-push; no deletion; applies to admins as well, so the shared account cannot bypass it by accident.
+
+### Consequences
+Even the owner cannot push directly to `main` while `enforce_admins` is on. The owner can switch it off in Settings → Branches if needed.

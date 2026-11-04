@@ -7,6 +7,12 @@ An AI review or green CI is **never** owner approval. Only the owner authorises 
 |---|---|---|---|---|---|---|---|
 | #10 | docs: Phase 0/1 records, approved protocol, and project memory | #1 / TASK-001, 002, 005 | `docs/issue-1-phase1-records` → `main` | none yet (CI arrives in #3) | 3 rounds → Ready for approval | owner approved `ec6645c` (2026-11-05) | **merged by owner** `6fba587` (merge commit) |
 | #12 | docs: PR-driven development workflow, templates, and CONTRIBUTING | #2 / TASK-004 | `docs/issue-2-workflow` → `main` | none (pre-CI) | 2 rounds → Ready for approval | merged by owner account (no explicit chat approval; see entry) | **merged** `f953420` (merge commit) |
+| #13 | chore: CI quality gates, pyproject, and dependency lock | #3 / TASK-003 | `chore/issue-3-ci` → `main` | run 41909923088 green at `1bcc8f1`; re-run pending on revision | round 1: Changes required (1 Major, 4 Minor) → fixes pushed | not given | not merged |
+
+### PR #13: chore: CI quality gates, pyproject, and dependency lock
+- Issue / Task: #3 / TASK-003 · Branch: `chore/issue-3-ci` → `main` (draft)
+- Round 1 (`1bcc8f1`): Changes required. Major 1: branch-protection result not recorded → protection is attempted after the revision's CI run, and the result goes into DEC-006. Minor: unused `tmp_path` and `.pyc` written into the repo (fixed); "no .gitattributes" (**incorrect**: it has been on `main` since PR #10); setuptools floor (fixed, ≥77); this tracker entry (added). Suggestions adopted: SHA-pinned actions v7, `persist-credentials: false`, no cancelling on `main`, lint-type installs from the lock, `pip check`, separate non-required `pip-audit` job plus a weekly schedule.
+- Owner approval: not given · Merge: not merged
 
 ### PR #10: docs: Phase 0/1 records, approved protocol, and project memory
 - Issue / Task: #1 / TASK-001, TASK-002, TASK-005
