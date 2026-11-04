@@ -89,7 +89,7 @@ The owner picks the merge method per PR. When an agent merges on the owner's exp
 ## DEC-006: CI check roles and branch protection on `main`
 
 **Date:** 2026-11-05
-**Status:** Proposed (protection settings are applied under the approved workflow plan; the whole entry is accepted when the owner merges PR #13)
+**Status:** Accepted (owner merged PR #13, 2026-11-05)
 **Related Task:** TASK-003 · **Related PR:** #13
 
 ### Decision

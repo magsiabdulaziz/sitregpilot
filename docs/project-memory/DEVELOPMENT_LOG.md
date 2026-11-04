@@ -60,3 +60,8 @@ Times are not reliably recorded; dates are from the session environment.
 - Independent read-only review: Changes required (Major: protection result not recorded). Revision: test fixes, setuptools>=77, CI hardening (SHA-pinned checkout/setup-python v7, persist-credentials false, lock-based lint, `pip check`, separate pip-audit job + weekly schedule), memory updates, DEC-006 (proposed).
 - Observed: repo visibility is now public (ISS-009), not changed by agents.
 - Branch protection on `main` applied and verified via API (DEC-006 result); CI run 41911110569 at `df05442` green incl. pip-audit.
+
+## 2026-11-05: PR #13 merged (M0 complete); issue #5 started
+- The owner said "merge #13". Agent squash-merged with `--match-head-commit c21d223` → `9f54304`; tree verified; issue #3 closed. DEC-006 accepted. The owner confirmed public visibility (ISS-009 resolved).
+- #5 on `feature/issue-5-ingest-validate`: `config.py` (pydantic, extra=forbid, hash-pinning validation), `data/labels.py` (schema loader, set-semantics parsing), `data/validate.py` (sha256 before read), `data/ingest.py` (binary gzip, split on LF only, statuses OK/EMPTY_INPUT/UNKNOWN_CODE/MALFORMED), `data/audit.py`, `cli.py audit`, `configs/data/core.yaml` (incl. legend hash).
+- Verified locally: ruff clean; mypy strict (8 files) clean; 19 unit tests pass; 5 corpus integration tests pass (counts equal the reference audit); CLI audit ~11 s; raw `.gz` hashes unchanged.

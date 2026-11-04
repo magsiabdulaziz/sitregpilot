@@ -1,0 +1,15 @@
+# Released CORE corpus (TurkuNLP/CORE-corpus @ b57dbdb5ebee4b2688fa94889a2cbdb341d86ee7).
+# Paths are relative to the repository root. Hashes pinned in the Phase 1 audit.
+raw_dir: data/raw/CORE-corpus
+files:
+  train: train.tsv.gz
+  dev: dev.tsv.gz
+  test: test.tsv.gz
+legend_file: register_label_abbreviations.txt
+label_schema: schemas/labels/label_schema_v0.draft.json
+verify_hashes: true
+expected_sha256:
+  train.tsv.gz: 6715944d0be46ca1bb0ab1d0acb3fd206440e18eb87c5a0b9f666fc0b43b15b3
+  dev.tsv.gz: 2a57492f815a4fa6ff9452cc9c6979041ca8a7529abb0d8257bdf467d918bc95
+  test.tsv.gz: 8fb92b68ce0ec6ae33dfdee852467e81d05b3a287829088bb20c5edf75e2bec5
+  register_label_abbreviations.txt: 33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d
