@@ -65,3 +65,7 @@ Times are not reliably recorded; dates are from the session environment.
 - The owner said "merge #13". Agent squash-merged with `--match-head-commit c21d223` → `9f54304`; tree verified; issue #3 closed. DEC-006 accepted. The owner confirmed public visibility (ISS-009 resolved).
 - #5 on `feature/issue-5-ingest-validate`: `config.py` (pydantic, extra=forbid, hash-pinning validation), `data/labels.py` (schema loader, set-semantics parsing), `data/validate.py` (sha256 before read), `data/ingest.py` (binary gzip, split on LF only, statuses OK/EMPTY_INPUT/UNKNOWN_CODE/MALFORMED), `data/audit.py`, `cli.py audit`, `configs/data/core.yaml` (incl. legend hash).
 - Verified locally: ruff clean; mypy strict (8 files) clean; 19 unit tests pass; 5 corpus integration tests pass (counts equal the reference audit); CLI audit ~11 s; raw `.gz` hashes unchanged.
+
+## 2026-11-05: PR #14 review round 1 and revision
+- Draft PR #14 opened; CI run 41913381331 green. Independent read-only review: Ready for approval (0 Critical, 0 Major, 4 Minor, 4 Suggestions).
+- Revision: empty-ID MALFORMED, whitespace-only EMPTY_INPUT (DEC-007, proposed), config combination checks (StrictBool, distinct files, no stray hashes), per-split audit code counts and label sets, stronger integration test, bare-CR and truncation fixtures, architecture Record contract aligned. Local: ruff, mypy clean; 31 tests pass incl. corpus integration.

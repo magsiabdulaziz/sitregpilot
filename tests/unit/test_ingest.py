@@ -78,6 +78,24 @@ def test_statuses_ok_empty_unknown_malformed(tmp_path: Path, schema: LabelSchema
     assert [r.line_no for r in rs] == [1, 2, 3, 4, 5, 6]
 
 
+def test_empty_id_is_malformed_and_whitespace_only_text_is_empty_input(tmp_path: Path, schema: LabelSchema) -> None:
+    rs = _records(tmp_path, schema, b"IN\t\ttext\nIN\t0000009\t  \t \nIN\t0000010\t \xc2\xa0 \n")
+    assert [r.status for r in rs] == [Status.MALFORMED, Status.EMPTY_INPUT, Status.EMPTY_INPUT]
+    assert rs[0].issue == "empty document ID field"
+    assert rs[1].text == "  \t "  # raw text is still preserved exactly
+
+
+def test_bare_carriage_return_stays_inside_text(tmp_path: Path, schema: LabelSchema) -> None:
+    # The one case where LF-only splitting differs from text-mode reading: none occur in the release.
+    (r,) = _records(tmp_path, schema, b"IN\t1\tleft\rright\n")
+    assert r.text == "left\rright" and r.status is Status.OK
+
+
+def test_issue_strings_are_truncated(tmp_path: Path, schema: LabelSchema) -> None:
+    (r,) = _records(tmp_path, schema, b"IN " + b"Z" * 300 + b"\t1\ttext\n")
+    assert r.status is Status.UNKNOWN_CODE and len(r.issue) <= 80
+
+
 def test_text_is_preserved_including_tabs_quotes_and_unicode_separators(tmp_path: Path, schema: LabelSchema) -> None:
     text = 'He said "hi"\tthen left    ok'
     (r,) = _records(tmp_path, schema, b"OP OB\t1\t" + text.encode("utf-8") + b"\n")
@@ -113,6 +131,30 @@ def test_config_requires_hashes_when_verifying() -> None:
             label_schema=Path("s.json"),
             expected_sha256={},
         )
+
+
+_BASE = {
+    "raw_dir": "r",
+    "files": {"train": "a", "dev": "b", "test": "c"},
+    "label_schema": "s.json",
+    "legend_file": "l",
+    "expected_sha256": {n: "0" * 64 for n in ("a", "b", "c", "l")},
+}
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"files": {"train": "a", "dev": "a", "test": "c"}},  # two splits share one file
+        {"expected_sha256": {**_BASE["expected_sha256"], "zz": "0" * 64}},  # hash for an unconfigured file
+        {"verify_hashes": "yes"},  # strings are not coerced to bool
+        {"expected_sha256": {**_BASE["expected_sha256"], "a": "ABC"}},  # not a lowercase hex digest
+    ],
+)
+def test_config_rejects_invalid_combinations(change: dict) -> None:  # type: ignore[type-arg]
+    DataConfig.model_validate(_BASE)  # the base is valid
+    with pytest.raises(ValidationError):
+        DataConfig.model_validate({**_BASE, **change})
 
 
 def test_hash_mismatch_is_refused_and_file_left_untouched(corpus_factory) -> None:  # type: ignore[no-untyped-def]

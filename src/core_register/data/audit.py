@@ -30,6 +30,8 @@ def run_audit(cfg: DataConfig, schema: LabelSchema | None = None) -> dict[str, A
 
     for split in SPLITS:
         st: Counter[str] = Counter()
+        split_codes: Counter[str] = Counter()
+        split_sets: set[tuple[str, ...]] = set()
         ws_total = ws_max = 0
         for rec in iter_records(cfg.split_path(split), split, schema):
             st[f"status_{rec.status.value}"] += 1
@@ -51,12 +53,16 @@ def run_audit(cfg: DataConfig, schema: LabelSchema | None = None) -> dict[str, A
             if len(labels & sub) >= 2:
                 st["multi_sub"] += 1
             code_counts.update(rec.labels)
+            split_codes.update(rec.labels)
             label_sets[rec.labels] += 1
+            split_sets.add(rec.labels)
             raw_strings.add(rec.raw_labels)
             ws_total += rec.n_ws_words
             ws_max = max(ws_max, rec.n_ws_words)
         splits_out[split] = {
             "stats": dict(sorted(st.items())),
+            "code_counts": {c: split_codes.get(c, 0) for c in schema.codes},
+            "n_distinct_label_sets": len(split_sets),
             "whitespace_words_total": ws_total,
             "whitespace_words_max": ws_max,
         }

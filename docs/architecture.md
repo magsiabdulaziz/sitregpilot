@@ -26,7 +26,7 @@ inference.predict (single/batch; outputs id, status, raw_scores, score_type, thr
 
 ## Key interfaces (to be frozen at the data gate)
 
-- **Record**: `doc_id: str`, `split_released: {train,dev,test}`, `source_file`, `line_no`, `raw_labels: str`, `source_labels: list[str]` (set semantics, schema order), `text_sha256`, `norm_sha256`, `n_ws_words`, `status`.
+- **Record** (implemented in `data/ingest.py`, PR #14): `doc_id: str`, `split` (the *released* split), `source_file`, `line_no`, `raw_labels: str`, `labels: tuple[str, ...]` (these are the source labels: set semantics, schema order), `unknown_codes`, `text`, `text_sha256`, `n_ws_words`, `status` (MALFORMED > UNKNOWN_CODE > EMPTY_INPUT > OK), `issue`. The normalised fingerprint (`norm_sha256`) is added by deduplication (#6); `analysis_labels` are derived per task, never stored on the Record.
 - **Prediction row**: `run_id`, `doc_id`, `task`, `split`, `cohort`, `status`, `scores: list[float]` (schema order), `score_type: {probability, svm_margin, prevalence}`, `threshold(s)`, `pred_labels`, `gold_labels` (evaluation files only; never in inference input).
 - **Config**: pydantic v2 models with `extra="forbid"`, plus validators for invalid combinations (e.g. `score_type=svm_margin` with calibration metrics).
 

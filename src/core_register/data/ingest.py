@@ -5,7 +5,11 @@ three tab-separated fields ``labels <TAB> id <TAB> text``, UTF-8, no header,
 no quoting. The file is read in binary and split on ``\\n`` only, so other
 characters (e.g. ``\\r``, U+2028) can never start a new record. The text is
 everything after the second tab and is preserved byte-for-byte; a trailing
-``\\r`` before the newline is treated as line-ending, not text.
+``\\r`` before the newline is treated as line-ending, not text. A bare ``\\r``
+inside a line stays in the text (the stdlib reference audit, which reads in text
+mode, would split there instead; the released corpus contains none, as checked in
+the PR #14 review). Document IDs are not format-checked beyond being non-empty:
+all released IDs are 7-digit strings (Phase 1 audit).
 """
 
 from __future__ import annotations
@@ -22,10 +26,15 @@ from core_register.data.labels import LabelSchema, parse_label_string
 
 
 class Status(StrEnum):
+    """Row status, in order of precedence (first matching rule wins)."""
+
+    MALFORMED = "MALFORMED"  # not UTF-8, fewer than 3 tab-separated fields, or empty ID field
+    UNKNOWN_CODE = "UNKNOWN_CODE"  # label problem: a code not in the schema, or no code at all
+    EMPTY_INPUT = "EMPTY_INPUT"  # text empty or whitespace-only: never classified
     OK = "OK"
-    EMPTY_INPUT = "EMPTY_INPUT"  # well-formed row with empty text: never classified
-    UNKNOWN_CODE = "UNKNOWN_CODE"  # label field empty or contains a code not in the schema
-    MALFORMED = "MALFORMED"  # not UTF-8, or fewer than 3 tab-separated fields
+
+
+_MAX_ISSUE_CHARS = 80  # issue strings may echo label tokens; keep them short in any manifest
 
 
 @dataclass(frozen=True)
@@ -67,12 +76,15 @@ def iter_records(path: Path, split: Split, schema: LabelSchema) -> Iterator[Reco
                 yield _malformed(path, split, line_no, f"{len(parts)} tab-separated field(s), expected 3")
                 continue
             raw_labels, doc_id, text = parts
+            if doc_id == "":
+                yield _malformed(path, split, line_no, "empty document ID field")
+                continue
             parsed = parse_label_string(raw_labels, schema)
             if parsed.unknown or not parsed.labels:
-                status, issue = Status.UNKNOWN_CODE, (
-                    f"unknown codes: {list(parsed.unknown)}" if parsed.unknown else "empty label field"
-                )
-            elif text == "":
+                status = Status.UNKNOWN_CODE
+                issue = f"unknown codes: {list(parsed.unknown)}" if parsed.unknown else "no label code"
+                issue = issue[:_MAX_ISSUE_CHARS]
+            elif text.strip() == "":
                 status, issue = Status.EMPTY_INPUT, ""
             else:
                 status, issue = Status.OK, ""

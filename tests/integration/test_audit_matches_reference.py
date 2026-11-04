@@ -43,6 +43,7 @@ def test_global_counts_match_reference(audits) -> None:  # type: ignore[no-untyp
     assert og["unique_ids"] == rg["unique_ids"]
     assert og["duplicate_ids"] == len(rg["duplicate_ids"]) == 0
     assert og["n_distinct_label_sets"] == rg["n_distinct_combinations"] == 455
+    # The reference JSON stores only label *sets*; the 460 raw strings were counted in Phase 1 (ISS-003).
     assert og["n_distinct_raw_label_strings"] == 460
     assert og["code_counts"] == rg["code_counts"]
     assert og["n_observed_codes"] == rg["n_observed_codes"] == 56
@@ -58,4 +59,10 @@ def test_split_counts_match_reference(audits, split: str) -> None:  # type: igno
         assert os_.get(key, 0) == rs.get(key, 0), key
     assert os_.get("status_MALFORMED", 0) == 0 and os_.get("status_UNKNOWN_CODE", 0) == 0
     assert os_["status_EMPTY_INPUT"] == rs["empty_text"]
-    assert ours["splits"][split]["whitespace_words_total"] == ref["splits"][split]["whitespace_word_count"]["total"]
+    ref_ws, our_split = ref["splits"][split]["whitespace_word_count"], ours["splits"][split]
+    assert our_split["whitespace_words_total"] == ref_ws["total"]
+    assert our_split["whitespace_words_max"] == ref_ws["max"]
+    assert our_split["code_counts"] == ref["splits"][split]["code_counts"]
+    assert our_split["n_distinct_label_sets"] == ref["splits"][split]["n_distinct_combinations"]
+    statuses = sum(v for k, v in os_.items() if k.startswith("status_"))
+    assert statuses == rs["lines"], "every physical line gets exactly one status"

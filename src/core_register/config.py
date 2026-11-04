@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, field_validator, model_validator
 
 Split = Literal["train", "dev", "test"]
 SPLITS: tuple[Split, ...] = ("train", "dev", "test")
@@ -31,7 +31,7 @@ class DataConfig(StrictModel):
     expected_sha256: dict[str, str] = Field(description="file name -> lowercase hex sha256")
     legend_file: str = "register_label_abbreviations.txt"
     label_schema: Path
-    verify_hashes: bool = True
+    verify_hashes: StrictBool = True  # a YAML string such as "yes" is rejected, not coerced
 
     @field_validator("expected_sha256")
     @classmethod
@@ -46,6 +46,12 @@ class DataConfig(StrictModel):
         missing_splits = set(SPLITS) - set(self.files)
         if missing_splits:
             raise ValueError(f"files is missing splits: {sorted(missing_splits)}")
+        names = [*self.files.values(), self.legend_file]
+        if len(set(names)) != len(names):
+            raise ValueError(f"each split and the legend must use a distinct file: {names}")
+        stray = sorted(set(self.expected_sha256) - set(names))
+        if stray:
+            raise ValueError(f"expected_sha256 has entries for unconfigured files: {stray}")
         if self.verify_hashes:
             unhashed = [f for f in (*self.files.values(), self.legend_file) if f not in self.expected_sha256]
             if unhashed:
