@@ -33,4 +33,4 @@ thresholds:
   per_label_shrinkage: 0.5    # per-label threshold moved halfway back toward the global one
 selection_metric: macro_f1
 seed: 20261105
-n_jobs: 4
+n_jobs: 1                     # sequential: threaded liblinear/scipy crashed (ISS-013), process backend fails (ISS-012)

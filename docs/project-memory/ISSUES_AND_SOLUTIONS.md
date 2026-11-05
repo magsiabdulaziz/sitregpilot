@@ -56,3 +56,8 @@
 - **Symptom:** the first B0–B2 run (`T1_lexical_20261105T083601-bb63f2a`) failed at its first `OneVsRestClassifier(..., n_jobs=4).fit` with `ValueError: WRITEBACKIFCOPY base is read-only`.
 - **Root cause:** confirmed. joblib's default process backend memory-maps large arrays read-only for workers, and scikit-learn's liblinear wrapper needs a writable copy. Small arrays are not memory-mapped, so unit tests with tiny data and `n_jobs=1` did not catch it.
 - **Resolution:** fit under `joblib.parallel_config(backend="threading")`; liblinear releases the GIL. Failed runs now write `FAILED.json`, and one was recorded for the first run.
+
+## ISS-013: Native access violation with threaded one-vs-rest fits
+- **Symptom:** the B0–B2 run `T1_lexical_20261105T083932-bb63f2a` completed 12 of 48 settings, then crashed with `Windows fatal exception: access violation` in a `multiprocessing.pool` thread worker inside `scipy.sparse._compressed.sum_duplicates` (faulthandler log saved as `stderr.log` in the run folder). The earlier run `…083748…` exited with code 5 and no traceback, probably the same kind of crash (UNVERIFIED).
+- **Root cause:** UNKNOWN at C level. Concurrent native code (liblinear and scipy sparse) running in threads under the joblib threading backend introduced for ISS-012. The process backend fails with ISS-012.
+- **Resolution:** `n_jobs: 1` (sequential fits). Slower, but no concurrency. Failed runs carry `FAILED.json`.
