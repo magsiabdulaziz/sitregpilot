@@ -95,3 +95,13 @@ Times are not reliably recorded; dates are from the session environment.
 - v1.0.0 extraction: 48,435 parsed in 3,180 s, 0 failures. MATTR-500 missing in 38.7% of train and 37.3% of dev (flagged to the owner).
 - PR #21 review round 1: Changes required. Majors: relative 'that'/'which' counted as demonstrative pronouns (41% of PRON demonstratives in a train sample were WDT); the §4 linguistic normalisation (NFC, control characters) was not applied; §6 items missing (SD of sentence length, possessive determiners, passive definition, nominalisation exclusion list, 60-doc inspection sample). Minors: '?' before a closing quote missed; hard-coded failure count; 'mine' (ADJ) missed; memory not updated.
 - Fixes (registry 1.1.0, extractor 1.1.0): DT-tag requirement for demonstratives; NFC plus C0 control-character replacement with per-document counts; `sd_sent_len` (from n_sent_len_sq), `poss_det` (PRP$); passive = VBN heads with an auxpass/nsubjpass dependent; nominalisation exclusion list; closing-punctuation skip for questions; possessive pronouns tagged ADJ; curly 'll/'d; cache key now includes the spaCy version and disabled pipes; measured failure count; 60-doc train-only inspection sample (pending human review). 76 tests pass. Re-extraction running.
+
+## 2026-11-05: #19 completion recorded (fixes the stale notes flagged in the #21 review); PR #21 merged
+- v1.1.0 extraction finished: 48,435 parsed in 3,221 s, 0 failures, cache sha f7e7bb99…; 78 tests passed. Review round 2 Ready. The owner said "merge #21" → `6318d93` (tree verified; #19 closed).
+
+## 2026-11-05: #20 CPU baselines B0–B4 (dev only)
+- Run failures: (1) ISS-012 read-only memmap with liblinear; (2) silent exit 5 (probably native); (3) ISS-013 access violation in threaded fits after 12/48 settings. Fixed by sequential fits (`n_jobs: 1`); threaded results were also not reproducible. All failed runs carry FAILED.json.
+- B0–B2 run `20261105T084605-5bb8e61` (clean commit): 48 settings, 1,595 s, peak 1.97 GB. Dev macro-F1: B1 LogReg 0.610 (200k, 1–2-grams, C 10, balanced), B2 SVM 0.605 (200k, 1–2-grams, C 1); B0 most-frequent set 0.077.
+- B3/B4 run `20261105T091306-c9d153b` (clean commit): 5,514 s, peak 2.45 GB. B3 linguistic 0.479 (C 0.1); B4 combined 0.613 (α 0.5; α 0.5/1/2 give 0.6131/0.6131/0.6130; α = 2 took 55 min with no convergence warning).
+- `reports/baselines/T1_dev_summary.md` is generated from the JSON reports. All dev numbers are optimistic (thresholds and selection both on dev). The test set was not touched.
+- Observations for the owner: the B1/B2 optimum is at the edge of the D-09 grid (largest vocabulary); B3's strongest SP predictor is the MATTR missing indicator (a document-length signal).

@@ -103,6 +103,66 @@ class SplitConfig(StrictModel):
         return self
 
 
+class LexicalConfig(StrictModel):
+    unicode: Literal["NFKC", "NFC"] = "NFKC"
+    lowercase: StrictBool = True
+    mask_urls_emails: StrictBool = True
+    token_pattern: str = r"(?u)\b\w\w+\b"
+
+
+class TfidfGrid(StrictModel):
+    max_features: list[int]
+    ngram_range: list[tuple[int, int]]
+    min_df: int = Field(ge=1)
+
+
+class LinearGrid(StrictModel):
+    C: list[float]
+    class_weight: list[Literal["balanced"] | None]
+
+
+class Range(StrictModel):
+    start: float
+    stop: float
+    step: float = Field(gt=0)
+
+
+class ThresholdConfig(StrictModel):
+    probability_grid: Range
+    margin_quantiles: Range
+    per_label_min_dev_positives: int = Field(ge=1)
+    per_label_shrinkage: float = Field(ge=0.0, le=1.0)
+
+
+class LinguisticModelConfig(StrictModel):
+    feature_cache_report: Path
+    imputation: Literal["median"]
+    scaling: Literal["robust"]
+    logreg_grid: LinearGrid
+    combined_alpha: list[float]
+
+
+class BaselineExperimentConfig(StrictModel):
+    """B0-B4 baselines (D-09). Development partitions only."""
+
+    task: Literal["T1"]
+    cohort: Literal["functional"]
+    window_words: int = Field(ge=1)
+    lexical: LexicalConfig
+    tfidf_grid: TfidfGrid
+    logreg_grid: LinearGrid
+    svm_grid: LinearGrid
+    linguistic: LinguisticModelConfig
+    thresholds: ThresholdConfig
+    selection_metric: Literal["macro_f1"]
+    seed: int
+    n_jobs: int = Field(ge=1, le=8)
+
+
+def load_baseline_config(path: Path) -> BaselineExperimentConfig:
+    return BaselineExperimentConfig.model_validate(_load_yaml_mapping(path))
+
+
 def load_split_config(path: Path) -> SplitConfig:
     return SplitConfig.model_validate(_load_yaml_mapping(path))
 

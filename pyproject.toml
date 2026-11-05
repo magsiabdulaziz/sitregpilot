@@ -52,8 +52,9 @@ strict = true
 files = ["src/core_register"]
 
 [[tool.mypy.overrides]]
-module = ["datasketch", "datasketch.*"]
-ignore_missing_imports = true
+module = ["datasketch", "datasketch.*", "sklearn", "sklearn.*", "joblib", "joblib.*", "pandas", "pandas.*",
+          "psutil", "psutil.*"]
+ignore_missing_imports = true  # no bundled type stubs; adding stub packages would be a new dependency
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
