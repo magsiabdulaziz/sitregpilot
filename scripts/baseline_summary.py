@@ -51,6 +51,8 @@ def main() -> None:
         "Task T1: 8 main registers, multilabel; functional cohort; controlled split. "
         f"Train n = {lex['run']['n_train']:,}, dev n = {lex['run']['n_dev']:,}.",
         "Conventions: zero_division = 0; samples-F1 counts empty-vs-empty as 1; AP = step-wise average precision.",
+        "**No significance testing has been done.** Differences between models (e.g. B4 vs B1) are untested point",
+        "estimates on dev; paired bootstrap intervals are computed only in Phase 5.",
         "",
         "| Model | macro-F1 | micro-F1 | weighted-F1 | samples-F1 | exact set | macro-AP | selected settings |",
         "|---|---|---|---|---|---|---|---|",

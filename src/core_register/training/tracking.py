@@ -18,8 +18,11 @@ def git_state() -> dict[str, Any]:
     def run(*args: str) -> str:
         return subprocess.run(["git", *args], capture_output=True, text=True, check=False).stdout.strip()
 
+    # dirty = modified tracked files, or untracked files under the code/config paths that a run can import or read
+    tracked = run("status", "--porcelain", "--untracked-files=no")
+    untracked = run("status", "--porcelain", "--untracked-files=all", "--", "src", "configs", "scripts", "schemas")
     return {"commit": run("rev-parse", "HEAD"), "branch": run("branch", "--show-current"),
-            "dirty": bool(run("status", "--porcelain", "--untracked-files=no"))}
+            "dirty": bool(tracked or untracked)}
 
 
 def environment() -> dict[str, Any]:

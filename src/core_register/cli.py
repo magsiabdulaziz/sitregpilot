@@ -182,9 +182,8 @@ def _run_baselines(args: argparse.Namespace, cfg: Any, exp: Any, hashes: dict[st
             fresh = (reloaded.predict_proba(dev.texts) if family == "logreg"
                      else reloaded.decision_function(dev.texts))
             parity = bool(np.allclose(fresh, cand.dev_scores, atol=1e-6))
-            if not parity:
-                print(f"error: save/load parity failed for {family}", file=sys.stderr)
-                return 4
+            if not parity:  # raise so the caller records FAILED.json (same as the B3/B4 path)
+                raise RuntimeError(f"save/load parity failed for {family}")
             preds = cand.thresholds.apply(cand.dev_scores)
             frame = pd.DataFrame({"doc_id": dev.doc_ids})
             for j, lab in enumerate(dev.labels):
