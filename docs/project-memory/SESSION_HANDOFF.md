@@ -3,15 +3,15 @@
 _Updated: 2026-11-05_
 
 ## Current Objective
-M2 / Phase 3: finish #20 (CPU baselines B0–B4 on dev; PR open). Then: decide the Phase 3b dev analyses and the Phase 4 scope with the owner.
+Phase 3b (D-15–D-17): #23 decision records → #24 vocabulary pilot/expansion → #25 full-document TF-IDF → #26 ablation + template diagnostic. Dev only; Phase 4 deferred.
 
 ## Last Verified State
-- `main` = `6318d93` (PRs #10, #12–#18, #21 merged; protected, DEC-006). Repo public. Gate C approved. Features v1.1.0 on main.
+- `main` = `f8c6ace` (PRs #10, #12–#18, #21, #22 merged; protected, DEC-006). Repo public. Gate C approved. Features v1.1.0 and baselines B0–B4 on main.
 - Data contracts on `main`: `audit`, `dedup`, `split` CLIs. Sealed split manifest `data/manifests/splits/split_manifest.csv` (sha in `reports/splits/split_report.json`); controlled train 33,870 / dev 4,843 / test 9,686; 53 excluded.
 - **Test set is sealed: no model work may look at test results until Phase 5.**
 
 ## Active Task
-TASK-021 / #20 on `feature/issue-20-baselines`: B0–B4 runs complete; PR → independent review → owner merge.
+TASK-022 / #23 on `docs/issue-23-phase3b-decisions`; then #24 (pilot first; stop if > 12 GB or > 3× fit time).
 
 ## Current Git Context
 See [PR_TRACKER](PR_TRACKER.md). Merges need an explicit per-PR owner instruction in chat; the harness blocked the standing-instruction merge.
@@ -29,9 +29,9 @@ ISS-001 (complementary study PDF, #9/#11).
 Merge of the #20 PR. Owner awareness: MATTR missing ~38%; B1/B2 optimum at the D-09 grid edge; length signal in B3. `/CLAUDE.md` line 3 wording (owner's file).
 
 ## Next Actions
-1. PR #22: delta re-review, then the owner's merge decision.
-2. Ask the owner about Phase 3b dev analyses (feature-family ablations, template-seen dev diagnostic, full-text TF-IDF ablation B6) and Phase 4 scope; a D-09 grid-edge widening would need approval.
-3. Keep test results sealed until Phase 5.
+1. #23 PR → review → owner merge.
+2. #24 pilot (training-only), then the 12 new settings if it passes; record the D-16 outcome.
+3. #25, then #26. Test stays sealed; every run is logged, failures included.
 
 ## Resume Instructions
 `git -C D:\SitRegPilot status --branch`; `& "C:\Program Files\GitHub CLI\gh.exe" pr list -R magsiabdulaziz/sitregpilot`; reconcile PR_TRACKER; `.venv\Scripts\python.exe -m pytest -m "not requires_corpus"` (fast) or a full run (~5 min with the corpus).
