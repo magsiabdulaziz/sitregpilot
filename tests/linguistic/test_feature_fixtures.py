@@ -74,9 +74,9 @@ def test_imperatives(counts) -> None:  # type: ignore[no-untyped-def]
 
 def test_nominalisation_and_modification(counts) -> None:  # type: ignore[no-untyped-def]
     c = counts("The organization of the government requires careful management and transparency.")
-    # organization (-tion), government (-ment), management (-ment); transparency (-ency) is not in the list.
-    # 'government' shows that the rule is a string heuristic: it is not a deverbal nominalisation in the strict sense.
-    assert n(c, "n_nominalisation") == 3
+    # organization (-tion), management (-ment). 'government' is on the exclusion list; transparency (-ency) has no
+    # listed suffix.
+    assert n(c, "n_nominalisation") == 2
     assert n(c, "n_amod") >= 1
     # boundary: short words ending in a suffix are not counted (len >= 7)
     assert n(counts("The city is nice."), "n_nominalisation") == 0
@@ -85,6 +85,32 @@ def test_nominalisation_and_modification(counts) -> None:  # type: ignore[no-unt
 def test_clause_proxies(counts) -> None:  # type: ignore[no-untyped-def]
     c = counts("The man who called yesterday said that he wanted to come because it was late.")
     assert (n(c, "n_relcl"), n(c, "n_advcl"), n(c, "n_ccomp_xcomp")) == (1, 1, 2)
+
+
+def test_relative_that_and_which_are_not_demonstratives(counts) -> None:  # type: ignore[no-untyped-def]
+    c = counts("The report that she wrote was long. The car which he bought is red.")
+    assert n(c, "n_dem_pron") + n(c, "n_dem_det") == 0
+    assert n(c, "n_relcl") == 2
+
+
+def test_question_inside_closing_quote_is_counted(counts) -> None:  # type: ignore[no-untyped-def]
+    c = counts('He asked, "Why did you leave?" She said nothing.')
+    assert n(c, "n_qmark_sents") == 1
+
+
+def test_possessives(counts) -> None:  # type: ignore[no-untyped-def]
+    c = counts("My bag is here. The red one is mine. Their house is near our school.")
+    assert n(c, "n_poss_det") == 3  # my, their, our
+    assert n(c, "n_pron_1sg") == 2  # my, mine (mine is tagged ADJ by this model)
+    assert n(c, "n_pron_1pl") == 1 and n(c, "n_pron_3") == 1
+
+
+def test_sentence_length_sd_inputs(counts) -> None:  # type: ignore[no-untyped-def]
+    from core_register.features.extract import features_from_counts
+
+    c = counts("Go now. The committee approved the final budget today.")  # sentence lengths 2 and 7
+    assert n(c, "n_sents") == 2 and n(c, "n_sent_len_sq") == 4 + 49
+    assert features_from_counts(c)["sd_sent_len"] == pytest.approx(2.5)
 
 
 def test_punctuation_is_not_counted_as_a_word(counts) -> None:  # type: ignore[no-untyped-def]

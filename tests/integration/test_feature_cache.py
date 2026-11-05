@@ -36,9 +36,11 @@ def test_cache_matches_report_and_manifest() -> None:
 
 
 def test_every_cached_row_yields_all_features() -> None:
+    with (ROOT / "data/manifests/splits/split_manifest.csv").open(encoding="utf-8", newline="") as f:
+        train_dev = {r["doc_id"] for r in csv.DictReader(f) if r["controlled_partition"] in ("train", "dev")}
     rows = read_cache(CACHE)
     ids = feature_ids()
-    for row in list(rows.values())[:2000]:
+    for row in [r for r in rows.values() if r["doc_id"] in train_dev][:2000]:  # never touch test rows
         feats = features_from_counts(row["counts"])
         assert list(feats) == ids
         assert all(isinstance(v, float) and (math.isnan(v) or v >= 0) for v in feats.values())

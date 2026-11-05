@@ -15,7 +15,9 @@ from core_register.features.extract import (
     features_from_counts,
     make_window,
     mattr,
+    normalize_for_linguistics,
     read_cache,
+    sd_sentence_length,
 )
 from core_register.features.registry import ALL_FEATURES, render_dictionary, validate_registry
 
@@ -43,6 +45,17 @@ def test_mattr_hand_computed() -> None:
     assert math.isnan(mattr(["a"] * 10, window=20))
     assert mattr(list("abcd"), window=2) == pytest.approx(1.0)  # every window has 2 types
     assert mattr(list("aabb"), window=2) == pytest.approx((1 + 2 + 1) / (3 * 2))
+
+
+def test_linguistic_normalisation_replaces_and_counts_control_characters() -> None:
+    text = "Café\u0007 menu\u0014 here\tok\n"
+    clean, n_control = normalize_for_linguistics(text)
+    assert clean == "Café  menu  here\tok\n"  # NFC composes e + combining acute; BEL and U+0014 -> space
+    assert n_control == 2
+
+
+def test_sd_sentence_length_missing_below_two_sentences() -> None:
+    assert math.isnan(sd_sentence_length({"n_sents": 1.0, "n_tokens_nonpunct": 5.0, "n_sent_len_sq": 25.0}))
 
 
 def test_window_keeps_case_and_flags_truncation() -> None:

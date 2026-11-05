@@ -5,30 +5,33 @@
     "test.tsv.gz": "8fb92b68ce0ec6ae33dfdee852467e81d05b3a287829088bb20c5edf75e2bec5",
     "register_label_abbreviations.txt": "33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d"
   },
-  "extractor_version": "1.0.0+registry1.0.0",
-  "registry_version": "1.0.0",
-  "spacy_model": "en_core_web_sm-3.8.0",
+  "extractor_version": "1.1.0+registry1.1.0",
+  "registry_version": "1.1.0",
+  "spacy_model": "en_core_web_sm-3.8.0@spacy3.8.18~disabled:ner-senter",
   "spacy_version": "3.8.18",
   "disabled_pipes": [
     "ner"
   ],
   "window_ws_words": 1000,
   "cache": {
-    "path": "artifacts/features/1.0.0+registry1.0.0/counts.jsonl",
-    "sha256": "4e4547710dfae657c24a048eca7543f7bfca4694c81e7337f906b61c7c5878ff",
+    "path": "artifacts/features/1.1.0+registry1.1.0/counts.jsonl",
+    "sha256": "f7e7bb9910eca043d59302449e5370bc97a8c13851ebce80c10b520c873df4c4",
     "rows": 48435
   },
   "run": {
     "parsed": 48435,
-    "seconds": 3180.1,
+    "seconds": 3220.7,
     "n_process": 1,
-    "batch_size": 32
+    "batch_size": 32,
+    "config_rationale": "reports/profiling/spacy_profile.json: 3 processes gave only +5% throughput (14.6 vs 13.9 docs/s) for +70% memory, so 1 process was used"
   },
   "extraction_failures": 0,
+  "linguistic_normalisation": "NFC; C0 control characters except tab/LF/CR replaced by a space (methodology \u00a74)",
   "controlled_train_dev": {
     "train": {
       "n_extracted": 33870,
-      "n_truncated": 10226,
+      "n_truncated": 10223,
+      "n_docs_with_control_chars_replaced": 502,
       "missing_rate": {
         "pos_noun": 0.0,
         "pos_propn": 0.0,
@@ -47,6 +50,7 @@
         "pron_2": 0.0,
         "pron_3": 0.0,
         "pron_it": 0.0,
+        "poss_det": 0.0,
         "dem_pron": 0.0,
         "dem_det": 0.0,
         "past_tense": 0.0002,
@@ -70,12 +74,14 @@
         "comp_per_clause": 0.0002,
         "amod_per_noun": 0.0,
         "nominalisation": 0.0,
+        "sd_sent_len": 0.0006,
         "mattr_500": 0.3872
       }
     },
     "dev": {
       "n_extracted": 4843,
       "n_truncated": 1498,
+      "n_docs_with_control_chars_replaced": 70,
       "missing_rate": {
         "pos_noun": 0.0,
         "pos_propn": 0.0,
@@ -94,6 +100,7 @@
         "pron_2": 0.0,
         "pron_3": 0.0,
         "pron_it": 0.0,
+        "poss_det": 0.0,
         "dem_pron": 0.0,
         "dem_det": 0.0,
         "past_tense": 0.0,
@@ -117,6 +124,7 @@
         "comp_per_clause": 0.0,
         "amod_per_noun": 0.0,
         "nominalisation": 0.0,
+        "sd_sent_len": 0.0006,
         "mattr_500": 0.3725
       }
     }

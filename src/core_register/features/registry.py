@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-REGISTRY_VERSION = "1.0.0"
+REGISTRY_VERSION = "1.1.0"
 
 PER_1K = 1000.0
 NONPUNCT = "n_tokens_nonpunct"  # tokens that are not punctuation, space or symbol-only
@@ -67,9 +67,11 @@ FEATURES: tuple[FeatureSpec, ...] = (
                 ambiguities="excludes 'it' (separate feature)"),
     FeatureSpec("pron_it", "pronoun", "pronoun 'it' (inexplicit reference)", "n_pron_it", NONPUNCT,
                 ambiguities="anaphoric vs dummy 'it' are not separated"),
+    FeatureSpec("poss_det", "pronoun", "possessive determiners (my, your, its ...)", "n_poss_det", NONPUNCT,
+                ambiguities="PTB tag PRP$; also pooled into the person counts above (not exclusive)"),
     FeatureSpec("dem_pron", "pronoun", "demonstrative pronoun", "n_dem_pron", NONPUNCT,
-                ambiguities="relies on the PRON vs DET tag for this/that/these/those; "
-                            "'that' complementiser excluded by tag"),
+                ambiguities="this/that/these/those with tag DT and POS PRON; relative 'that'/'which' (WDT) and "
+                            "complementiser 'that' (IN) excluded"),
     FeatureSpec("dem_det", "pronoun", "demonstrative determiner", "n_dem_det", NONPUNCT),
     # --- verbs
     FeatureSpec("past_tense", "verb", "narration (past orientation)", "n_tense_past", FINITE,
@@ -87,7 +89,8 @@ FEATURES: tuple[FeatureSpec, ...] = (
                 ambiguities="auxiliary 'be' child of a VBG head; overlaps going-to future; passive progressive "
                             "('is being painted') counts as passive only"),
     FeatureSpec("passive", "verb", "impersonal / agentless style", "n_passive", FINITE,
-                ambiguities="auxpass or nsubjpass dependency; get-passives partly missed"),
+                ambiguities="one per VBN head with an auxpass or nsubjpass dependent (be + VBN passives as parsed); "
+                            "get-passives and reduced passives partly missed"),
     FeatureSpec("imperative_sent", "verb", "directive / instruction", "n_imperative_sents", SENTS,
                 ambiguities="heuristic: first word after any leading ADV/INTJ/CCONJ is a base-form verb (VB) with no "
                             "subject; titles and fragments give false positives"),
@@ -113,8 +116,15 @@ FEATURES: tuple[FeatureSpec, ...] = (
     FeatureSpec("amod_per_noun", "dependency", "prenominal adjectival modification", "n_amod", NOUNS, scale=1.0),
     # --- nominalisation
     FeatureSpec("nominalisation", "lexical", "abstraction (nominalisation)", "n_nominalisation", NONPUNCT,
-                ambiguities="NOUN ending -tion/-sion/-ment/-ness/-ity, length >= 7; string match, not morphology"),
+                ambiguities="NOUN ending -tion/-sion/-ment/-ness/-ity, length >= 7, minus an explicit exclusion "
+                            "list of concrete/non-deverbal nouns (extract.NOMINAL_EXCLUSIONS); string match, "
+                            "not morphology"),
 )
+
+# Computed from stored counts (n_sent_len_sq, n_tokens_nonpunct, n_sents), not a simple ratio.
+SD_SENT_LEN = FeatureSpec("sd_sent_len", "density", "variability of sentence length", "n_sent_len_sq", SENTS,
+                          scale=1.0, min_denominator=2,
+                          ambiguities="population SD over sentences; missing with fewer than 2 sentences")
 
 # MATTR is not a ratio of stored counts: it is computed by the extractor over the lowercased non-punct tokens.
 MATTR_WINDOW = 500
@@ -122,7 +132,7 @@ MATTR = FeatureSpec("mattr_500", "diversity", "lexical diversity (moving-average
                     "n_tokens_nonpunct", scale=1.0, min_denominator=MATTR_WINDOW,
                     ambiguities="missing below 500 non-punct tokens; tokenisation-dependent")
 
-ALL_FEATURES: tuple[FeatureSpec, ...] = (*FEATURES, MATTR)
+ALL_FEATURES: tuple[FeatureSpec, ...] = (*FEATURES, SD_SENT_LEN, MATTR)
 
 
 def render_dictionary() -> str:

@@ -132,7 +132,13 @@ def _cmd_features(args: argparse.Namespace) -> int:
 
     import spacy
 
-    from core_register.features.extract import EXTRACTOR_VERSION, extract_to_cache, feature_ids, features_from_counts
+    from core_register.features.extract import (
+        EXTRACTOR_VERSION,
+        extract_to_cache,
+        feature_ids,
+        features_from_counts,
+        model_signature,
+    )
     from core_register.features.extract import read_cache as read_feature_cache
     from core_register.features.registry import REGISTRY_VERSION, validate_registry
 
@@ -144,10 +150,12 @@ def _cmd_features(args: argparse.Namespace) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     with args.split_manifest.open(encoding="utf-8", newline="") as f:
-        partition = {r["doc_id"]: r["controlled_partition"] for r in csv.DictReader(f)}
+        manifest = list(csv.DictReader(f))
+    partition = {r["doc_id"]: r["controlled_partition"] for r in manifest}
+    ok_ids = {r["doc_id"] for r in manifest if r["status"] == "OK"}
     schema = load_label_schema(cfg.label_schema)
     nlp = spacy.load("en_core_web_sm", disable=["ner"])
-    model = f"{nlp.meta['lang']}_{nlp.meta['name']}-{nlp.meta['version']}"
+    model = model_signature(nlp)
     cache = args.cache_dir / EXTRACTOR_VERSION / "counts.jsonl"
 
     def docs() -> Iterator[tuple[str, str]]:
@@ -171,6 +179,7 @@ def _cmd_features(args: argparse.Namespace) -> int:
         summary[part] = {
             "n_extracted": len(ids),
             "n_truncated": sum(rows[i]["truncated"] for i in ids),
+            "n_docs_with_control_chars_replaced": sum(rows[i]["n_control_chars_replaced"] > 0 for i in ids),
             "missing_rate": {k: round(v / len(ids), 4) for k, v in missing.items()} if ids else {},
         }
     n_test = sum(1 for i, p in partition.items() if p == "test" and i in rows)
@@ -184,8 +193,12 @@ def _cmd_features(args: argparse.Namespace) -> int:
         "window_ws_words": args.window_words,
         "cache": {"path": cache.as_posix(), "sha256": sha256_file(cache), "rows": len(rows)},
         "run": {**stats, "seconds": round(time.perf_counter() - start, 1),
-                "n_process": args.n_process, "batch_size": args.batch_size},
-        "extraction_failures": 0,
+                "n_process": args.n_process, "batch_size": args.batch_size,
+                "config_rationale": "reports/profiling/spacy_profile.json: 3 processes gave only +5% throughput "
+                                    "(14.6 vs 13.9 docs/s) for +70% memory, so 1 process was used"},
+        # measured: OK documents in the sealed manifest that have no cache row
+        "extraction_failures": len(ok_ids - set(rows)),
+        "linguistic_normalisation": "NFC; C0 control characters except tab/LF/CR replaced by a space (methodology §4)",
         "controlled_train_dev": summary,
         "controlled_test": {"n_extracted": n_test, "note": "sealed: no descriptive statistics reported"},
     }

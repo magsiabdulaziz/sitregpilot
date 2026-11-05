@@ -8,8 +8,10 @@ and audited. Cache key = sha256(window text) + extractor version + spaCy model v
 from __future__ import annotations
 
 import hashlib
+import importlib.metadata
 import json
 import math
+import unicodedata
 from collections import Counter
 from collections.abc import Iterable, Iterator
 from pathlib import Path
@@ -20,7 +22,7 @@ from spacy.tokens import Doc, Token
 
 from core_register.features.registry import ALL_FEATURES, FEATURES, MATTR_WINDOW, REGISTRY_VERSION
 
-EXTRACTOR_VERSION = f"1.0.0+registry{REGISTRY_VERSION}"
+EXTRACTOR_VERSION = f"1.1.0+registry{REGISTRY_VERSION}"
 
 POS_TAGS = ("NOUN", "PROPN", "VERB", "ADJ", "ADV", "PRON", "DET", "CCONJ", "SCONJ", "ADP", "NUM", "INTJ")
 CONTENT = {"NOUN", "PROPN", "VERB", "ADJ", "ADV"}
@@ -33,15 +35,33 @@ PRONOUNS = {
                  "they", "them", "their", "theirs", "themselves"},
     "n_pron_it": {"it", "its", "itself"},
 }
+POSSESSIVE_PRONOUNS = {"mine", "yours", "ours", "hers", "theirs"}  # often tagged ADJ by en_core_web_sm
 DEMONSTRATIVES = {"this", "that", "these", "those"}
 MODALS = {
     "n_modal_possibility": {"can", "ca", "could", "may", "might"},
     "n_modal_necessity": {"must", "should", "ought"},
-    "n_modal_prediction": {"will", "wo", "would", "shall", "sha", "'ll", "'d"},
+    "n_modal_prediction": {"will", "wo", "would", "shall", "sha", "'ll", "'d", "’ll", "’d"},
 }
 WH_WORDS = {"what", "who", "whom", "whose", "which", "when", "where", "why", "how"}
 NOMINAL_SUFFIXES = ("tion", "sion", "ment", "ness", "ity")
+# Frequent nouns that match a suffix but are not abstract nominalisations (transparent, deliberately short list).
+NOMINAL_EXCLUSIONS = frozenset({
+    "apartment", "basement", "document", "element", "equipment", "garment", "government", "instrument",
+    "moment", "segment", "supplement", "tournament", "university", "community", "city", "electricity",
+    "business", "witness", "wilderness", "nation", "station", "section", "question", "position", "mention",
+    "edition", "region", "religion", "television", "version", "mission", "vision", "session",
+})
 SUBJECT_DEPS = {"nsubj", "nsubjpass", "expl", "csubj", "csubjpass"}
+CLOSING_PUNCT = {'"', "'", "”", "’", ")", "]", "}", "»"}
+# Methodology section 4: control characters (C0 except tab, LF, CR) are replaced by a space and counted.
+_CONTROL = {i: " " for i in range(0x20) if i not in (0x09, 0x0A, 0x0D)}
+
+
+def normalize_for_linguistics(text: str) -> tuple[str, int]:
+    """NFC, then C0 control characters replaced by a space; returns (text, n_replaced). Case is kept."""
+    nfc = unicodedata.normalize("NFC", text)
+    n_control = sum(1 for ch in nfc if ord(ch) in _CONTROL)
+    return nfc.translate(_CONTROL), n_control
 
 
 def make_window(text: str, window_words: int) -> tuple[str, bool]:
@@ -84,11 +104,14 @@ def count_doc(doc: Doc) -> dict[str, float]:
             c[f"n_pos_{t.pos_}"] += 1
         if t.pos_ in CONTENT:
             c["n_content"] += 1
-        if t.pos_ in ("PRON", "DET"):
+        if t.pos_ in ("PRON", "DET") or (t.pos_ == "ADJ" and low in POSSESSIVE_PRONOUNS):
             for key, forms in PRONOUNS.items():
                 if low in forms:
                     c[key] += 1
-        if low in DEMONSTRATIVES:
+        if t.tag_ == "PRP$":
+            c["n_poss_det"] += 1
+        # Demonstratives must carry the DT tag: relative 'that'/'which' (WDT) and complementiser 'that' (IN) excluded
+        if low in DEMONSTRATIVES and t.tag_ == "DT":
             if t.pos_ == "PRON":
                 c["n_dem_pron"] += 1
             elif t.pos_ == "DET":
@@ -108,7 +131,8 @@ def count_doc(doc: Doc) -> dict[str, float]:
             c["n_perfect"] += 1
         if t.dep_ == "aux" and t.lemma_.lower() == "be" and t.head.tag_ == "VBG":
             c["n_progressive"] += 1
-        if t.dep_ == "auxpass":
+        # passive: one per VBN head that has an auxpass or nsubjpass dependent (no double counting)
+        if t.tag_ == "VBN" and any(ch.dep_ in ("auxpass", "nsubjpass") for ch in t.children):
             c["n_passive"] += 1
         if t.dep_ == "neg":
             c["n_neg"] += 1
@@ -120,7 +144,8 @@ def count_doc(doc: Doc) -> dict[str, float]:
             c["n_ccomp_xcomp"] += 1
         if t.dep_ == "amod":
             c["n_amod"] += 1
-        if t.pos_ == "NOUN" and len(low) >= 7 and low.endswith(NOMINAL_SUFFIXES):
+        if (t.pos_ == "NOUN" and len(low) >= 7 and low.endswith(NOMINAL_SUFFIXES)
+                and t.lemma_.lower() not in NOMINAL_EXCLUSIONS and low not in NOMINAL_EXCLUSIONS):
             c["n_nominalisation"] += 1
     c["n_pos_NOUN_PROPN"] = c["n_pos_NOUN"] + c["n_pos_PROPN"]
     for sent in doc.sents:
@@ -128,8 +153,11 @@ def count_doc(doc: Doc) -> dict[str, float]:
         if not toks:
             continue
         c["n_sents"] += 1
-        last = [t for t in sent if not t.is_space]
-        is_q = bool(last) and "?" in last[-1].text
+        c["n_sent_len_sq"] += len(toks) ** 2  # with n_tokens_nonpunct and n_sents gives the SD of sentence length
+        tail = [t for t in sent if not t.is_space]
+        while tail and tail[-1].text in CLOSING_PUNCT:  # 'He asked "why?"': look past closing quotes/brackets
+            tail.pop()
+        is_q = bool(tail) and "?" in tail[-1].text
         if is_q:
             c["n_qmark_sents"] += 1
             first = toks[0]
@@ -144,17 +172,35 @@ def count_doc(doc: Doc) -> dict[str, float]:
     return out
 
 
+def sd_sentence_length(counts: dict[str, float]) -> float:
+    """Population SD of sentence length (non-punct tokens); NaN with fewer than 2 sentences."""
+    n = counts.get("n_sents", 0.0)
+    if n < 2:
+        return math.nan
+    mean = counts.get("n_tokens_nonpunct", 0.0) / n
+    var = counts.get("n_sent_len_sq", 0.0) / n - mean * mean
+    return math.sqrt(max(var, 0.0))
+
+
 def features_from_counts(counts: dict[str, float]) -> dict[str, float]:
     feats: dict[str, float] = {}
     for f in FEATURES:
         den = counts.get(f.denominator, 0.0)
         feats[f.id] = math.nan if den < f.min_denominator else f.scale * counts.get(f.numerator, 0.0) / den
+    feats["sd_sent_len"] = sd_sentence_length(counts)
     feats["mattr_500"] = counts.get("mattr_500", math.nan)
     return feats
 
 
 def feature_ids() -> list[str]:
     return [f.id for f in ALL_FEATURES]
+
+
+def model_signature(nlp: Language) -> str:
+    """Model name and version, spaCy library version, and disabled pipes: all of them affect the counts."""
+    disabled = "-".join(sorted(nlp.disabled)) or "none"
+    return (f"{nlp.meta['lang']}_{nlp.meta['name']}-{nlp.meta['version']}"
+            f"@spacy{importlib.metadata.version('spacy')}~disabled:{disabled}")
 
 
 def cache_key(window_text: str, model_version: str) -> str:
@@ -185,18 +231,22 @@ def extract_to_cache(
     n_process: int = 1,
     batch_size: int = 32,
 ) -> dict[str, int]:
-    """Parse (doc_id, raw text) pairs not yet cached; append one JSON line per document. Resumable."""
-    model_version = f"{nlp.meta['lang']}_{nlp.meta['name']}-{nlp.meta['version']}"
+    """Parse (doc_id, raw text) pairs not yet cached; append one JSON line per document. Resumable.
+
+    Text goes through the methodology section 4 linguistic normalisation (NFC, control characters) before windowing.
+    """
+    model_version = model_signature(nlp)
     cached = read_cache(cache_path)
-    todo: list[tuple[str, str, bool]] = []
+    todo: list[tuple[str, str, bool, int]] = []
     stats = Counter[str]()
     for doc_id, text in docs:
-        window, truncated = make_window(text, window_words)
+        clean, n_control = normalize_for_linguistics(text)
+        window, truncated = make_window(clean, window_words)
         key = cache_key(window, model_version)
         if doc_id in cached and cached[doc_id]["key"] == key:
             stats["cached"] += 1
             continue
-        todo.append((doc_id, window, truncated))
+        todo.append((doc_id, window, truncated, n_control))
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     # An interrupted run can leave a torn final line: start a fresh line so new rows stay parseable.
     if cache_path.is_file() and cache_path.stat().st_size > 0:
@@ -208,16 +258,17 @@ def extract_to_cache(
                 fw.write(b"\n")
 
     def texts() -> Iterator[str]:
-        for _, w, _ in todo:
+        for _, w, _, _ in todo:
             yield w
 
     with cache_path.open("a", encoding="utf-8", newline="\n") as out:
-        for (doc_id, window, truncated), doc in zip(todo, nlp.pipe(texts(), n_process=n_process, batch_size=batch_size),
-                                                    strict=True):
+        parsed = nlp.pipe(texts(), n_process=n_process, batch_size=batch_size)
+        for (doc_id, window, truncated, n_control), doc in zip(todo, parsed, strict=True):
             row = {
                 "doc_id": doc_id,
                 "key": cache_key(window, model_version),
                 "truncated": truncated,
+                "n_control_chars_replaced": n_control,
                 "n_window_ws_words": len(window.split()),
                 "counts": count_doc(doc),
             }
