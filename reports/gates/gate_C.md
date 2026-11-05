@@ -1,6 +1,6 @@
 # Gate C: data contracts (Phase 2)
 
-**Status:** all criteria passed, with evidence below. **Owner sign-off pending** (required before Phase 3).
+**Status:** all criteria passed, with evidence below. **Approved by the owner on 2026-11-05** ("approve gate C"; PR #18 merged as `bb63f2a`).
 Evidence generated 2026-11-05 on branch `test/issue-8-gate-c` (base `main` = `c6eab9b`), Windows, Python 3.14.5.
 
 Gate C (master prompt §16): *hashes stable; all input rows accounted for; no group overlap in the controlled protocol; anomaly decisions logged.*
@@ -48,4 +48,4 @@ Main-register counts after control (train / dev / test / excluded): SP 513/76/14
 - The corpus integration tests run only where the corpus exists; CI checks the committed seal instead.
 
 ## Sign-off
-- [ ] Owner approves gate C, allowing Phase 3 (features and CPU baselines on train/dev only; test stays sealed until Phase 5).
+- [x] Owner approves gate C (2026-11-05), allowing Phase 3 (features and CPU baselines on train/dev only; test stays sealed until Phase 5).

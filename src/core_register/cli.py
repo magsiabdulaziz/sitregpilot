@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import importlib.metadata
 import json
 import sys
 import time
@@ -228,6 +229,87 @@ def _run_baselines(args: argparse.Namespace, cfg: Any, exp: Any, hashes: dict[st
     return 0
 
 
+def _cmd_features(args: argparse.Namespace) -> int:
+    import math
+
+    import spacy
+
+    from core_register.features.extract import (
+        EXTRACTOR_VERSION,
+        extract_to_cache,
+        feature_ids,
+        features_from_counts,
+        model_signature,
+    )
+    from core_register.features.extract import read_cache as read_feature_cache
+    from core_register.features.registry import REGISTRY_VERSION, validate_registry
+
+    validate_registry()
+    cfg = load_data_config(args.config)
+    try:
+        hashes = verify_source_files(cfg)
+    except SourceIntegrityError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    with args.split_manifest.open(encoding="utf-8", newline="") as f:
+        manifest = list(csv.DictReader(f))
+    partition = {r["doc_id"]: r["controlled_partition"] for r in manifest}
+    ok_ids = {r["doc_id"] for r in manifest if r["status"] == "OK"}
+    schema = load_label_schema(cfg.label_schema)
+    nlp = spacy.load("en_core_web_sm", disable=["ner"])
+    model = model_signature(nlp)
+    cache = args.cache_dir / EXTRACTOR_VERSION / "counts.jsonl"
+
+    def docs() -> Iterator[tuple[str, str]]:
+        for split in SPLITS:
+            for rec in iter_records(cfg.split_path(split), split, schema):
+                if rec.status.value == "OK":
+                    yield rec.doc_id, rec.text
+
+    start = time.perf_counter()
+    stats = extract_to_cache(docs(), nlp, cache, args.window_words, n_process=args.n_process,
+                             batch_size=args.batch_size)
+    rows = read_feature_cache(cache)
+    # Descriptive statistics on train and dev only: the test set is sealed (extracted, never inspected).
+    summary: dict[str, Any] = {}
+    for part in ("train", "dev"):
+        ids = [i for i, p in partition.items() if p == part and i in rows]
+        missing = {fid: 0 for fid in feature_ids()}
+        for i in ids:
+            for fid, v in features_from_counts(rows[i]["counts"]).items():
+                missing[fid] += math.isnan(v)
+        summary[part] = {
+            "n_extracted": len(ids),
+            "n_truncated": sum(rows[i]["truncated"] for i in ids),
+            "n_docs_with_control_chars_replaced": sum(rows[i]["n_control_chars_replaced"] > 0 for i in ids),
+            "missing_rate": {k: round(v / len(ids), 4) for k, v in missing.items()} if ids else {},
+        }
+    n_test = sum(1 for i, p in partition.items() if p == "test" and i in rows)
+    report = {
+        "source_sha256": hashes,
+        "extractor_version": EXTRACTOR_VERSION,
+        "registry_version": REGISTRY_VERSION,
+        "spacy_model": model,
+        "spacy_version": importlib.metadata.version("spacy"),
+        "disabled_pipes": ["ner"],
+        "window_ws_words": args.window_words,
+        "cache": {"path": cache.as_posix(), "sha256": sha256_file(cache), "rows": len(rows)},
+        "run": {**stats, "seconds": round(time.perf_counter() - start, 1),
+                "n_process": args.n_process, "batch_size": args.batch_size,
+                "config_rationale": "reports/profiling/spacy_profile.json: 3 processes gave only +5% throughput "
+                                    "(14.6 vs 13.9 docs/s) for +70% memory, so 1 process was used"},
+        # measured: OK documents in the sealed manifest that have no cache row
+        "extraction_failures": len(ok_ids - set(rows)),
+        "linguistic_normalisation": "NFC; C0 control characters except tab/LF/CR replaced by a space (methodology §4)",
+        "controlled_train_dev": summary,
+        "controlled_test": {"n_extracted": n_test, "note": "sealed: no descriptive statistics reported"},
+    }
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
+    print(f"wrote {args.report}; cache {cache}", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="core_register", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -255,6 +337,15 @@ def build_parser() -> argparse.ArgumentParser:
     base.add_argument("--runs-dir", type=Path, default=Path("artifacts/runs"))
     base.add_argument("--report", type=Path, default=Path("reports/baselines/T1_dev_lexical.json"))
     base.set_defaults(func=_cmd_baselines)
+    feats = sub.add_parser("features", help="cached spaCy feature extraction (methodology section 6)")
+    feats.add_argument("--config", type=Path, required=True, help="data config YAML")
+    feats.add_argument("--split-manifest", type=Path, default=Path("data/manifests/splits/split_manifest.csv"))
+    feats.add_argument("--cache-dir", type=Path, default=Path("artifacts/features"))
+    feats.add_argument("--report", type=Path, default=Path("reports/features/extraction_report.json"))
+    feats.add_argument("--window-words", type=int, default=1000, help="D-06 window")
+    feats.add_argument("--n-process", type=int, default=1)
+    feats.add_argument("--batch-size", type=int, default=32)
+    feats.set_defaults(func=_cmd_features)
     return parser
 
 

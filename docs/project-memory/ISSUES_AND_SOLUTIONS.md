@@ -43,6 +43,15 @@
 - **Exposure:** code, docs, audit JSON (CORE doc IDs and labels; CC BY-SA 4.0 annotations), no corpus text.
 - **Resolution:** the owner confirmed on 2026-11-05: **the repository stays public**. Agents do not change visibility.
 
+## ISS-010: spaCy multiprocessing from a stdin script fails on Windows
+- **Symptom:** `nlp.pipe(..., n_process=3)` from `python -` → `OSError: [Errno 22] Invalid argument: 'D:\SitRegPilot\<stdin>'` in spawned workers; the parent hung.
+- **Root cause:** confirmed: Windows `spawn` re-imports the main module from a file path.
+- **Resolution:** run multiprocessing code from a real file with an `if __name__ == "__main__":` guard (`scripts/profile_spacy.py`, `core_register.cli`).
+
+## ISS-011: Torn final cache line swallowed the next row
+- **Symptom:** after an interrupted write, the next appended row joined the torn line and became unparseable (found by `test_cache_is_resumable_and_tolerates_a_torn_line`).
+- **Resolution:** before appending, `extract_to_cache` writes a newline if the file does not end in one. Test passes.
+
 ## ISS-012: liblinear rejects joblib's read-only memory-mapped input
 - **Symptom:** the first B0–B2 run (`T1_lexical_20261105T083601-bb63f2a`) failed at its first `OneVsRestClassifier(..., n_jobs=4).fit` with `ValueError: WRITEBACKIFCOPY base is read-only`.
 - **Root cause:** confirmed. joblib's default process backend memory-maps large arrays read-only for workers, and scikit-learn's liblinear wrapper needs a writable copy. Small arrays are not memory-mapped, so unit tests with tiny data and `n_jobs=1` did not catch it.
