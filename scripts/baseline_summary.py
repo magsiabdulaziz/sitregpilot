@@ -71,7 +71,20 @@ def main() -> None:
         if key in sel:
             lines.append(f"| {label} | {sel[key]['dev_default_threshold']['macro_f1']:.3f} | "
                          f"{sel[key]['dev_tuned']['macro_f1']:.3f} |")
-    lines += ["", "Default threshold = 0.5 for probabilities and 0.0 for SVM margins.", "",
+    lines += ["", "Default threshold = 0.5 for probabilities and 0.0 for SVM margins."]
+    if ling and "B3_coefficients" in ling:
+        lines += ["", "## B3: strongest linguistic associations per register (dev-selected model, fitted on train)", "",
+                  "Logistic-regression weights on robust-scaled features (`missingindicator_*` = feature was missing).",
+                  "These are **predictive associations given the other features**, not functional definitions of a",
+                  "register. Correlated features share or trade weight; signs can flip under collinearity.", "",
+                  "| Register | strongest positive | strongest negative |", "|---|---|---|"]
+        for lab in LABELS:
+            co = ling["B3_coefficients"][lab]
+            ranked = sorted(co.items(), key=lambda kv: kv[1])
+            neg = ", ".join(f"`{k}` {v:+.2f}" for k, v in ranked[:3])
+            pos = ", ".join(f"`{k}` {v:+.2f}" for k, v in reversed(ranked[-3:]))
+            lines.append(f"| {lab} | {pos} | {neg} |")
+    lines += ["",
               "## Provenance", "",
               f"- B0–B2 run `{lex['run']['run_id']}` (commit `{lex['run']['git']['commit'][:7]}`, dirty "
               f"{lex['run']['git']['dirty']}), {lex['run']['timing']['seconds']} s, peak "

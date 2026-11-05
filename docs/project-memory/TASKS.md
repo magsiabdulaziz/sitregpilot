@@ -16,8 +16,8 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 | TASK-011 | Exact + MinHash near-duplicate grouping | P0 | DONE | #6 | 010 | #15 |
 | TASK-012 | released/controlled split manifests, test sealing | P0 | DONE | #7 | 011 | #17 |
 | TASK-013 | Data-contract test suite (Phase 2 gate C) | P0 | DONE | #8 | 010–012 | #18 |
-| TASK-020 | Phase 3: linguistic feature registry & extraction | P0 | IN_REVIEW | #19 | 013 | #21 |
-| TASK-021 | Phase 3: CPU baselines B0–B4 on dev | P0 | TODO | #20 | 013, 020 | — |
+| TASK-020 | Phase 3: linguistic feature registry & extraction | P0 | DONE | #19 | 013 | #21 |
+| TASK-021 | Phase 3: CPU baselines B0–B4 on dev | P0 | IN_REVIEW | #20 | 013, 020 | (pending) |
 
 ## Details
 

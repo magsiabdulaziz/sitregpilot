@@ -1,0 +1,1167 @@
+{
+  "run": {
+    "run_id": "20261105T091306-c9d153b",
+    "task": "T1",
+    "cohort": "functional",
+    "split": "controlled",
+    "partitions_used": [
+      "train",
+      "dev"
+    ],
+    "test_inference": false,
+    "git": {
+      "commit": "c9d153b6776e039ee87dee9a86481a269f67fec5",
+      "branch": "feature/issue-20-baselines",
+      "dirty": false
+    },
+    "source_sha256": {
+      "train.tsv.gz": "6715944d0be46ca1bb0ab1d0acb3fd206440e18eb87c5a0b9f666fc0b43b15b3",
+      "dev.tsv.gz": "2a57492f815a4fa6ff9452cc9c6979041ca8a7529abb0d8257bdf467d918bc95",
+      "test.tsv.gz": "8fb92b68ce0ec6ae33dfdee852467e81d05b3a287829088bb20c5edf75e2bec5",
+      "register_label_abbreviations.txt": "33caf0a3bd07c4c91d98fe01addc80f2b7b318d1fda506b6a846f7cea0953d1d"
+    },
+    "split_manifest_sha256": "99246b79b0c743fc36924682d524af8ced7c7a23a06ed4706b4d439b4ad9c28b",
+    "feature_cache": {
+      "path": "artifacts/features/1.1.0+registry1.1.0/counts.jsonl",
+      "sha256": "f7e7bb9910eca043d59302449e5370bc97a8c13851ebce80c10b520c873df4c4",
+      "extractor_version": "1.1.0+registry1.1.0"
+    },
+    "b1_selection_from": {
+      "path": "reports/baselines/T1_dev_lexical.json",
+      "sha256": "5fe959f84606d65f93ac871d5db35503d42742225d2c4ab7797942bb4cf2953e",
+      "params": {
+        "max_features": 200000,
+        "ngram_range": [
+          1,
+          2
+        ],
+        "min_df": 3,
+        "C": 10.0,
+        "class_weight": "balanced"
+      }
+    },
+    "experiment_config": {
+      "task": "T1",
+      "cohort": "functional",
+      "window_words": 1000,
+      "lexical": {
+        "unicode": "NFKC",
+        "lowercase": true,
+        "mask_urls_emails": true,
+        "token_pattern": "(?u)\\b\\w\\w+\\b"
+      },
+      "tfidf_grid": {
+        "max_features": [
+          50000,
+          200000
+        ],
+        "ngram_range": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "min_df": 3
+      },
+      "logreg_grid": {
+        "C": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "svm_grid": {
+        "C": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "linguistic": {
+        "feature_cache_report": "reports\\features\\extraction_report.json",
+        "imputation": "median",
+        "scaling": "robust",
+        "logreg_grid": {
+          "C": [
+            0.1,
+            1.0,
+            10.0
+          ],
+          "class_weight": [
+            null,
+            "balanced"
+          ]
+        },
+        "combined_alpha": [
+          0.5,
+          1.0,
+          2.0
+        ]
+      },
+      "thresholds": {
+        "probability_grid": {
+          "start": 0.05,
+          "stop": 0.95,
+          "step": 0.05
+        },
+        "margin_quantiles": {
+          "start": 0.05,
+          "stop": 0.95,
+          "step": 0.05
+        },
+        "per_label_min_dev_positives": 50,
+        "per_label_shrinkage": 0.5
+      },
+      "selection_metric": "macro_f1",
+      "seed": 20261105,
+      "n_jobs": 1
+    },
+    "environment": {
+      "python": "3.14.5",
+      "platform": "Windows-11-10.0.26300-SP0",
+      "cpu_logical": 8,
+      "ram_gb": 23.8,
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "scikit-learn": "1.9.1",
+        "pandas": "3.1.1",
+        "pyarrow": "26.0.1",
+        "spacy": "3.8.18",
+        "joblib": "1.6.0"
+      },
+      "thread_env": {
+        "OMP_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null
+      }
+    },
+    "timing": {
+      "started_utc": "2026-11-05T04:13:06+00:00",
+      "ended_utc": "2026-11-05T05:45:00+00:00",
+      "seconds": 5513.5,
+      "peak_rss_mb": 2447
+    },
+    "n_train": 33463,
+    "n_dev": 4785,
+    "selection": "dev macro-F1 after threshold tuning (dev-optimistic; test sealed)"
+  },
+  "grid": [
+    {
+      "family": "B3_linguistic_logreg",
+      "params": {
+        "C": 0.1,
+        "class_weight": null
+      },
+      "dev_macro_f1_tuned": 0.47855944021764635,
+      "dev_macro_ap": 0.43756853804926926,
+      "fit_seconds": 5.2
+    },
+    {
+      "family": "B3_linguistic_logreg",
+      "params": {
+        "C": 0.1,
+        "class_weight": "balanced"
+      },
+      "dev_macro_f1_tuned": 0.41937185528264487,
+      "dev_macro_ap": 0.4062887517355571,
+      "fit_seconds": 7.6
+    },
+    {
+      "family": "B3_linguistic_logreg",
+      "params": {
+        "C": 1.0,
+        "class_weight": null
+      },
+      "dev_macro_f1_tuned": 0.4775265416085794,
+      "dev_macro_ap": 0.4369640734733969,
+      "fit_seconds": 8.1
+    },
+    {
+      "family": "B3_linguistic_logreg",
+      "params": {
+        "C": 1.0,
+        "class_weight": "balanced"
+      },
+      "dev_macro_f1_tuned": 0.41999357863403397,
+      "dev_macro_ap": 0.4045503167489447,
+      "fit_seconds": 10.2
+    },
+    {
+      "family": "B3_linguistic_logreg",
+      "params": {
+        "C": 10.0,
+        "class_weight": null
+      },
+      "dev_macro_f1_tuned": 0.47578280510767956,
+      "dev_macro_ap": 0.4364475140334861,
+      "fit_seconds": 10.7
+    },
+    {
+      "family": "B3_linguistic_logreg",
+      "params": {
+        "C": 10.0,
+        "class_weight": "balanced"
+      },
+      "dev_macro_f1_tuned": 0.41823831152554924,
+      "dev_macro_ap": 0.4032051376433551,
+      "fit_seconds": 15.0
+    },
+    {
+      "family": "B4_combined_logreg",
+      "params": {
+        "alpha": 0.5,
+        "b1_params": {
+          "max_features": 200000,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "min_df": 3,
+          "C": 10.0,
+          "class_weight": "balanced"
+        }
+      },
+      "dev_macro_f1_tuned": 0.6130870136475632,
+      "dev_macro_ap": 0.6245068599805279,
+      "fit_seconds": 752.0
+    },
+    {
+      "family": "B4_combined_logreg",
+      "params": {
+        "alpha": 1.0,
+        "b1_params": {
+          "max_features": 200000,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "min_df": 3,
+          "C": 10.0,
+          "class_weight": "balanced"
+        }
+      },
+      "dev_macro_f1_tuned": 0.6130511305514477,
+      "dev_macro_ap": 0.6242483743398428,
+      "fit_seconds": 1372.9
+    },
+    {
+      "family": "B4_combined_logreg",
+      "params": {
+        "alpha": 2.0,
+        "b1_params": {
+          "max_features": 200000,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "min_df": 3,
+          "C": 10.0,
+          "class_weight": "balanced"
+        }
+      },
+      "dev_macro_f1_tuned": 0.6129964037602698,
+      "dev_macro_ap": 0.6241194967790761,
+      "fit_seconds": 3277.2
+    }
+  ],
+  "selected": {
+    "B3_linguistic_logreg": {
+      "params": {
+        "C": 0.1,
+        "class_weight": null
+      },
+      "score_type": "probability",
+      "thresholds": {
+        "global": 0.2,
+        "per_label": {
+          "SP": {
+            "threshold": 0.175,
+            "tuned": true
+          },
+          "LY": {
+            "threshold": 0.175,
+            "tuned": true
+          },
+          "IN": {
+            "threshold": 0.25,
+            "tuned": true
+          },
+          "IP": {
+            "threshold": 0.15000000000000002,
+            "tuned": true
+          },
+          "OP": {
+            "threshold": 0.225,
+            "tuned": true
+          },
+          "NA": {
+            "threshold": 0.30000000000000004,
+            "tuned": true
+          },
+          "HI": {
+            "threshold": 0.2,
+            "tuned": true
+          },
+          "ID": {
+            "threshold": 0.2,
+            "tuned": true
+          }
+        }
+      },
+      "dev_tuned": {
+        "n_documents": 4785,
+        "macro_f1": 0.47855944021764635,
+        "micro_f1": 0.5858600798698418,
+        "weighted_f1": 0.5847361233700197,
+        "samples_f1": 0.5962103796586554,
+        "exact_set_accuracy": 0.26666666666666666,
+        "per_label": {
+          "SP": {
+            "precision": 0.43243243243243246,
+            "recall": 0.42105263157894735,
+            "f1": 0.4266666666666667,
+            "support": 76,
+            "predicted": 74,
+            "ap": 0.27145360928533036
+          },
+          "LY": {
+            "precision": 0.6056338028169014,
+            "recall": 0.6323529411764706,
+            "f1": 0.6187050359712231,
+            "support": 68,
+            "predicted": 71,
+            "ap": 0.5959127551441221
+          },
+          "IN": {
+            "precision": 0.48075909330521877,
+            "recall": 0.7169811320754716,
+            "f1": 0.5755758914484065,
+            "support": 1272,
+            "predicted": 1897,
+            "ap": 0.6026143837814893
+          },
+          "IP": {
+            "precision": 0.12871287128712872,
+            "recall": 0.12560386473429952,
+            "f1": 0.1271393643031785,
+            "support": 207,
+            "predicted": 202,
+            "ap": 0.10449668744501092
+          },
+          "OP": {
+            "precision": 0.3700750469043152,
+            "recall": 0.7492877492877493,
+            "f1": 0.495447409733124,
+            "support": 1053,
+            "predicted": 2132,
+            "ap": 0.4495185060020095
+          },
+          "NA": {
+            "precision": 0.6092139175257731,
+            "recall": 0.8886278195488722,
+            "f1": 0.7228593272171254,
+            "support": 2128,
+            "predicted": 3104,
+            "ap": 0.7634378200098174
+          },
+          "HI": {
+            "precision": 0.3877551020408163,
+            "recall": 0.46798029556650245,
+            "f1": 0.42410714285714285,
+            "support": 203,
+            "predicted": 245,
+            "ap": 0.34771129925859123
+          },
+          "ID": {
+            "precision": 0.3922902494331066,
+            "recall": 0.49570200573065903,
+            "f1": 0.4379746835443038,
+            "support": 349,
+            "predicted": 441,
+            "ap": 0.3654032434677831
+          }
+        },
+        "macro_ap": 0.43756853804926926,
+        "micro_ap": 0.6175927463754273
+      },
+      "dev_default_threshold": {
+        "n_documents": 4785,
+        "macro_f1": 0.31739820387739864,
+        "micro_f1": 0.5200973010540948,
+        "weighted_f1": 0.4724673197321416,
+        "samples_f1": 0.4380703587600139,
+        "exact_set_accuracy": 0.38223615464994776,
+        "per_label": {
+          "SP": {
+            "precision": 0.5,
+            "recall": 0.07894736842105263,
+            "f1": 0.13636363636363635,
+            "support": 76,
+            "predicted": 12,
+            "ap": 0.27145360928533036
+          },
+          "LY": {
+            "precision": 0.84375,
+            "recall": 0.39705882352941174,
+            "f1": 0.54,
+            "support": 68,
+            "predicted": 32,
+            "ap": 0.5959127551441221
+          },
+          "IN": {
+            "precision": 0.6697247706422018,
+            "recall": 0.40172955974842767,
+            "f1": 0.5022113022113022,
+            "support": 1272,
+            "predicted": 763,
+            "ap": 0.6026143837814893
+          },
+          "IP": {
+            "precision": 0.3333333333333333,
+            "recall": 0.00966183574879227,
+            "f1": 0.018779342723004695,
+            "support": 207,
+            "predicted": 6,
+            "ap": 0.10449668744501092
+          },
+          "OP": {
+            "precision": 0.5606694560669456,
+            "recall": 0.12725546058879392,
+            "f1": 0.20743034055727555,
+            "support": 1053,
+            "predicted": 239,
+            "ap": 0.4495185060020095
+          },
+          "NA": {
+            "precision": 0.7150383141762452,
+            "recall": 0.7015977443609023,
+            "f1": 0.7082542694497154,
+            "support": 2128,
+            "predicted": 2088,
+            "ap": 0.7634378200098174
+          },
+          "HI": {
+            "precision": 0.5172413793103449,
+            "recall": 0.1477832512315271,
+            "f1": 0.22988505747126436,
+            "support": 203,
+            "predicted": 58,
+            "ap": 0.34771129925859123
+          },
+          "ID": {
+            "precision": 0.5316455696202531,
+            "recall": 0.12034383954154727,
+            "f1": 0.19626168224299065,
+            "support": 349,
+            "predicted": 79,
+            "ap": 0.3654032434677831
+          }
+        },
+        "macro_ap": 0.43756853804926926,
+        "micro_ap": 0.6175927463754273
+      },
+      "model_path": "artifacts/runs/T1_linguistic_20261105T091306-c9d153b/B3_linguistic_logreg.joblib",
+      "model_sha256": "57cd2c6538ae2dd80daf8385d669158635526e260c09bf8fb58eb8e8681b9929",
+      "dev_predictions_path": "artifacts/runs/T1_linguistic_20261105T091306-c9d153b/dev_predictions_B3_linguistic_logreg.parquet",
+      "dev_predictions_sha256": "28a73169fb1301deb4b9681df2f425c7ecb951142d51375232ee5922bb6a1d13",
+      "save_load_parity": true
+    },
+    "B4_combined_logreg": {
+      "params": {
+        "alpha": 0.5,
+        "b1_params": {
+          "max_features": 200000,
+          "ngram_range": [
+            1,
+            2
+          ],
+          "min_df": 3,
+          "C": 10.0,
+          "class_weight": "balanced"
+        }
+      },
+      "score_type": "probability",
+      "thresholds": {
+        "global": 0.45,
+        "per_label": {
+          "SP": {
+            "threshold": 0.5,
+            "tuned": true
+          },
+          "LY": {
+            "threshold": 0.575,
+            "tuned": true
+          },
+          "IN": {
+            "threshold": 0.4,
+            "tuned": true
+          },
+          "IP": {
+            "threshold": 0.42500000000000004,
+            "tuned": true
+          },
+          "OP": {
+            "threshold": 0.45,
+            "tuned": true
+          },
+          "NA": {
+            "threshold": 0.45,
+            "tuned": true
+          },
+          "HI": {
+            "threshold": 0.42500000000000004,
+            "tuned": true
+          },
+          "ID": {
+            "threshold": 0.5,
+            "tuned": true
+          }
+        }
+      },
+      "dev_tuned": {
+        "n_documents": 4785,
+        "macro_f1": 0.6130870136475632,
+        "micro_f1": 0.6667828208032058,
+        "weighted_f1": 0.6694138989510255,
+        "samples_f1": 0.6655799373040753,
+        "exact_set_accuracy": 0.4685475444096134,
+        "per_label": {
+          "SP": {
+            "precision": 0.5324675324675324,
+            "recall": 0.5394736842105263,
+            "f1": 0.5359477124183006,
+            "support": 76,
+            "predicted": 77,
+            "ap": 0.4714465206094197
+          },
+          "LY": {
+            "precision": 0.8208955223880597,
+            "recall": 0.8088235294117647,
+            "f1": 0.8148148148148148,
+            "support": 68,
+            "predicted": 67,
+            "ap": 0.8205278351834334
+          },
+          "IN": {
+            "precision": 0.5640224859462836,
+            "recall": 0.7099056603773585,
+            "f1": 0.6286112077967282,
+            "support": 1272,
+            "predicted": 1601,
+            "ap": 0.6733066551194864
+          },
+          "IP": {
+            "precision": 0.3811881188118812,
+            "recall": 0.3719806763285024,
+            "f1": 0.3765281173594132,
+            "support": 207,
+            "predicted": 202,
+            "ap": 0.35775780316284206
+          },
+          "OP": {
+            "precision": 0.5288611544461779,
+            "recall": 0.6438746438746439,
+            "f1": 0.580728051391863,
+            "support": 1053,
+            "predicted": 1282,
+            "ap": 0.5830903067915164
+          },
+          "NA": {
+            "precision": 0.7580859548072663,
+            "recall": 0.8040413533834586,
+            "f1": 0.780387685290764,
+            "support": 2128,
+            "predicted": 2257,
+            "ap": 0.8519813180685635
+          },
+          "HI": {
+            "precision": 0.44285714285714284,
+            "recall": 0.6108374384236454,
+            "f1": 0.5134575569358178,
+            "support": 203,
+            "predicted": 280,
+            "ap": 0.5084465244696679
+          },
+          "ID": {
+            "precision": 0.6666666666666666,
+            "recall": 0.6819484240687679,
+            "f1": 0.6742209631728046,
+            "support": 349,
+            "predicted": 357,
+            "ap": 0.7294979164392934
+          }
+        },
+        "macro_ap": 0.6245068599805279,
+        "micro_ap": 0.7186763936709613
+      },
+      "dev_default_threshold": {
+        "n_documents": 4785,
+        "macro_f1": 0.6081533012938763,
+        "micro_f1": 0.6651321241138016,
+        "weighted_f1": 0.665242911202181,
+        "samples_f1": 0.6504702194357367,
+        "exact_set_accuracy": 0.4942528735632184,
+        "per_label": {
+          "SP": {
+            "precision": 0.5324675324675324,
+            "recall": 0.5394736842105263,
+            "f1": 0.5359477124183006,
+            "support": 76,
+            "predicted": 77,
+            "ap": 0.4714465206094197
+          },
+          "LY": {
+            "precision": 0.7702702702702703,
+            "recall": 0.8382352941176471,
+            "f1": 0.8028169014084507,
+            "support": 68,
+            "predicted": 74,
+            "ap": 0.8205278351834334
+          },
+          "IN": {
+            "precision": 0.6084021005251313,
+            "recall": 0.6375786163522013,
+            "f1": 0.6226487523992322,
+            "support": 1272,
+            "predicted": 1333,
+            "ap": 0.6733066551194864
+          },
+          "IP": {
+            "precision": 0.4110429447852761,
+            "recall": 0.32367149758454106,
+            "f1": 0.3621621621621622,
+            "support": 207,
+            "predicted": 163,
+            "ap": 0.35775780316284206
+          },
+          "OP": {
+            "precision": 0.5587975243147657,
+            "recall": 0.6001899335232669,
+            "f1": 0.5787545787545788,
+            "support": 1053,
+            "predicted": 1131,
+            "ap": 0.5830903067915164
+          },
+          "NA": {
+            "precision": 0.7763157894736842,
+            "recall": 0.7763157894736842,
+            "f1": 0.7763157894736842,
+            "support": 2128,
+            "predicted": 2128,
+            "ap": 0.8519813180685635
+          },
+          "HI": {
+            "precision": 0.47107438016528924,
+            "recall": 0.5615763546798029,
+            "f1": 0.5123595505617977,
+            "support": 203,
+            "predicted": 242,
+            "ap": 0.5084465244696679
+          },
+          "ID": {
+            "precision": 0.6666666666666666,
+            "recall": 0.6819484240687679,
+            "f1": 0.6742209631728046,
+            "support": 349,
+            "predicted": 357,
+            "ap": 0.7294979164392934
+          }
+        },
+        "macro_ap": 0.6245068599805279,
+        "micro_ap": 0.7186763936709613
+      },
+      "model_path": "artifacts/runs/T1_linguistic_20261105T091306-c9d153b/B4_combined_logreg.joblib",
+      "model_sha256": "c915360f8efc88d100ee7e852b37ed38741540207881f3366df876414d5aaa9d",
+      "dev_predictions_path": "artifacts/runs/T1_linguistic_20261105T091306-c9d153b/dev_predictions_B4_combined_logreg.parquet",
+      "dev_predictions_sha256": "d07993b6d71db4e69c7dbaf87dc57bdedefc07be45e079e88120d4ea0a801895",
+      "save_load_parity": true
+    }
+  },
+  "B3_coefficients": {
+    "SP": {
+      "pos_noun": -0.14015761139415897,
+      "pos_propn": 0.02923592515354417,
+      "pos_verb": -1.053067051023318,
+      "pos_adj": -0.8492115960832337,
+      "pos_adv": -0.13528650010914492,
+      "pos_pron": 0.7721372275768276,
+      "pos_det": -0.3356836164161804,
+      "pos_cconj": -0.1565910232088673,
+      "pos_sconj": -0.3761049342308245,
+      "pos_adp": -0.19659642397712862,
+      "pos_num": -0.8021774352327543,
+      "pos_intj": 0.01695228214085694,
+      "pron_1sg": -0.19227859984728782,
+      "pron_1pl": 0.12678388675983185,
+      "pron_2": -0.04015762203726875,
+      "pron_3": -0.4008129530440686,
+      "pron_it": 0.04096674823085948,
+      "poss_det": -0.42937758470316784,
+      "dem_pron": 0.03805071507210272,
+      "dem_det": 0.1227958177826893,
+      "past_tense": -0.23591527517588318,
+      "present_tense": -0.1992529146040962,
+      "modal_possibility": -0.5106390384557481,
+      "modal_necessity": -0.1739834285063855,
+      "modal_prediction": -0.3084571033929786,
+      "perfect_aspect": 0.10112279633790722,
+      "progressive_aspect": 0.1479087735956255,
+      "passive": -0.47431409799763563,
+      "imperative_sent": -0.5777210661457696,
+      "negation": -0.5725185133874822,
+      "question_mark_sent": 0.25454320711080547,
+      "interrogative_sent": 0.07704528235363567,
+      "mean_sent_len": -0.6811155881773239,
+      "mean_word_len": 0.05319934812558074,
+      "lexical_density": -0.2515814823378565,
+      "noun_verb_ratio": -0.5109301772580978,
+      "relcl_per_clause": -0.050843703172443515,
+      "advcl_per_clause": -0.26182388175014204,
+      "comp_per_clause": -0.01688096752794189,
+      "amod_per_noun": 0.36985661004958365,
+      "nominalisation": 0.17134706896549087,
+      "sd_sent_len": 0.12555368823495397,
+      "mattr_500": -0.12003700742469069,
+      "missingindicator_past_tense": -3.658074341689956e-05,
+      "missingindicator_present_tense": -3.658074341689956e-05,
+      "missingindicator_modal_possibility": -3.658074341689956e-05,
+      "missingindicator_modal_necessity": -3.658074341689956e-05,
+      "missingindicator_modal_prediction": -3.658074341689956e-05,
+      "missingindicator_perfect_aspect": -3.658074341689955e-05,
+      "missingindicator_progressive_aspect": -3.658074341689955e-05,
+      "missingindicator_passive": -3.658074341689955e-05,
+      "missingindicator_noun_verb_ratio": -6.578976832379677e-06,
+      "missingindicator_relcl_per_clause": -3.658074341689955e-05,
+      "missingindicator_advcl_per_clause": -3.658074341689955e-05,
+      "missingindicator_comp_per_clause": -3.658074341689955e-05,
+      "missingindicator_sd_sent_len": -1.6127828292244895e-05,
+      "missingindicator_mattr_500": -1.9731586936762837
+    },
+    "LY": {
+      "pos_noun": -0.2969035063145485,
+      "pos_propn": -0.2663885877344017,
+      "pos_verb": -0.3205149130327869,
+      "pos_adj": -0.3865435345736611,
+      "pos_adv": -0.27218362840046195,
+      "pos_pron": 1.3273409207029594,
+      "pos_det": 0.2797795371817628,
+      "pos_cconj": -0.11715664852380317,
+      "pos_sconj": -0.383768973583144,
+      "pos_adp": -0.4044236215228529,
+      "pos_num": -0.5066706432859835,
+      "pos_intj": 0.12033084715228914,
+      "pron_1sg": -0.03319650194330438,
+      "pron_1pl": -0.08871820499691524,
+      "pron_2": 0.02100114801572152,
+      "pron_3": -0.2001358154544016,
+      "pron_it": -0.17489068192055457,
+      "poss_det": -0.057954002076103184,
+      "dem_pron": -0.4866076008627895,
+      "dem_det": 0.05104344603921543,
+      "past_tense": -0.07142289068857882,
+      "present_tense": 0.08307011981302986,
+      "modal_possibility": -0.06583436236645243,
+      "modal_necessity": -0.06647352391682881,
+      "modal_prediction": 0.009114819118626598,
+      "perfect_aspect": -0.2685070914549066,
+      "progressive_aspect": -0.30197656212580953,
+      "passive": -0.011944817401397781,
+      "imperative_sent": -0.15403015227838823,
+      "negation": -0.14409327282121448,
+      "question_mark_sent": -0.0993297145280651,
+      "interrogative_sent": -0.06826357063599224,
+      "mean_sent_len": 0.07433056013387025,
+      "mean_word_len": -1.2452042779376549,
+      "lexical_density": 0.1415505633788601,
+      "noun_verb_ratio": 0.1252175637882206,
+      "relcl_per_clause": 0.19264681846371848,
+      "advcl_per_clause": 0.0341518557537545,
+      "comp_per_clause": 0.1753473594240057,
+      "amod_per_noun": -0.24742575182491677,
+      "nominalisation": -0.36329320386173086,
+      "sd_sent_len": 0.14024783163121604,
+      "mattr_500": 0.11441528160413933,
+      "missingindicator_past_tense": -0.025927432679064267,
+      "missingindicator_present_tense": -0.025927432679064267,
+      "missingindicator_modal_possibility": -0.025927432679064267,
+      "missingindicator_modal_necessity": -0.025927432679064267,
+      "missingindicator_modal_prediction": -0.025927432679064267,
+      "missingindicator_perfect_aspect": -0.025927432679064267,
+      "missingindicator_progressive_aspect": -0.025927432679064267,
+      "missingindicator_passive": -0.025927432679064267,
+      "missingindicator_noun_verb_ratio": -9.496506840479444e-05,
+      "missingindicator_relcl_per_clause": -0.025927432679064267,
+      "missingindicator_advcl_per_clause": -0.025927432679064267,
+      "missingindicator_comp_per_clause": -0.025927432679064267,
+      "missingindicator_sd_sent_len": 0.1574276122013699,
+      "missingindicator_mattr_500": 0.2987240034055315
+    },
+    "IN": {
+      "pos_noun": 0.0031610015312990847,
+      "pos_propn": -0.17814978243660815,
+      "pos_verb": -0.05476143235178783,
+      "pos_adj": 0.07210891893436315,
+      "pos_adv": -0.06732655095507722,
+      "pos_pron": -0.02164335639345964,
+      "pos_det": 0.0416097652064338,
+      "pos_cconj": 0.17499791049488037,
+      "pos_sconj": -0.009719541586001272,
+      "pos_adp": 0.14267462483443377,
+      "pos_num": 0.13329631367535463,
+      "pos_intj": 0.0011169781333894165,
+      "pron_1sg": -0.17642698519995548,
+      "pron_1pl": 0.05045523264947757,
+      "pron_2": 0.1884134954171042,
+      "pron_3": 0.05330974643050325,
+      "pron_it": -0.09939144829494485,
+      "poss_det": -0.012042277434752625,
+      "dem_pron": -0.0897638296903309,
+      "dem_det": 0.03681779941404048,
+      "past_tense": 0.09042479271852474,
+      "present_tense": 0.4672189876665374,
+      "modal_possibility": 0.17467742378661297,
+      "modal_necessity": 0.006160710936896473,
+      "modal_prediction": 0.0016215507187275374,
+      "perfect_aspect": -0.1790762971717779,
+      "progressive_aspect": -0.15482634751887328,
+      "passive": 0.2798059313219907,
+      "imperative_sent": 0.0001748595649319507,
+      "negation": -0.2713696750382105,
+      "question_mark_sent": -0.05253741038179826,
+      "interrogative_sent": 0.05442844229093782,
+      "mean_sent_len": -0.042855439733475505,
+      "mean_word_len": 0.6269571287153178,
+      "lexical_density": 0.07735308560929735,
+      "noun_verb_ratio": 0.14652724257952696,
+      "relcl_per_clause": -0.014803110174105365,
+      "advcl_per_clause": 0.03614754136792931,
+      "comp_per_clause": -0.17832733042620755,
+      "amod_per_noun": -0.07134337206128029,
+      "nominalisation": 0.02710738049331756,
+      "sd_sent_len": 0.013108421624411786,
+      "mattr_500": -0.14753777865711332,
+      "missingindicator_past_tense": 0.009085822499215706,
+      "missingindicator_present_tense": 0.009085822499215706,
+      "missingindicator_modal_possibility": 0.009085822499215706,
+      "missingindicator_modal_necessity": 0.009085822499215706,
+      "missingindicator_modal_prediction": 0.009085822499215706,
+      "missingindicator_perfect_aspect": 0.009085822499215707,
+      "missingindicator_progressive_aspect": 0.009085822499215707,
+      "missingindicator_passive": 0.009085822499215707,
+      "missingindicator_noun_verb_ratio": 0.06807074896756304,
+      "missingindicator_relcl_per_clause": 0.009085822499215707,
+      "missingindicator_advcl_per_clause": 0.009085822499215707,
+      "missingindicator_comp_per_clause": 0.009085822499215707,
+      "missingindicator_sd_sent_len": 0.3754590985527472,
+      "missingindicator_mattr_500": 0.03940369822489993
+    },
+    "IP": {
+      "pos_noun": 0.011496388489423328,
+      "pos_propn": 0.012028455693253084,
+      "pos_verb": -0.582764125652937,
+      "pos_adj": 0.05521756161309066,
+      "pos_adv": -0.20818284287096436,
+      "pos_pron": 0.4827909860651813,
+      "pos_det": 0.01562200986603118,
+      "pos_cconj": 0.2540133281828373,
+      "pos_sconj": -0.01829278118245677,
+      "pos_adp": -0.004015286566842622,
+      "pos_num": 0.03721334767947258,
+      "pos_intj": -0.026733772500704342,
+      "pron_1sg": -0.354374874034305,
+      "pron_1pl": 0.05604778524368208,
+      "pron_2": 0.11213728852256796,
+      "pron_3": -0.10344678949922591,
+      "pron_it": -0.08668383718431029,
+      "poss_det": 0.28370805569838164,
+      "dem_pron": -0.12193888055641701,
+      "dem_det": 0.21201664456746772,
+      "past_tense": -0.6517708196879236,
+      "present_tense": -0.008336429234179637,
+      "modal_possibility": -0.07851290865369248,
+      "modal_necessity": -0.03437752815331309,
+      "modal_prediction": -0.04766912823113882,
+      "perfect_aspect": -0.0544072727476615,
+      "progressive_aspect": -0.2160654492377879,
+      "passive": -0.14753116601919325,
+      "imperative_sent": -0.023374219644377386,
+      "negation": -0.1785488795800908,
+      "question_mark_sent": -0.08762740412919008,
+      "interrogative_sent": -0.004391056860242794,
+      "mean_sent_len": -0.3488623780650066,
+      "mean_word_len": 0.19453179955305072,
+      "lexical_density": 0.3384950124664673,
+      "noun_verb_ratio": -0.25644378530985074,
+      "relcl_per_clause": 0.11972466146414015,
+      "advcl_per_clause": 0.07680289782959585,
+      "comp_per_clause": 0.0010202344416669637,
+      "amod_per_noun": 0.18670347254166295,
+      "nominalisation": -0.13956318153696293,
+      "sd_sent_len": 0.06053386114152897,
+      "mattr_500": 0.020353556754749078,
+      "missingindicator_past_tense": -0.048677130137931304,
+      "missingindicator_present_tense": -0.048677130137931304,
+      "missingindicator_modal_possibility": -0.048677130137931304,
+      "missingindicator_modal_necessity": -0.048677130137931304,
+      "missingindicator_modal_prediction": -0.048677130137931304,
+      "missingindicator_perfect_aspect": -0.048677130137931304,
+      "missingindicator_progressive_aspect": -0.048677130137931304,
+      "missingindicator_passive": -0.048677130137931304,
+      "missingindicator_noun_verb_ratio": -2.9568193926846514e-05,
+      "missingindicator_relcl_per_clause": -0.048677130137931304,
+      "missingindicator_advcl_per_clause": -0.048677130137931304,
+      "missingindicator_comp_per_clause": -0.048677130137931304,
+      "missingindicator_sd_sent_len": -0.004188123882049917,
+      "missingindicator_mattr_500": 0.04126915036953453
+    },
+    "OP": {
+      "pos_noun": -0.2438426695783748,
+      "pos_propn": -0.16034770276280297,
+      "pos_verb": -0.3392308654330579,
+      "pos_adj": 0.04147650779358753,
+      "pos_adv": 0.13435011805030286,
+      "pos_pron": 0.5089113689580586,
+      "pos_det": 0.014938846448639916,
+      "pos_cconj": 0.05989296373041822,
+      "pos_sconj": 0.19826216011066541,
+      "pos_adp": -0.05537308588234289,
+      "pos_num": -0.32196512897960705,
+      "pos_intj": -0.07102254100133903,
+      "pron_1sg": -0.47931758454934226,
+      "pron_1pl": -0.16610608164082524,
+      "pron_2": -0.2801319210098735,
+      "pron_3": -0.3907977380504907,
+      "pron_it": -0.12631736442533356,
+      "poss_det": 0.26665877929322357,
+      "dem_pron": 0.039897907793472256,
+      "dem_det": 0.1084727888914313,
+      "past_tense": -0.06506614645237231,
+      "present_tense": 0.3020130818670113,
+      "modal_possibility": -0.01771589529554852,
+      "modal_necessity": 0.04528112609299465,
+      "modal_prediction": -0.0978984619688538,
+      "perfect_aspect": -0.10594144232735242,
+      "progressive_aspect": -0.07387545247233324,
+      "passive": -0.24583180015789155,
+      "imperative_sent": 0.05624336636907159,
+      "negation": 0.13749414400879412,
+      "question_mark_sent": 0.07773561305947801,
+      "interrogative_sent": 0.004392687239303037,
+      "mean_sent_len": -0.08554764133442834,
+      "mean_word_len": -0.0445533536786605,
+      "lexical_density": -0.34899692757896567,
+      "noun_verb_ratio": -0.22213207940526622,
+      "relcl_per_clause": 0.10923416148035317,
+      "advcl_per_clause": -0.02144999988290046,
+      "comp_per_clause": -0.02170949875624935,
+      "amod_per_noun": 0.1497849312015196,
+      "nominalisation": 0.07307067521094361,
+      "sd_sent_len": 0.017387266298801482,
+      "mattr_500": 0.1828322184886049,
+      "missingindicator_past_tense": -0.0695684990340349,
+      "missingindicator_present_tense": -0.0695684990340349,
+      "missingindicator_modal_possibility": -0.0695684990340349,
+      "missingindicator_modal_necessity": -0.0695684990340349,
+      "missingindicator_modal_prediction": -0.0695684990340349,
+      "missingindicator_perfect_aspect": -0.0695684990340349,
+      "missingindicator_progressive_aspect": -0.0695684990340349,
+      "missingindicator_passive": -0.0695684990340349,
+      "missingindicator_noun_verb_ratio": -0.05422839133994195,
+      "missingindicator_relcl_per_clause": -0.0695684990340349,
+      "missingindicator_advcl_per_clause": -0.0695684990340349,
+      "missingindicator_comp_per_clause": -0.0695684990340349,
+      "missingindicator_sd_sent_len": -0.004021472296592449,
+      "missingindicator_mattr_500": -0.49755714898627484
+    },
+    "NA": {
+      "pos_noun": 0.006206666007122756,
+      "pos_propn": 0.2899435066647917,
+      "pos_verb": -0.18173420700008464,
+      "pos_adj": -0.2011954063263233,
+      "pos_adv": -0.11819212489352379,
+      "pos_pron": -0.6583614349940071,
+      "pos_det": -0.21892617372009293,
+      "pos_cconj": -0.38366604836562224,
+      "pos_sconj": -0.07277111374185954,
+      "pos_adp": 0.021202074012051497,
+      "pos_num": -0.0833457146762284,
+      "pos_intj": -0.038922964138342245,
+      "pron_1sg": 0.09161127033570454,
+      "pron_1pl": 0.09102661162503708,
+      "pron_2": -0.46119976165615845,
+      "pron_3": 0.14623182429353138,
+      "pron_it": 0.04045391855463468,
+      "poss_det": -0.05176197340737466,
+      "dem_pron": 0.017859010529407,
+      "dem_det": -0.02298494566207228,
+      "past_tense": 0.09153393091835607,
+      "present_tense": -0.5896150278766522,
+      "modal_possibility": -0.19143913055201853,
+      "modal_necessity": -0.06279687382251492,
+      "modal_prediction": 0.05093184416402584,
+      "perfect_aspect": 0.26155301773616135,
+      "progressive_aspect": 0.2587364660561265,
+      "passive": -0.2162274989054221,
+      "imperative_sent": -0.1428439365665289,
+      "negation": -0.05124042682914705,
+      "question_mark_sent": -0.09884408303028484,
+      "interrogative_sent": -0.07056434137700068,
+      "mean_sent_len": 0.06822109486960715,
+      "mean_word_len": -0.29956127626347884,
+      "lexical_density": 0.07510166152082697,
+      "noun_verb_ratio": -0.520000194669466,
+      "relcl_per_clause": -0.07726402373020119,
+      "advcl_per_clause": -0.15598511154579964,
+      "comp_per_clause": 0.16695636547029866,
+      "amod_per_noun": -0.04293490489711062,
+      "nominalisation": -0.10084735127800368,
+      "sd_sent_len": -0.08957751273902051,
+      "mattr_500": 0.14512433174891284,
+      "missingindicator_past_tense": 0.022190284735445306,
+      "missingindicator_present_tense": 0.022190284735445306,
+      "missingindicator_modal_possibility": 0.022190284735445306,
+      "missingindicator_modal_necessity": 0.022190284735445306,
+      "missingindicator_modal_prediction": 0.022190284735445306,
+      "missingindicator_perfect_aspect": 0.022190284735445306,
+      "missingindicator_progressive_aspect": 0.022190284735445306,
+      "missingindicator_passive": 0.022190284735445306,
+      "missingindicator_noun_verb_ratio": -0.02239230170066333,
+      "missingindicator_relcl_per_clause": 0.022190284735445306,
+      "missingindicator_advcl_per_clause": 0.022190284735445306,
+      "missingindicator_comp_per_clause": 0.022190284735445306,
+      "missingindicator_sd_sent_len": -0.6351538267376035,
+      "missingindicator_mattr_500": -0.0516660965942331
+    },
+    "HI": {
+      "pos_noun": 0.34091016441140504,
+      "pos_propn": -0.32270607227928855,
+      "pos_verb": -0.06273437813658275,
+      "pos_adj": -0.2987022185837276,
+      "pos_adv": -0.08795218338488306,
+      "pos_pron": -0.1996360445541084,
+      "pos_det": 0.2712582979622113,
+      "pos_cconj": 0.05288897876635654,
+      "pos_sconj": 0.22225080645151876,
+      "pos_adp": -0.1742891623116507,
+      "pos_num": 0.049710731789872786,
+      "pos_intj": -0.0502625348505348,
+      "pron_1sg": -0.13843856145143324,
+      "pron_1pl": -0.2141066619249253,
+      "pron_2": 0.2667646353662695,
+      "pron_3": -0.565014480942906,
+      "pron_it": -0.05327951832320415,
+      "poss_det": 0.16262043214311941,
+      "dem_pron": 0.11512477826022723,
+      "dem_det": -0.002166097924173577,
+      "past_tense": -0.6475712315350431,
+      "present_tense": -0.07767310850316739,
+      "modal_possibility": 0.06939415990586877,
+      "modal_necessity": 0.06857644917210244,
+      "modal_prediction": -0.05985624995885671,
+      "perfect_aspect": -0.07114932005912274,
+      "progressive_aspect": -0.14900318478892863,
+      "passive": 0.032809854660817345,
+      "imperative_sent": 0.23401023526488224,
+      "negation": -0.28327201043443384,
+      "question_mark_sent": -0.16134172019436951,
+      "interrogative_sent": 0.038083681514453425,
+      "mean_sent_len": -0.4460209783302008,
+      "mean_word_len": -0.45351931816727215,
+      "lexical_density": 0.5231863597160415,
+      "noun_verb_ratio": -0.7266396636511566,
+      "relcl_per_clause": 0.03638004868823029,
+      "advcl_per_clause": 0.11000383307962991,
+      "comp_per_clause": 0.06540842002249556,
+      "amod_per_noun": 0.018003626475645206,
+      "nominalisation": -0.12925301295063069,
+      "sd_sent_len": 0.06273318094522755,
+      "mattr_500": -0.08852984215001536,
+      "missingindicator_past_tense": 0.0026074197034053684,
+      "missingindicator_present_tense": 0.0026074197034053684,
+      "missingindicator_modal_possibility": 0.0026074197034053684,
+      "missingindicator_modal_necessity": 0.0026074197034053684,
+      "missingindicator_modal_prediction": 0.0026074197034053684,
+      "missingindicator_perfect_aspect": 0.0026074197034053684,
+      "missingindicator_progressive_aspect": 0.0026074197034053684,
+      "missingindicator_passive": 0.0026074197034053684,
+      "missingindicator_noun_verb_ratio": -5.912816022536826e-06,
+      "missingindicator_relcl_per_clause": 0.0026074197034053684,
+      "missingindicator_advcl_per_clause": 0.0026074197034053684,
+      "missingindicator_comp_per_clause": 0.0026074197034053684,
+      "missingindicator_sd_sent_len": -0.00025778023659555395,
+      "missingindicator_mattr_500": -0.408929506170866
+    },
+    "ID": {
+      "pos_noun": -0.12355386805763532,
+      "pos_propn": -0.48379423247481285,
+      "pos_verb": 0.08696077678020575,
+      "pos_adj": -0.2110869293523565,
+      "pos_adv": 0.2626400348925522,
+      "pos_pron": 0.41460927279683424,
+      "pos_det": -0.05122133526520537,
+      "pos_cconj": 0.19564974842813404,
+      "pos_sconj": 0.04804217073544991,
+      "pos_adp": -0.2672307409267182,
+      "pos_num": 0.1423710842442888,
+      "pos_intj": -0.010199135627025284,
+      "pron_1sg": -0.15834398085815077,
+      "pron_1pl": -0.41214903744486253,
+      "pron_2": -0.3970425160462737,
+      "pron_3": -0.4363247528869401,
+      "pron_it": -0.08256236884637262,
+      "poss_det": -0.028559530357089732,
+      "dem_pron": 0.05329033993624752,
+      "dem_det": -0.2015279513382106,
+      "past_tense": -1.2020443187343617,
+      "present_tense": -0.8362918027373144,
+      "modal_possibility": -0.10609967508360325,
+      "modal_necessity": -0.06552396329262075,
+      "modal_prediction": -0.03144990631853739,
+      "perfect_aspect": -0.15483199965239064,
+      "progressive_aspect": -0.042979905120178706,
+      "passive": -0.07502987535580802,
+      "imperative_sent": -0.06976710646467783,
+      "negation": 0.2402165163434036,
+      "question_mark_sent": 0.3008786129278695,
+      "interrogative_sent": -0.05661892493378634,
+      "mean_sent_len": -0.306959137521217,
+      "mean_word_len": -0.6982168871509282,
+      "lexical_density": 0.016087634593111112,
+      "noun_verb_ratio": -0.08935469574475213,
+      "relcl_per_clause": -0.21054545229184266,
+      "advcl_per_clause": 0.05212878956837456,
+      "comp_per_clause": -0.042237374843746914,
+      "amod_per_noun": 0.035363797081692364,
+      "nominalisation": -0.039890589227118856,
+      "sd_sent_len": 0.1373425389185154,
+      "mattr_500": -0.17112982541510938,
+      "missingindicator_past_tense": -0.03851608366608282,
+      "missingindicator_present_tense": -0.03851608366608282,
+      "missingindicator_modal_possibility": -0.03851608366608282,
+      "missingindicator_modal_necessity": -0.03851608366608282,
+      "missingindicator_modal_prediction": -0.03851608366608282,
+      "missingindicator_perfect_aspect": -0.03851608366608282,
+      "missingindicator_progressive_aspect": -0.03851608366608282,
+      "missingindicator_passive": -0.03851608366608282,
+      "missingindicator_noun_verb_ratio": -0.029798227897254385,
+      "missingindicator_relcl_per_clause": -0.03851608366608282,
+      "missingindicator_advcl_per_clause": -0.03851608366608282,
+      "missingindicator_comp_per_clause": -0.03851608366608282,
+      "missingindicator_sd_sent_len": 0.06528475335569779,
+      "missingindicator_mattr_500": 0.6583439628772831
+    }
+  }
+}
