@@ -1,0 +1,95 @@
+{
+  "decision_rule": "D-16: stop if peak RSS > 12 GB or 400k vectoriser fit > 3x the 200k fit",
+  "baseline_200k": {
+    "max_features": 200000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "n_train": 33463,
+    "vocabulary_size": 200000,
+    "nnz": 19904040,
+    "vectoriser_fit_seconds": 71.4,
+    "b1best_logreg_fit_seconds": 102.9,
+    "timing": {
+      "started_utc": "2026-11-05T06:29:25+00:00",
+      "ended_utc": "2026-11-05T06:33:03+00:00",
+      "seconds": 218.1,
+      "peak_rss_mb": 1671
+    },
+    "git": {
+      "commit": "81a15a62d1d0257cb8a9b957a7e2e969e3d14c61",
+      "branch": "feature/issue-24-vocab",
+      "dirty": false
+    },
+    "environment": {
+      "python": "3.14.5",
+      "platform": "Windows-11-10.0.26300-SP0",
+      "cpu_logical": 8,
+      "ram_gb": 23.8,
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "scikit-learn": "1.9.1",
+        "pandas": "3.1.1",
+        "pyarrow": "26.0.1",
+        "spacy": "3.8.18",
+        "joblib": "1.6.0"
+      },
+      "thread_env": {
+        "OMP_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null
+      }
+    }
+  },
+  "candidate_400k": {
+    "max_features": 400000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "n_train": 33463,
+    "vocabulary_size": 400000,
+    "nnz": 21426967,
+    "vectoriser_fit_seconds": 76.2,
+    "b1best_logreg_fit_seconds": 101.7,
+    "timing": {
+      "started_utc": "2026-11-05T06:33:07+00:00",
+      "ended_utc": "2026-11-05T06:36:54+00:00",
+      "seconds": 227.1,
+      "peak_rss_mb": 1863
+    },
+    "git": {
+      "commit": "81a15a62d1d0257cb8a9b957a7e2e969e3d14c61",
+      "branch": "feature/issue-24-vocab",
+      "dirty": false
+    },
+    "environment": {
+      "python": "3.14.5",
+      "platform": "Windows-11-10.0.26300-SP0",
+      "cpu_logical": 8,
+      "ram_gb": 23.8,
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "scikit-learn": "1.9.1",
+        "pandas": "3.1.1",
+        "pyarrow": "26.0.1",
+        "spacy": "3.8.18",
+        "joblib": "1.6.0"
+      },
+      "thread_env": {
+        "OMP_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null
+      }
+    }
+  },
+  "vectoriser_fit_ratio": 1.07,
+  "outcome": "CONTINUE: run the 400k settings",
+  "stop_reasons": [],
+  "partitions_used": [
+    "train"
+  ]
+}

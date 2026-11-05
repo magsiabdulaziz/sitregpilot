@@ -18,8 +18,8 @@ DONE requires verification evidence and, once the PR workflow is active, an owne
 | TASK-013 | Data-contract test suite (Phase 2 gate C) | P0 | DONE | #8 | 010–012 | #18 |
 | TASK-020 | Phase 3: linguistic feature registry & extraction | P0 | DONE | #19 | 013 | #21 |
 | TASK-021 | Phase 3: CPU baselines B0–B4 on dev | P0 | DONE | #20 | 013, 020 | #22 |
-| TASK-022 | Phase 3b decision records D-15–D-17 + GPU plan | P0 | IN_REVIEW | #23 | 021 | (pending) |
-| TASK-023 | D-16 bounded vocabulary expansion (pilot first) | P0 | TODO | #24 | 022 | — |
+| TASK-022 | Phase 3b decision records D-15–D-17 + GPU plan | P0 | DONE | #23 | 021 | #27 |
+| TASK-023 | D-16 bounded vocabulary expansion (pilot first) | P0 | BLOCKED (owner: confirm stop thresholds) | #24 | 022 | — |
 | TASK-024 | Phase 3b(c) full-document TF-IDF | P0 | TODO | #25 | 022 | — |
 | TASK-025 | Phase 3b(a, b) ablation + template diagnostic | P0 | TODO | #26 | 022 | — |
 

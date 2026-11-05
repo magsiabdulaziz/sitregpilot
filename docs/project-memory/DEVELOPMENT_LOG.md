@@ -110,3 +110,10 @@ Times are not reliably recorded; dates are from the session environment.
 - The owner said "merge #22" → `f8c6ace` at `39385d3` (tree verified; #20 closed). Phase 3 baselines complete (dev only).
 - Owner decisions: Phase 3b analyses (a), (b), (c) approved with explicit reporting caveats (D-15); D-09 amended with one 400k vocabulary candidate after a training-only pilot, stop rules declared in advance (D-16); Phase 4 deferred, GPU plan only (D-17); evaluation controls recorded with D-15–D-17.
 - Opened #23–#26. Started #23 (decision records, `docs/phase4_gpu_plan.md`, experiment-plan status).
+
+## 2026-11-05: PR #27 merged; D-16 pilot; work stopped
+- PR #27 review round 1: Changes required (D-16 thresholds had been presented as owner-approved; setting count unclear). Fixed: thresholds labelled as the implementer's proposal, pending owner confirmation; 24 new settings (12 per model). Round 2 Ready. The owner said "merge #27" → `e2c0d74` (tree verified; #23 closed).
+- A network outage (DNS failure for github.com) briefly blocked a push; retried successfully.
+- A Claude Code restart occurred mid-session; the reviewer agent and pilot resumed.
+- D-16 training-only pilot (`scripts/vocab_pilot.py`, commit `81a15a6`): 400k vs 200k: vectoriser fit 76.2 s vs 71.4 s (ratio 1.07), peak 1.86 GB vs 1.67 GB. The proposed rules say continue; **thresholds not yet confirmed**, so the 24 settings were not run.
+- The owner asked to update memory and stop. The branch `feature/issue-24-vocab` was pushed without a PR. No processes left running.
