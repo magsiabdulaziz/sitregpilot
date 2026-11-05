@@ -37,7 +37,9 @@ def main() -> None:
     rng = random.Random(SEED)
     strata = {
         "short (<300 words)": [i for i in pool if rows[i]["n_window_ws_words"] < 300],
-        "medium (300-999)": [i for i in pool if 300 <= rows[i]["n_window_ws_words"] < 1000 and not rows[i]["truncated"]],
+        "medium (300-999)": [
+            i for i in pool if 300 <= rows[i]["n_window_ws_words"] < 1000 and not rows[i]["truncated"]
+        ],
         "truncated (1,000-word window)": [i for i in pool if rows[i]["truncated"]],
     }
     chosen: list[tuple[str, str]] = []
