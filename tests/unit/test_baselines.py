@@ -111,6 +111,22 @@ def test_tiny_grid_runs_and_separates_signal() -> None:
     assert best["logreg"].tuned["macro_f1"] > b0["B0_most_frequent_set"]["macro_f1"]
 
 
+def test_sequential_fits_are_deterministic() -> None:
+    """Same data and settings give identical dev scores (ISS-013: threaded fits were not reproducible)."""
+    cfg = load_baseline_config(ROOT / "configs/experiments/cpu_baselines.yaml")
+    assert cfg.n_jobs == 1
+    small = cfg.model_copy(update={
+        "tfidf_grid": cfg.tfidf_grid.model_copy(update={"max_features": [100], "ngram_range": [(1, 1)], "min_df": 1}),
+        "logreg_grid": cfg.logreg_grid.model_copy(update={"C": [1.0], "class_weight": ["balanced"]}),
+        "svm_grid": cfg.svm_grid.model_copy(update={"C": [1.0], "class_weight": ["balanced"]}),
+    })
+    train, dev = _synthetic(300, 3), _synthetic(100, 4)
+    _, a = run_linear_grid(train, dev, small)
+    _, b = run_linear_grid(train, dev, small)
+    for fam in ("logreg", "svm"):
+        assert np.array_equal(a[fam].dev_scores, b[fam].dev_scores)
+
+
 def test_experiment_config_matches_d09() -> None:
     cfg = load_baseline_config(ROOT / "configs/experiments/cpu_baselines.yaml")
     assert cfg.logreg_grid.C == cfg.svm_grid.C == [0.1, 1.0, 10.0]
