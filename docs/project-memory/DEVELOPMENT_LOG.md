@@ -105,3 +105,8 @@ Times are not reliably recorded; dates are from the session environment.
 - B3/B4 run `20261105T091306-c9d153b` (clean commit): 5,514 s, peak 2.45 GB. B3 linguistic 0.479 (C 0.1); B4 combined 0.613 (α 0.5; α 0.5/1/2 give 0.6131/0.6131/0.6130; α = 2 took 55 min with no convergence warning).
 - `reports/baselines/T1_dev_summary.md` is generated from the JSON reports. All dev numbers are optimistic (thresholds and selection both on dev). The test set was not touched.
 - Observations for the owner: the B1/B2 optimum is at the edge of the D-09 grid (largest vocabulary); B3's strongest SP predictor is the MATTR missing indicator (a document-length signal).
+
+## 2026-11-05: PR #22 merged; Phase 3b decisions
+- The owner said "merge #22" → `f8c6ace` at `39385d3` (tree verified; #20 closed). Phase 3 baselines complete (dev only).
+- Owner decisions: Phase 3b analyses (a), (b), (c) approved with explicit reporting caveats (D-15); D-09 amended with one 400k vocabulary candidate after a training-only pilot, stop rules declared in advance (D-16); Phase 4 deferred, GPU plan only (D-17); evaluation controls recorded with D-15–D-17.
+- Opened #23–#26. Started #23 (decision records, `docs/phase4_gpu_plan.md`, experiment-plan status).

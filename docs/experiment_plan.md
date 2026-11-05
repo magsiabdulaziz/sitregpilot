@@ -39,3 +39,8 @@ Sensitivity: S-OTHER (all-negative training).
 ## Handoffs planned
 - H-001 (`Explore`, read-only): independently recount §2 audit numbers from raw files; report mismatches.
 - H-002 (`general-purpose`, after the data gate): write linguistic fixtures independently of the extractor implementation.
+
+## Status and amendments (2026-11-05)
+- **Done (dev only):** B0–B4 (PR #22). Dev macro-F1: B1 0.610, B2 0.605, B3 0.479, B4 0.613. Summary: `reports/baselines/T1_dev_summary.md`.
+- **Approved additions (D-15, D-16):** Phase 3b (a) B3 feature-family ablation, (b) template-overlap diagnostic, (c) full-document TF-IDF (#25, #26); bounded vocabulary candidate 400k after a training-only pilot (#24). Vocabulary expansion and full-document runs are kept separate.
+- **Deferred (D-17):** Phase 4, E1/E2 (`docs/phase4_gpu_plan.md`).
