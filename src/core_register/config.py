@@ -134,8 +134,16 @@ class ThresholdConfig(StrictModel):
     per_label_shrinkage: float = Field(ge=0.0, le=1.0)
 
 
+class LinguisticModelConfig(StrictModel):
+    feature_cache_report: Path
+    imputation: Literal["median"]
+    scaling: Literal["robust"]
+    logreg_grid: LinearGrid
+    combined_alpha: list[float]
+
+
 class BaselineExperimentConfig(StrictModel):
-    """B0-B2 lexical baselines (D-09). Development partitions only."""
+    """B0-B4 baselines (D-09). Development partitions only."""
 
     task: Literal["T1"]
     cohort: Literal["functional"]
@@ -144,6 +152,7 @@ class BaselineExperimentConfig(StrictModel):
     tfidf_grid: TfidfGrid
     logreg_grid: LinearGrid
     svm_grid: LinearGrid
+    linguistic: LinguisticModelConfig
     thresholds: ThresholdConfig
     selection_metric: Literal["macro_f1"]
     seed: int

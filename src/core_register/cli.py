@@ -310,6 +310,102 @@ def _cmd_features(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_baselines_ling(args: argparse.Namespace) -> int:
+    import joblib
+    import numpy as np
+    import pandas as pd
+
+    from core_register.config import load_baseline_config
+    from core_register.data.tasks import load_t1
+    from core_register.features.extract import read_cache as read_feature_cache
+    from core_register.preprocessing.text import lexical_view
+    from core_register.training.linguistic import b4_frame, feature_frame, run_b3, run_b4
+    from core_register.training.tracking import RunTimer, environment, git_state
+
+    cfg = load_data_config(args.config)
+    exp = load_baseline_config(args.experiment)
+    try:
+        hashes = verify_source_files(cfg)
+    except SourceIntegrityError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    feat_report = json.loads(exp.linguistic.feature_cache_report.read_text(encoding="utf-8"))
+    cache = Path(feat_report["cache"]["path"])
+    if not cache.is_file() or sha256_file(cache) != feat_report["cache"]["sha256"]:
+        print(f"error: feature cache {cache} missing or not the one recorded in the extraction report", file=sys.stderr)
+        return 2
+    b1_report = json.loads(args.b1_report.read_text(encoding="utf-8"))
+    b1_params = b1_report["selected"]["logreg"]["params"]
+    git = git_state()
+    run_id = time.strftime("%Y%m%dT%H%M%S") + "-" + (git["commit"][:7] or "nogit")
+    run_dir = args.runs_dir / f"T1_linguistic_{run_id}"
+    run_dir.mkdir(parents=True, exist_ok=False)
+    schema = load_label_schema(cfg.label_schema)
+    lx = exp.lexical
+
+    def view(text: str) -> str:
+        return lexical_view(text, exp.window_words, unicode=lx.unicode, lowercase=lx.lowercase,
+                            mask_urls_emails=lx.mask_urls_emails)
+
+    try:
+        with RunTimer() as timer:
+            data = load_t1(cfg, schema, args.split_manifest, ["train", "dev"], view)
+            train, dev = data["train"], data["dev"]
+            rows = read_feature_cache(cache)
+            f_train, f_dev = feature_frame(train.doc_ids, rows), feature_frame(dev.doc_ids, rows)
+            g3, best3 = run_b3(train, dev, f_train, f_dev, exp)
+            g4, best4 = run_b4(train, dev, f_train, f_dev, exp, b1_params)
+            selected: dict[str, Any] = {}
+            for name, cand, x_dev in (("B3_linguistic_logreg", best3, f_dev),
+                                      ("B4_combined_logreg", best4, b4_frame(dev, f_dev))):
+                path = run_dir / f"{name}.joblib"
+                joblib.dump(cand.pipeline, path)
+                fresh = np.asarray(joblib.load(path).predict_proba(x_dev), dtype=float)
+                if not np.allclose(fresh, cand.dev_scores, atol=1e-6):
+                    raise RuntimeError(f"save/load parity failed for {name}")
+                preds = cand.thresholds.apply(cand.dev_scores)
+                frame = pd.DataFrame({"doc_id": dev.doc_ids})
+                for j, lab in enumerate(dev.labels):
+                    frame[f"gold_{lab}"], frame[f"score_{lab}"], frame[f"pred_{lab}"] = (
+                        dev.y[:, j], cand.dev_scores[:, j], preds[:, j])
+                pred_path = run_dir / f"dev_predictions_{name}.parquet"
+                frame.to_parquet(pred_path, index=False)
+                selected[name] = {
+                    "params": cand.params, "score_type": "probability",
+                    "thresholds": cand.thresholds.to_dict(dev.labels), "dev_tuned": cand.tuned,
+                    "dev_default_threshold": cand.untuned, "model_path": path.as_posix(),
+                    "model_sha256": sha256_file(path), "dev_predictions_path": pred_path.as_posix(),
+                    "dev_predictions_sha256": sha256_file(pred_path), "save_load_parity": True,
+                }
+            # B3 coefficients on robust-scaled features (predictive associations, not functional definitions)
+            names = list(best3.pipeline.named_steps["ling"].get_feature_names_out(f_train.columns))
+            coefs = {lab: dict(zip(names, map(float, est.coef_.ravel()), strict=True))
+                     for lab, est in zip(dev.labels, best3.pipeline.named_steps["clf"].estimators_, strict=True)}
+    except Exception as exc:
+        (run_dir / "FAILED.json").write_text(json.dumps({"run_id": run_id, "git": git,
+                                                         "error": f"{type(exc).__name__}: {exc}"}, indent=2) + "\n",
+                                             encoding="utf-8", newline="\n")
+        raise
+    manifest = {
+        "run_id": run_id, "task": "T1", "cohort": "functional", "split": "controlled",
+        "partitions_used": ["train", "dev"], "test_inference": False, "git": git, "source_sha256": hashes,
+        "split_manifest_sha256": sha256_file(args.split_manifest),
+        "feature_cache": {"path": cache.as_posix(), "sha256": feat_report["cache"]["sha256"],
+                          "extractor_version": feat_report["extractor_version"]},
+        "b1_selection_from": {"path": args.b1_report.as_posix(), "sha256": sha256_file(args.b1_report),
+                              "params": b1_params},
+        "experiment_config": exp.model_dump(mode="json"), "environment": environment(), "timing": timer.to_dict(),
+        "n_train": len(train.doc_ids), "n_dev": len(dev.doc_ids),
+        "selection": "dev macro-F1 after threshold tuning (dev-optimistic; test sealed)",
+    }
+    (run_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
+    report = {"run": manifest, "grid": g3 + g4, "selected": selected, "B3_coefficients": coefs}
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
+    print(f"wrote {args.report} and {run_dir}", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="core_register", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -337,6 +433,14 @@ def build_parser() -> argparse.ArgumentParser:
     base.add_argument("--runs-dir", type=Path, default=Path("artifacts/runs"))
     base.add_argument("--report", type=Path, default=Path("reports/baselines/T1_dev_lexical.json"))
     base.set_defaults(func=_cmd_baselines)
+    ling = sub.add_parser("baselines-ling", help="B3/B4 linguistic and combined baselines on T1 (dev only)")
+    ling.add_argument("--config", type=Path, required=True, help="data config YAML")
+    ling.add_argument("--experiment", type=Path, required=True, help="baseline experiment YAML")
+    ling.add_argument("--b1-report", type=Path, default=Path("reports/baselines/T1_dev_lexical.json"))
+    ling.add_argument("--split-manifest", type=Path, default=Path("data/manifests/splits/split_manifest.csv"))
+    ling.add_argument("--runs-dir", type=Path, default=Path("artifacts/runs"))
+    ling.add_argument("--report", type=Path, default=Path("reports/baselines/T1_dev_linguistic.json"))
+    ling.set_defaults(func=_cmd_baselines_ling)
     feats = sub.add_parser("features", help="cached spaCy feature extraction (methodology section 6)")
     feats.add_argument("--config", type=Path, required=True, help="data config YAML")
     feats.add_argument("--split-manifest", type=Path, default=Path("data/manifests/splits/split_manifest.csv"))
