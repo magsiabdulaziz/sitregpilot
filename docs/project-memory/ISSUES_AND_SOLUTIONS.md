@@ -42,3 +42,8 @@
 - **Root cause:** UNKNOWN. No agent command changed visibility (none of the session's `gh` calls touch it). Presumably an owner action in the GitHub UI: UNVERIFIED.
 - **Exposure:** code, docs, audit JSON (CORE doc IDs and labels; CC BY-SA 4.0 annotations), no corpus text.
 - **Resolution:** the owner confirmed on 2026-11-05: **the repository stays public**. Agents do not change visibility.
+
+## ISS-012: liblinear rejects joblib's read-only memory-mapped input
+- **Symptom:** the first B0–B2 run (`T1_lexical_20261105T083601-bb63f2a`) failed at its first `OneVsRestClassifier(..., n_jobs=4).fit` with `ValueError: WRITEBACKIFCOPY base is read-only`.
+- **Root cause:** confirmed. joblib's default process backend memory-maps large arrays read-only for workers, and scikit-learn's liblinear wrapper needs a writable copy. Small arrays are not memory-mapped, so unit tests with tiny data and `n_jobs=1` did not catch it.
+- **Resolution:** fit under `joblib.parallel_config(backend="threading")`; liblinear releases the GIL. Failed runs now write `FAILED.json`, and one was recorded for the first run.

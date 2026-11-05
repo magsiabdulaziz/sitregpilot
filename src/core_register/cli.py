@@ -12,6 +12,7 @@ import sys
 import time
 from collections.abc import Iterator, Sequence
 from pathlib import Path
+from typing import Any
 
 from core_register.config import SPLITS, load_data_config, load_dedup_config, load_split_config
 from core_register.data.audit import run_audit
@@ -125,6 +126,108 @@ def _cmd_split(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_baselines(args: argparse.Namespace) -> int:
+    from core_register.config import load_baseline_config
+    from core_register.preprocessing.text import lexical_view
+    from core_register.training.tracking import git_state
+
+    cfg = load_data_config(args.config)
+    exp = load_baseline_config(args.experiment)
+    try:
+        hashes = verify_source_files(cfg)
+    except SourceIntegrityError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    git = git_state()
+    run_id = time.strftime("%Y%m%dT%H%M%S") + "-" + (git["commit"][:7] or "nogit")
+    run_dir = args.runs_dir / f"T1_lexical_{run_id}"
+    run_dir.mkdir(parents=True, exist_ok=False)  # never overwrite a run
+    schema = load_label_schema(cfg.label_schema)
+    lx = exp.lexical
+
+    def view(text: str) -> str:
+        return lexical_view(text, exp.window_words, unicode=lx.unicode, lowercase=lx.lowercase,
+                            mask_urls_emails=lx.mask_urls_emails)
+
+    try:
+        return _run_baselines(args, cfg, exp, hashes, git, run_id, run_dir, schema, view)
+    except Exception as exc:  # record failed runs instead of leaving an unexplained directory
+        (run_dir / "FAILED.json").write_text(
+            json.dumps({"run_id": run_id, "git": git, "error": f"{type(exc).__name__}: {exc}"}, indent=2) + "\n",
+            encoding="utf-8", newline="\n")
+        raise
+
+
+def _run_baselines(args: argparse.Namespace, cfg: Any, exp: Any, hashes: dict[str, str], git: dict[str, Any],
+                   run_id: str, run_dir: Path, schema: Any, view: Any) -> int:
+    import joblib
+    import numpy as np
+    import pandas as pd
+
+    from core_register.data.tasks import load_t1
+    from core_register.training.lexical import constant_baselines, run_linear_grid
+    from core_register.training.tracking import RunTimer, environment
+
+    with RunTimer() as timer:
+        data = load_t1(cfg, schema, args.split_manifest, ["train", "dev"], view)
+        train, dev = data["train"], data["dev"]
+        b0 = constant_baselines(train, dev)
+        grid, best = run_linear_grid(train, dev, exp)
+        selected: dict[str, Any] = {}
+        for family, cand in best.items():
+            model_path = run_dir / f"B{1 if family == 'logreg' else 2}_{family}.joblib"
+            joblib.dump(cand.pipeline, model_path)
+            reloaded = joblib.load(model_path)
+            fresh = (reloaded.predict_proba(dev.texts) if family == "logreg"
+                     else reloaded.decision_function(dev.texts))
+            parity = bool(np.allclose(fresh, cand.dev_scores, atol=1e-6))
+            if not parity:
+                print(f"error: save/load parity failed for {family}", file=sys.stderr)
+                return 4
+            preds = cand.thresholds.apply(cand.dev_scores)
+            frame = pd.DataFrame({"doc_id": dev.doc_ids})
+            for j, lab in enumerate(dev.labels):
+                frame[f"gold_{lab}"] = dev.y[:, j]
+                frame[f"score_{lab}"] = cand.dev_scores[:, j]
+                frame[f"pred_{lab}"] = preds[:, j]
+            pred_path = run_dir / f"dev_predictions_{family}.parquet"
+            frame.to_parquet(pred_path, index=False)
+            selected[family] = {
+                "params": cand.params,
+                "score_type": "probability" if family == "logreg" else "svm_margin (not a probability)",
+                "thresholds": cand.thresholds.to_dict(dev.labels),
+                "dev_tuned": cand.tuned,
+                "dev_default_threshold": cand.untuned,
+                "model_path": model_path.as_posix(),
+                "model_sha256": sha256_file(model_path),
+                "dev_predictions_path": pred_path.as_posix(),
+                "dev_predictions_sha256": sha256_file(pred_path),
+                "save_load_parity": parity,
+            }
+    manifest = {
+        "run_id": run_id,
+        "task": "T1", "cohort": "functional", "split": "controlled", "partitions_used": ["train", "dev"],
+        "test_inference": False,
+        "git": git,
+        "source_sha256": hashes,
+        "split_manifest_sha256": sha256_file(args.split_manifest),
+        "label_schema_version": schema.version,
+        "experiment_config_file": args.experiment.as_posix(),
+        "experiment_config": exp.model_dump(mode="json"),
+        "environment": environment(),
+        "timing": timer.to_dict(),
+        "n_train": len(train.doc_ids), "n_dev": len(dev.doc_ids),
+        "selection": "dev macro-F1 after threshold tuning (thresholds and selection both use dev: dev scores are "
+                     "optimistic; the test set stays sealed)",
+    }
+    (run_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
+    report = {"run": manifest, "B0": b0, "grid": grid, "selected": selected}
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
+    print(f"wrote {args.report} and {run_dir}", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="core_register", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -145,6 +248,13 @@ def build_parser() -> argparse.ArgumentParser:
     split.add_argument("--report", type=Path, default=Path("reports/splits/split_report.json"))
     split.add_argument("--manifest", type=Path, default=Path("data/manifests/splits/split_manifest.csv"))
     split.set_defaults(func=_cmd_split)
+    base = sub.add_parser("baselines", help="B0-B2 lexical baselines on T1 (train fit, dev selection; no test)")
+    base.add_argument("--config", type=Path, required=True, help="data config YAML")
+    base.add_argument("--experiment", type=Path, required=True, help="baseline experiment YAML")
+    base.add_argument("--split-manifest", type=Path, default=Path("data/manifests/splits/split_manifest.csv"))
+    base.add_argument("--runs-dir", type=Path, default=Path("artifacts/runs"))
+    base.add_argument("--report", type=Path, default=Path("reports/baselines/T1_dev_lexical.json"))
+    base.set_defaults(func=_cmd_baselines)
     return parser
 
 
