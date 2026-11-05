@@ -26,11 +26,11 @@ D-01/D-02 adopted, D-03…D-12 and D-14 approved, D-13 blocked ([decisions](../d
 ISS-001 (complementary study PDF, #9/#11).
 
 ## Pending User Approvals
-Merge of the #20 PR. Owner awareness: MATTR missing ~38%; B1/B2 optimum at the D-09 grid edge; length signal in B3. `/CLAUDE.md` line 3 wording (owner's file).
+Merge of PR #27 (decision records). Confirmation of the proposed D-16 stop thresholds (12 GB peak RSS; 3× vectoriser fit time). `/CLAUDE.md` line 3 wording (owner's file).
 
 ## Next Actions
 1. #23 PR → review → owner merge.
-2. #24 pilot (training-only), then the 12 new settings if it passes; record the D-16 outcome.
+2. #24 pilot (training-only, measurement only). Proposed stop thresholds (12 GB, 3× fit) are **pending owner confirmation**; if it passes and the owner confirms, run the 24 new settings (12 per model); record the D-16 outcome.
 3. #25, then #26. Test stays sealed; every run is logged, failures included.
 
 ## Resume Instructions
